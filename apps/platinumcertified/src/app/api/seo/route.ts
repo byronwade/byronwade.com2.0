@@ -3,28 +3,16 @@ import * as zlib from 'zlib';
 import { chromium } from 'playwright';
 import { extractHeadingsWithText } from './functions/extractHeadingsWithText';
 import { checkLinks } from './functions/checkLinks';
-//import { checkMobileFriendly } from './functions/checkMobileFriendly';
-//import { pageSpeedScore } from './functions/pageSpeed';
-//import { checkBrokenLinks } from './functions/checkBrokenLinks';
 import { checkForXMLSitemap } from './functions/checkforXMLSitemap';
 import { checkRobotsTxt } from './functions/checkRobotsTxt';
 import { checkSSLCertificate } from './functions/checkSSLCertificate';
 import { checkCustom404 } from './functions/checkCustom404';
-//import { checkRedirects } from './functions/checkRedirects';
 import { checkDNSInfo } from './functions/checkDNS';
 import { checkMetadata } from './functions/checkMetadata';
-//import { securityAnalysis } from './functions/securityAnalysis';
-//import { checkCookiePolicy } from './functions/checkCookiePolicy';
 import { checkConsoleOutput } from './functions/checkConsoleOutput';
-//import { checkDeprecatedHtmlTags } from './functions/checkDeprecatedHtmlTags';
-//import { checkAccessibility } from './functions/checkAccessibility';
-//import { checkResponsiveness } from './functions/checkResponsiveness';
 import { keywordAnalysis } from './functions/keywordAnalysis';
-//import { checkBrowserCompatibility } from './functions/checkBrowserCompatability';
-//import { softwareDetection } from './functions/softwareDetection';
 import { checkImageOptimization } from './functions/checkImageOptimization';
 import { extractCompanyDataFromHtml } from './functions/companyData';
-//import { checkCache } from './functions/checkCache';
 
 let completedTasks = 0;
 const totalTasks = 26;
@@ -81,29 +69,13 @@ const fetchPageData = async (link: string): Promise<Record<string, any>> => {
   //const headers = response?.headers();
 
   const promises = [
-    // timeFunction('brokenLinks', () =>
-    //   checkBrokenLinks(page).catch((e) => ({ error: e.toString() }))
-    // ),
-    // timeFunction('checkAccessibility', () =>
-    //   checkAccessibility(page).catch((e) => ({ error: e.toString() }))
-    // ),
-    // timeFunction('checkBrowserCompatibility', () =>
-    //   checkBrowserCompatibility(page).catch((e) => ({ error: e.toString() }))
-    // ),
-    //timeFunction('checkCache', () => checkCache(headers).catch((e) => ({ error: e.toString() }))),
     timeFunction('checkConsoleOutput', () =>
       checkConsoleOutput(page).catch((e) => ({ error: e.toString() }))
     ),
-    // timeFunction('checkCookiePolicy', () =>
-    //   checkCookiePolicy(page).catch((e) => ({ error: e.toString() }))
-    // ),
     timeFunction('checkCustom404', () =>
       checkCustom404(domain).catch((e) => ({ error: e.toString() }))
     ),
     timeFunction('checkDNS', () => checkDNSInfo(domain).catch((e) => ({ error: e.toString() }))),
-    // timeFunction('checkDeprecatedHtmlTags', () =>
-    //   checkDeprecatedHtmlTags(content).catch((e) => ({ error: e.toString() }))
-    // ),
     timeFunction('checkHeadings', () =>
       extractHeadingsWithText(content).catch((e) => ({ error: e.toString() }))
     ),
@@ -113,24 +85,12 @@ const fetchPageData = async (link: string): Promise<Record<string, any>> => {
     timeFunction('checkMetadata', () =>
       checkMetadata(content).catch((e) => ({ error: e.toString() }))
     ),
-    // timeFunction('checkMobileFriendly', () =>
-    //   checkMobileFriendly(page).catch((e) => ({ error: e.toString() }))
-    // ),
-    // timeFunction('checkRedirects', () =>
-    //   checkRedirects(domain).catch((e) => ({ error: e.toString() }))
-    // ),
-    // timeFunction('checkResponsiveness', () =>
-    //   checkResponsiveness(page).catch((e) => ({ error: e.toString() }))
-    // ),
     timeFunction('checkRobotTxt', () =>
       checkRobotsTxt(domain).catch((e) => ({ error: e.toString() }))
     ),
     timeFunction('checkSSL', () =>
       checkSSLCertificate(domain).catch((e) => ({ error: e.toString() }))
     ),
-    // timeFunction('checkSecurity', () =>
-    //   securityAnalysis(page).catch((e) => ({ error: e.toString() }))
-    // ),
     timeFunction('checkSitemap', () =>
       checkForXMLSitemap(domain).catch((e) => ({ error: e.toString() }))
     ),
@@ -138,20 +98,12 @@ const fetchPageData = async (link: string): Promise<Record<string, any>> => {
     timeFunction('keywordAnalysis', () =>
       keywordAnalysis(content).catch((e) => ({ error: e.toString() }))
     ),
-    //timeFunction('pageSpeed', () => pageSpeedScore(page).catch((e) => ({ error: e.toString() }))),
-    // timeFunction('softwareDetection', () =>
-    //   softwareDetection(content, headers).catch((e) => ({ error: e.toString() }))
-    // ),
     timeFunction('takeScreenshot', () =>
       takeScreenshot(domain).catch((e) => ({ error: e.toString() }))
     ),
     timeFunction('companyData', () =>
       extractCompanyDataFromHtml(content).catch((e) => ({ error: e.toString() }))
     )
-    //timeFunction("analyzeSocialSignals", () => analyzeSocialSignals(domain).catch((e) => ({ error: e.toString() }))),
-    //timeFunction("backlinkAnalysis", () => backlinkAnalysis(content).catch((e) => ({ error: e.toString() }))),
-    //timeFunction("contentQualityAnalysis", () => contentQualityAnalysis(content, 2000).catch((e) => ({ error: e.toString() }))),
-    //timeFunction("seoScore", () => onPageSEOScore(domain, content, page).catch((e) => ({ error: e.toString() }))),
   ];
 
   const results = await Promise.all(promises);

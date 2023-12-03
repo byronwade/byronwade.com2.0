@@ -1,5 +1,5 @@
-import { checkMobileFriendly } from './checkMobileFriendly';
-import { pageSpeedScore } from './pageSpeed';
+import { checkMobileFriendly } from './not_used/checkMobileFriendly';
+import { pageSpeedScore } from './not_used/pageSpeed';
 import { checkSSLCertificate } from './checkSSLCertificate';
 import { checkCustom404 } from './checkCustom404';
 import { checkMetadata } from './checkMetadata';
