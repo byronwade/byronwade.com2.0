@@ -12,7 +12,7 @@ export function Related() {
           role="list-item"
           className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4"
         >
-          <Link href="/view/Atlas" className="hover:opacity-90 transition">
+          <Link href="/" className="hover:opacity-90 transition">
             <div
               className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
               alt=""
@@ -26,7 +26,7 @@ export function Related() {
             </div>
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <Link href="" className="">
+            <Link href="/" className="">
               <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
                 Atlas
               </h2>
@@ -42,7 +42,7 @@ export function Related() {
           role="list-item"
           className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4"
         >
-          <Link href="/view/Scale AI" className="hover:opacity-90 transition">
+          <Link href="/" className="hover:opacity-90 transition">
             <div
               className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
               alt=""
@@ -53,7 +53,7 @@ export function Related() {
             />
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <Link href="" className="">
+            <Link href="/" className="">
               <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
                 Scale AI
               </h2>
@@ -69,7 +69,7 @@ export function Related() {
           role="list-item"
           className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4"
         >
-          <Link href="/view/Family" className="hover:opacity-90 transition">
+          <Link href="/" className="hover:opacity-90 transition">
             <div
               className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
               alt=""
@@ -83,7 +83,7 @@ export function Related() {
             </div>
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <Link href="" className="">
+            <Link href="/" className="">
               <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
                 Family
               </h2>
@@ -99,7 +99,7 @@ export function Related() {
           role="list-item"
           className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4"
         >
-          <Link href="/view/Phantom" className="hover:opacity-90 transition">
+          <Link href="/" className="hover:opacity-90 transition">
             <div
               className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
               alt=""
@@ -113,7 +113,7 @@ export function Related() {
             </div>
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <Link href="" className="">
+            <Link href="/" className="">
               <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
                 Phantom
               </h2>
@@ -129,7 +129,7 @@ export function Related() {
           role="list-item"
           className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4"
         >
-          <Link href="/view/Wise Design" className="hover:opacity-90 transition">
+          <Link href="/" className="hover:opacity-90 transition">
             <div
               className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
               alt=""
@@ -143,7 +143,7 @@ export function Related() {
             </div>
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <Link href="" className="">
+            <Link href="/" className="">
               <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
                 Wise Design
               </h2>
@@ -159,7 +159,7 @@ export function Related() {
           role="list-item"
           className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4"
         >
-          <Link href="/view/Chenzoku" className="hover:opacity-90 transition">
+          <Link href="/" className="hover:opacity-90 transition">
             <div
               className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
               alt=""
@@ -173,7 +173,7 @@ export function Related() {
             </div>
           </Link>
           <div className="flex justify-between items-center mt-2">
-            <Link href="" className="">
+            <Link href="/" className="">
               <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
                 Chenzoku
               </h2>

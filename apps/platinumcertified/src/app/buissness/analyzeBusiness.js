@@ -159,7 +159,7 @@ export async function analyzeBusiness(url) {
   }
 
   try {
-    const businessData = await fetch(`http://localhost:3001/api/seo?url=${url}`);
+    const businessData = await fetch(`${process.env['API_URL']}/api/seo?url=${url}`);
     const business = await readJSONFromStream(businessData.body);
     const openAIContent = await fetchOpenAIContent(business);
     const query = openAIContent.address

@@ -32,7 +32,6 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [isValidUrl, setIsValidUrl] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [lastSubmittedUrl, setLastSubmittedUrl] = useState('');
 
   console.log(business);
 
@@ -42,17 +41,11 @@ export default function Page() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // URL validation (checks if URL starts with http:// or https://)
     const isValidUrl = /^https?:\/\/.+/i.test(url);
     if (!isValidUrl) {
+      // Handle error: Display error message or perform other actions
       console.error('Error: URL is not valid');
-      return; // Exit the function if URL is not valid
-    }
-
-    // Check if the URL is the same as the last submitted URL
-    if (url === lastSubmittedUrl) {
-      console.error('Error: This URL has already been submitted');
-      return; // Exit the function if it's a duplicate submission
+      return; // Exit the function, preventing further execution
     }
 
     setIsLoading(true);
@@ -61,10 +54,9 @@ export default function Page() {
     try {
       const response = await analyzeBusiness(url);
       setBusiness(response);
-      setLastSubmittedUrl(url); // Update the last submitted URL
     } catch (error) {
       console.error('Error analyzing business:', error);
-      setBusiness(defaultBusinessData);
+      setBusiness(defaultBusinessData); // If there's an error, set the business back to default data or handle it as needed
     }
 
     setIsLoading(false);
@@ -122,7 +114,7 @@ export default function Page() {
             <button
               type="submit"
               aria-disabled={isLoading}
-              className={`flex aspect-square h-8 w-8 items-center justify-center rounded-lg dark:text-black 
+              className={`flex aspect-square h-8 w-8 items-center justify-center rounded-lg text-white dark:text-black 
               ${isLoading ? 'text-black' : ''}
               ${
                 isValidUrl
