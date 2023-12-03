@@ -17,5 +17,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "jsdom": "^23.0.1"
+  }
 }

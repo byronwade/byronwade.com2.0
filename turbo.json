@@ -8,7 +8,10 @@
     "lint": {},
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["OPENAI_API_KEY", "YELP_API", "GOOGLE_PLACES_API_KEY"]
     }
-  }
+  },
+  "globalEnv": ["OPENAI_API_KEY", "YELP_API", "GOOGLE_PLACES_API_KEY"],
+  "globalDependencies": ["OPENAI_API_KEY", "YELP_API", "GOOGLE_PLACES_API_KEY"]
 }
