@@ -1,8 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dev stuff
-/app/api/seo/*
-/app/upload/*
+/src/app/api/seo/*
+/src/app/upload/*
 
 # dependencies
 /node_modules
