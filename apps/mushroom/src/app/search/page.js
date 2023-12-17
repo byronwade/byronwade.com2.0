@@ -90,7 +90,7 @@ export default function Search() {
                   </div>
                 ))
               ) : (
-                <p>No data</p>
+                <p className="block w-full mx-auto mt-10">No data</p>
               )}
             </div>
           </div>
