@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState('');
-
-  console.log(searchTerm);
+  const [results, setResults] = useState(null);
+  const [searchPerformed, setSearchPerformed] = useState(false); // New state to track if search has been performed
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setSearchPerformed(true); // Set to true when search is performed
     try {
       const response = await fetch(`/api/search?query=${searchTerm}`);
 
@@ -19,12 +19,11 @@ export default function Search() {
       const responseData = await response.json();
       console.log('Data received:', responseData);
 
-      // Check if responseData.data is an array
       if (Array.isArray(responseData.data)) {
         setResults(responseData.data);
       } else {
         console.error('Received data is not an array:', responseData.data);
-        setResults([]); // Reset results or handle accordingly
+        setResults([]); // Reset results
       }
     } catch (error) {
       console.error('There was an error fetching the search results:', error);
@@ -83,15 +82,22 @@ export default function Search() {
               </div>
             </div>
             <div className="block w-full mx-auto mt-10">
-              {Array.isArray(results) && results.length > 0 ? (
-                results.map((item, index) => (
-                  <div key={index}>
-                    <SearchResult jsonData={item} />
-                  </div>
-                ))
-              ) : (
-                <p className="block w-full mx-auto mt-10">No data</p>
-              )}
+              {
+                // Only show results or "No data" if a search has been performed
+                searchPerformed ? (
+                  Array.isArray(results) && results.length > 0 ? (
+                    results.map((item, index) => (
+                      <div key={index}>
+                        <SearchResult jsonData={item} />
+                      </div>
+                    ))
+                  ) : (
+                    <p className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-xl bg-neutral-200">
+                      No data
+                    </p>
+                  )
+                ) : null
+              }
             </div>
           </div>
         </div>
