@@ -1,121 +1,241 @@
-import Header from '../components/header';
-import Sidebar from '../components/sidebar';
-import { createClient } from '@supabase/supabase-js';
-import { BusinessCard } from '../components/businessCard';
-import HeroHome from '../components/heroHome';
+'use client';
+import React, { useState } from 'react';
 
-const supabase = createClient(process.env['SUPABASE_URL'], process.env['SUPABASE_API_KEY']);
-const { data: business } = await supabase.from('business').select('*');
+export default function Search() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState('');
 
-export default function Home() {
+  console.log(searchTerm);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`/api/search?query=${searchTerm}`);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Data received:', responseData);
+
+      // Check if responseData.data is an array
+      if (Array.isArray(responseData.data)) {
+        setResults(responseData.data);
+      } else {
+        console.error('Received data is not an array:', responseData.data);
+        setResults([]); // Reset results or handle accordingly
+      }
+    } catch (error) {
+      console.error('There was an error fetching the search results:', error);
+    }
+  };
+
   return (
     <>
-      <Sidebar />
-      <div className="main w-full max-h-[100vh] scrollbar-hide overflow-y-auto">
-        <Header />
-        <HeroHome />
-        <div className="flex flex-col sm:flex-col md:flex-col lg:flex-row gap-10 justify-between items-center mt-[100px] sm:mt-[100px] xl:mt-[50px] mb-10 px-5 xl:px-8">
-          <div className="px-0 sm:px-2 md:px-10 max-w-auto xl:max-w-[500px] w-full">
-            <h1 className="text-[45px] font-bold leading-[1] mb-3 capitalize text-transparent bg-clip-text bg-gradient-to-r from-[#707070] to-black dark:to-dark-300 dark:from-white">
-              All the best SaaS resources in one place
-            </h1>
-            <p className="text-[18px] font-light text-[#8a8a8a]">
-              UI resources that will boost your creative workflow and save you time and money.
-            </p>
-            <div className="flex items-center mt-3">
-              <button className="py-2 text-sm bg-white border border-1 border-[#e3e3e3] text-black hover:bg-light-100 transition-all duration-300 px-5 rounded-full">
-                Subscribe
-              </button>
-              <div
-                role="modal"
-                className="fixed inset-0 z-20 animate-fadeIn"
-                style={{ display: 'none' }}
-              >
-                <div className="modal-bg absolute w-full h-full bg-black opacity-60" />
-                <div className="bg-white w-[90%] sm:w-[90%] md:w-[90%] lg:w-[50%] xl:w-[40%] 2xl:w-[40%] h-fit max-h-[90%] sm:h-fit md:h-fit rounded-xl shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-10 py-5">
-                  <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8f8f8f] to-black text-center mt-5 mb-2">
-                    Get Your Daily Dose of News with a Dash of Humor
-                  </h1>
-                  <form className="mt-4 relative">
+      <main className="flex-1 overflow-auto">
+        <div className="flex py-[26vh] my-12 justify-center items-center">
+          <div className="relative flex flex-col items-center w-full px-6">
+            <div className="overflow-hidden max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px]">
+              <div className="relative z-10 flex items-center flex-1 min-w-0 px-3 bg-gray-900 md:pl-4">
+                <form className="w-full h-full" onSubmit={handleSearch}>
+                  <div
+                    className="relative flex items-center w-full min-h-full transition-all duration-300 h-fit"
+                    style={{ height: 47 }}
+                  >
+                    <label htmlFor="home-prompt" className="sr-only">
+                      Search
+                    </label>
                     <input
-                      type="email"
-                      placeholder="Email"
-                      className="w-[100%] px-4 py-4 border border-1 rounded-full focus:outline-light-300"
+                      className="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-teal-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&_textarea]:px-0"
+                      style={{ colorScheme: 'dark', height: '47px !important' }}
+                      spellCheck="true"
+                      rows={1}
+                      placeholder="Search for a shroom..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <button className="px-2 py-2 rounded-full absolute right-2 top-[50%] translate-y-[-50%]">
+                    <button
+                      className="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px]"
+                      type="submit"
+                      disabled=""
+                      id="send-button"
+                      data-state="closed"
+                    >
+                      <span className="sr-only">Send</span>
                       <svg
-                        xmlns="http://www.w3.org/2000/svg"
+                        width={16}
+                        height={16}
+                        viewBox="0 0 16 16"
                         fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-6 h-6"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M13.5 3V2.25H15V3V10C15 10.5523 14.5522 11 14 11H3.56062L5.53029 12.9697L6.06062 13.5L4.99996 14.5607L4.46963 14.0303L1.39641 10.9571C1.00588 10.5666 1.00588 9.93342 1.39641 9.54289L4.46963 6.46967L4.99996 5.93934L6.06062 7L5.53029 7.53033L3.56062 9.5H13.5V3Z"
+                          fill="currentColor"
                         />
                       </svg>
                     </button>
-                  </form>
-                  <p className="py-5 text-sm text-dark-200 text-center">
-                    Join over 4 million people who kickstart their day with CopyUI&apos;s daily
-                    newsletter - delivering the latest headlines worldwide with a touch of humor,
-                    all for free.
-                  </p>
-                </div>
+                  </div>
+                </form>
               </div>
             </div>
-          </div>
-          <div className="w-full rounded-xl max-w-auto xl:max-w-[650px]">
-            <a href="/view/Chenzoku" className="hover:opacity-90 transition">
-              <div
-                style={{ backgroundImage: 'url("")' }}
-                className="relative w-full rounded-xl h-[250px] lg:h-[400px] bg-cover bg-no-repeat bg-center border-[1px] border-light-100 border-solid transition duration-20"
-                alt=""
-              >
-                <video
-                  className="ease block w-full h-full object-cover rounded-xl transition duration-200"
-                  autoPlay=""
-                  loop=""
-                  src="https://video.godly.website/video/upload/w_2560/q_100/godly/recordings/pyaqvjjimo6vixa0mdab.webm"
-                />
-              </div>
-            </a>
-            <div className="flex justify-between items-center mt-2">
-              <a href="">
-                <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
-                  ChainZoku
-                </h2>
-              </a>
-              <div className="flex justify-end gap-2 font-normal">
-                <a href="">
-                  <button className="flex flex-1 justify-end items-center text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200 text-[16px] gap-1 cursor-pointer hover:opacity-75">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-[20px]"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </a>
-              </div>
+            <div className="block w-full mx-auto mt-10">
+              {Array.isArray(results) && results.length > 0 ? (
+                results.map((item, index) => (
+                  <div key={index}>
+                    <SearchResult jsonData={item} />
+                  </div>
+                ))
+              ) : (
+                <p className="block w-full mx-auto mt-10">No data</p>
+              )}
             </div>
           </div>
         </div>
-        <div role="list" className="flex flex-wrap p-5">
-          {business?.map((business) => (
-            <BusinessCard key={business.id} {...business} />
-          ))}
-        </div>
-      </div>
+      </main>
     </>
+  );
+}
+
+function renderNestedObject(obj) {
+  if (!obj) {
+    return <span>Information not available</span>;
+  }
+
+  return (
+    <ul>
+      {Object.entries(obj).map(([key, value]) => (
+        <li key={key}>
+          <strong>{key}:</strong>{' '}
+          {typeof value === 'object' && value !== null
+            ? renderNestedObject(value)
+            : value !== null
+            ? value.toString()
+            : 'N/A'}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function SearchResult({ jsonData }) {
+  const {
+    common_name,
+    origin,
+    genetic_lineage,
+    year_discovered,
+    description,
+    poisonous, // This is an object
+    edible,
+    categories, // This is an array of objects
+    pricing, // This is an object
+    physical_characteristics, // This is an object
+    microscopic_features, // This is an object
+    growth_info, // This is an object
+    potency_info, // This is an object
+    dosage_recommendations, // This is an object
+    storage, // This is an object
+    legal_status, // This is an object
+    additional_info, // This is an object
+    educational_summary, // This is an object
+    research_data, // This is an object
+    tags, // This is an array
+    cite_sources, // This is an object
+    growth_conditions, // This is an object
+    medicinal_properties, // This is an object
+    nutritional_value, // This is an object
+    user_experience, // This is an object
+    scientific_profile, // This is an object
+    classification // This is an object
+  } = jsonData;
+
+  return (
+    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-xl bg-neutral-200">
+      <h1>Common Name</h1>
+      <p>{common_name}</p>
+
+      <h2>Origin</h2>
+      <p>{origin}</p>
+
+      <h2>Genetic Lineage</h2>
+      <p>{genetic_lineage}</p>
+
+      <h2>Year Discovered</h2>
+      <p>{year_discovered}</p>
+
+      <h2>Description</h2>
+      <p>{description}</p>
+
+      <h2>Poisonous</h2>
+      {poisonous && renderNestedObject(poisonous)}
+
+      <h2>Edible</h2>
+      <div>{edible ? 'True' : 'False'}</div>
+
+      <h2>Pricing</h2>
+      <div>{pricing && renderNestedObject(pricing)}</div>
+
+      <h2>Categories</h2>
+      <ul>
+        {categories && categories.map((category, index) => <li key={index}>{category.title}</li>)}
+      </ul>
+
+      <h2>Physical Characteristics</h2>
+      {physical_characteristics && renderNestedObject(physical_characteristics)}
+
+      <h2>Microscopic Features</h2>
+      {microscopic_features && renderNestedObject(microscopic_features)}
+
+      <h2>Growth Info</h2>
+      {growth_info && renderNestedObject(growth_info)}
+
+      <h2>Potency Info</h2>
+      {potency_info && renderNestedObject(potency_info)}
+
+      <h2>Dosage Recommendations</h2>
+      {dosage_recommendations && renderNestedObject(dosage_recommendations)}
+
+      <h2>Storage</h2>
+      {storage && renderNestedObject(storage)}
+
+      <h2>Legal Status</h2>
+      {legal_status && renderNestedObject(legal_status)}
+
+      <h2>Additional Info</h2>
+      {additional_info && renderNestedObject(additional_info)}
+
+      <h2>Educational Summary</h2>
+      {educational_summary && renderNestedObject(educational_summary)}
+
+      <h2>Research Data</h2>
+      {research_data && renderNestedObject(research_data)}
+
+      <h2>Cite Sources</h2>
+      {cite_sources && renderNestedObject(cite_sources)}
+
+      <h2>Growth Conditions</h2>
+      {growth_conditions && renderNestedObject(growth_conditions)}
+
+      <h2>Medicinal Properties</h2>
+      {medicinal_properties && renderNestedObject(medicinal_properties)}
+
+      <h2>Nutritional Value</h2>
+      {nutritional_value && renderNestedObject(nutritional_value)}
+
+      <h2>User Experience</h2>
+      {user_experience && renderNestedObject(user_experience)}
+
+      <h2>Scientific Profile</h2>
+      {scientific_profile && renderNestedObject(scientific_profile)}
+
+      <h2>Classification</h2>
+      {classification && renderNestedObject(classification)}
+
+      <h2>Tags</h2>
+      <ul>{tags && tags.map((tag, index) => <li key={index}>{tag}</li>)}</ul>
+    </div>
   );
 }
