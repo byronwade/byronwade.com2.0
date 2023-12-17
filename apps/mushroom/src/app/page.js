@@ -5,10 +5,12 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState(null);
   const [searchPerformed, setSearchPerformed] = useState(false); // New state to track if search has been performed
+  const [isLoading, setIsLoading] = useState(false); // New state for loading
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setSearchPerformed(true); // Set to true when search is performed
+    setSearchPerformed(true);
+    setIsLoading(true); // Start loading
     try {
       const response = await fetch(`/api/search?query=${searchTerm}`);
 
@@ -27,6 +29,8 @@ export default function Search() {
       }
     } catch (error) {
       console.error('There was an error fetching the search results:', error);
+    } finally {
+      setIsLoading(false); // Stop loading regardless of outcome
     }
   };
 
@@ -83,8 +87,10 @@ export default function Search() {
             </div>
             <div className="block w-full mx-auto mt-10">
               {
-                // Only show results or "No data" if a search has been performed
-                searchPerformed ? (
+                // Conditional rendering based on loading and searchPerformed
+                isLoading ? (
+                  <p className="w-full p-4 mx-auto mb-10 text-center">Loading...</p>
+                ) : searchPerformed ? (
                   Array.isArray(results) && results.length > 0 ? (
                     results.map((item, index) => (
                       <div key={index}>
@@ -92,9 +98,7 @@ export default function Search() {
                       </div>
                     ))
                   ) : (
-                    <p className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-xl bg-neutral-200">
-                      No data
-                    </p>
+                    <p className="w-full p-4 mx-auto mb-10 text-center">No data</p>
                   )
                 ) : null
               }
