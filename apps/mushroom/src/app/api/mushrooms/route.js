@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { fetchOpenAIContent } from './functions/OpenAI';
-import { getBaiscCompanyData } from './functions/BasicCompanyData';
+import { fetchPageData } from '../seo/functions/fetchPageData';
 
 // Initialize Supabase client
 const supabaseUrl = 'https://xmyialnxjvkyxmpbuvis.supabase.co';
@@ -17,7 +17,7 @@ export async function GET(req) {
     let business = null;
 
     if (url) {
-      business = await getBaiscCompanyData(url);
+      business = await fetchPageData(url);
       if (!business) {
         console.error('Failed to get basic company data');
         return Response.json({ error: 'Failed to get basic company data' });
