@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { fetchOpenAIContent } from './functions/OpenAI';
-import { fetchPageData } from '../seo/functions/fetchPageData';
+import { fetchPageData } from './functions/webScrape/fetchPageData';
 
 // Initialize Supabase client
 const supabaseUrl = 'https://xmyialnxjvkyxmpbuvis.supabase.co';
