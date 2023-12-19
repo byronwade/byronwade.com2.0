@@ -1,10 +1,9 @@
-"use client";
-import { useState } from "react";
-import { RadioGroup } from "@headlessui/react";
-import { CheckCircleIcon, TrashIcon } from "@heroicons/react/20/solid";
+'use client';
+import { useState } from 'react';
+import { RadioGroup } from '@headlessui/react';
 
 const handlePayment = async () => {
-  const response = await fetch("/api/checkout", { method: "POST" });
+  const response = await fetch('/api/checkout', { method: 'POST' });
   const data = await response.json();
   if (response.ok) {
     window.location.href = data.chargeUrl;
@@ -16,58 +15,50 @@ const handlePayment = async () => {
 const products = [
   {
     id: 1,
-    title: "Basic Tee",
-    href: "#",
-    price: "$32.00",
-    color: "Black",
-    size: "Large",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-  },
+    title: 'Basic Tee',
+    href: '#',
+    price: '$32.00',
+    color: 'Black',
+    size: 'Large',
+    imageSrc: 'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
+    imageAlt: "Front of men's Basic Tee in black."
+  }
   // More products...
 ];
 const deliveryMethods = [
   {
     id: 1,
-    title: "Standard",
-    turnaround: "4–10 business days",
-    price: "$5.00",
+    title: 'Standard',
+    turnaround: '4–10 business days',
+    price: '$5.00'
   },
-  { id: 2, title: "Express", turnaround: "2–5 business days", price: "$16.00" },
+  { id: 2, title: 'Express', turnaround: '2–5 business days', price: '$16.00' }
 ];
 const paymentMethods = [
-  { id: "credit-card", title: "Credit card" },
-  { id: "paypal", title: "PayPal" },
-  { id: "etransfer", title: "eTransfer" },
+  { id: 'credit-card', title: 'Credit card' },
+  { id: 'paypal', title: 'PayPal' },
+  { id: 'etransfer', title: 'eTransfer' }
 ];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Example() {
-  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
-    deliveryMethods[0],
-  );
+  const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0]);
 
   return (
     <div className="bg-gray-50">
-      <div className="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="max-w-2xl px-4 pt-16 pb-24 mx-auto sm:px-6 lg:max-w-7xl lg:px-8">
         <h2 className="sr-only">Checkout</h2>
 
         <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
           <div>
             <div>
-              <h2 className="text-lg font-medium text-gray-900">
-                Contact information
-              </h2>
+              <h2 className="text-lg font-medium text-gray-900">Contact information</h2>
 
               <div className="mt-4">
-                <label
-                  htmlFor="email-address"
-                  className="block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                   Email address
                 </label>
                 <div className="mt-1">
@@ -76,23 +67,18 @@ export default function Example() {
                     id="email-address"
                     name="email-address"
                     autoComplete="email"
-                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="mt-10 border-t border-gray-200 pt-10">
-              <h2 className="text-lg font-medium text-gray-900">
-                Shipping information
-              </h2>
+            <div className="pt-10 mt-10 border-t border-gray-200">
+              <h2 className="text-lg font-medium text-gray-900">Shipping information</h2>
 
-              <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+              <div className="grid grid-cols-1 mt-4 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                 <div>
-                  <label
-                    htmlFor="first-name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
                     First name
                   </label>
                   <div className="mt-1">
@@ -101,16 +87,13 @@ export default function Example() {
                       id="first-name"
                       name="first-name"
                       autoComplete="given-name"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="last-name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
                     Last name
                   </label>
                   <div className="mt-1">
@@ -119,16 +102,13 @@ export default function Example() {
                       id="last-name"
                       name="last-name"
                       autoComplete="family-name"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label
-                    htmlFor="company"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="company" className="block text-sm font-medium text-gray-700">
                     Company
                   </label>
                   <div className="mt-1">
@@ -136,16 +116,13 @@ export default function Example() {
                       type="text"
                       name="company"
                       id="company"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label
-                    htmlFor="address"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="address" className="block text-sm font-medium text-gray-700">
                     Address
                   </label>
                   <div className="mt-1">
@@ -154,16 +131,13 @@ export default function Example() {
                       name="address"
                       id="address"
                       autoComplete="street-address"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label
-                    htmlFor="apartment"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="apartment" className="block text-sm font-medium text-gray-700">
                     Apartment, suite, etc.
                   </label>
                   <div className="mt-1">
@@ -171,16 +145,13 @@ export default function Example() {
                       type="text"
                       name="apartment"
                       id="apartment"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="city"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">
                     City
                   </label>
                   <div className="mt-1">
@@ -189,16 +160,13 @@ export default function Example() {
                       name="city"
                       id="city"
                       autoComplete="address-level2"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="country"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="country" className="block text-sm font-medium text-gray-700">
                     Country
                   </label>
                   <div className="mt-1">
@@ -206,7 +174,7 @@ export default function Example() {
                       id="country"
                       name="country"
                       autoComplete="country-name"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     >
                       <option>United States</option>
                       <option>Canada</option>
@@ -216,10 +184,7 @@ export default function Example() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="region"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="region" className="block text-sm font-medium text-gray-700">
                     State / Province
                   </label>
                   <div className="mt-1">
@@ -228,16 +193,13 @@ export default function Example() {
                       name="region"
                       id="region"
                       autoComplete="address-level1"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="postal-code"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
                     Postal code
                   </label>
                   <div className="mt-1">
@@ -246,16 +208,13 @@ export default function Example() {
                       name="postal-code"
                       id="postal-code"
                       autoComplete="postal-code"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
                     Phone
                   </label>
                   <div className="mt-1">
@@ -264,32 +223,29 @@ export default function Example() {
                       name="phone"
                       id="phone"
                       autoComplete="tel"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-10 border-t border-gray-200 pt-10">
-              <RadioGroup
-                value={selectedDeliveryMethod}
-                onChange={setSelectedDeliveryMethod}
-              >
+            <div className="pt-10 mt-10 border-t border-gray-200">
+              <RadioGroup value={selectedDeliveryMethod} onChange={setSelectedDeliveryMethod}>
                 <RadioGroup.Label className="text-lg font-medium text-gray-900">
                   Delivery method
                 </RadioGroup.Label>
 
-                <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                <div className="grid grid-cols-1 mt-4 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                   {deliveryMethods.map((deliveryMethod) => (
                     <RadioGroup.Option
                       key={deliveryMethod.id}
                       value={deliveryMethod}
                       className={({ checked, active }) =>
                         classNames(
-                          checked ? "border-transparent" : "border-gray-300",
-                          active ? "ring-2 ring-indigo-500" : "",
-                          "relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none",
+                          checked ? 'border-transparent' : 'border-gray-300',
+                          active ? 'ring-2 ring-indigo-500' : '',
+                          'relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none'
                         )
                       }
                     >
@@ -305,7 +261,7 @@ export default function Example() {
                               </RadioGroup.Label>
                               <RadioGroup.Description
                                 as="span"
-                                className="mt-1 flex items-center text-sm text-gray-500"
+                                className="flex items-center mt-1 text-sm text-gray-500"
                               >
                                 {deliveryMethod.turnaround}
                               </RadioGroup.Description>
@@ -317,19 +273,17 @@ export default function Example() {
                               </RadioGroup.Description>
                             </span>
                           </span>
-                          {checked ? (
+                          {/* {checked ? (
                             <CheckCircleIcon
-                              className="h-5 w-5 text-indigo-600"
+                              className="w-5 h-5 text-indigo-600"
                               aria-hidden="true"
                             />
-                          ) : null}
+                          ) : null} */}
                           <span
                             className={classNames(
-                              active ? "border" : "border-2",
-                              checked
-                                ? "border-indigo-500"
-                                : "border-transparent",
-                              "pointer-events-none absolute -inset-px rounded-lg",
+                              active ? 'border' : 'border-2',
+                              checked ? 'border-indigo-500' : 'border-transparent',
+                              'pointer-events-none absolute -inset-px rounded-lg'
                             )}
                             aria-hidden="true"
                           />
@@ -342,7 +296,7 @@ export default function Example() {
             </div>
 
             {/* Payment */}
-            <div className="mt-10 border-t border-gray-200 pt-10">
+            <div className="pt-10 mt-10 border-t border-gray-200">
               <h2 className="text-lg font-medium text-gray-900">Payment</h2>
 
               <fieldset className="mt-4">
@@ -356,20 +310,20 @@ export default function Example() {
                           name="payment-type"
                           type="radio"
                           defaultChecked
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
                         />
                       ) : (
                         <input
                           id={paymentMethod.id}
                           name="payment-type"
                           type="radio"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
                         />
                       )}
 
                       <label
                         htmlFor={paymentMethod.id}
-                        className="ml-3 block text-sm font-medium text-gray-700"
+                        className="block ml-3 text-sm font-medium text-gray-700"
                       >
                         {paymentMethod.title}
                       </label>
@@ -378,12 +332,9 @@ export default function Example() {
                 </div>
               </fieldset>
 
-              <div className="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
+              <div className="grid grid-cols-4 mt-6 gap-x-4 gap-y-6">
                 <div className="col-span-4">
-                  <label
-                    htmlFor="card-number"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="card-number" className="block text-sm font-medium text-gray-700">
                     Card number
                   </label>
                   <div className="mt-1">
@@ -392,16 +343,13 @@ export default function Example() {
                       id="card-number"
                       name="card-number"
                       autoComplete="cc-number"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div className="col-span-4">
-                  <label
-                    htmlFor="name-on-card"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="name-on-card" className="block text-sm font-medium text-gray-700">
                     Name on card
                   </label>
                   <div className="mt-1">
@@ -410,7 +358,7 @@ export default function Example() {
                       id="name-on-card"
                       name="name-on-card"
                       autoComplete="cc-name"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -428,16 +376,13 @@ export default function Example() {
                       name="expiration-date"
                       id="expiration-date"
                       autoComplete="cc-exp"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="cvc"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="cvc" className="block text-sm font-medium text-gray-700">
                     CVC
                   </label>
                   <div className="mt-1">
@@ -446,7 +391,7 @@ export default function Example() {
                       name="cvc"
                       id="cvc"
                       autoComplete="csc"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -458,7 +403,7 @@ export default function Example() {
           <div className="mt-10 lg:mt-0">
             <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
 
-            <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
+            <div className="mt-4 bg-white border border-gray-200 rounded-lg shadow-sm">
               <h3 className="sr-only">Items in your cart</h3>
               <ul role="list" className="divide-y divide-gray-200">
                 {products.map((product) => (
@@ -471,9 +416,9 @@ export default function Example() {
                       />
                     </div>
 
-                    <div className="ml-6 flex flex-1 flex-col">
+                    <div className="flex flex-col flex-1 ml-6">
                       <div className="flex">
-                        <div className="min-w-0 flex-1">
+                        <div className="flex-1 min-w-0">
                           <h4 className="text-sm">
                             <a
                               href={product.href}
@@ -482,29 +427,23 @@ export default function Example() {
                               {product.title}
                             </a>
                           </h4>
-                          <p className="mt-1 text-sm text-gray-500">
-                            {product.color}
-                          </p>
-                          <p className="mt-1 text-sm text-gray-500">
-                            {product.size}
-                          </p>
+                          <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                          <p className="mt-1 text-sm text-gray-500">{product.size}</p>
                         </div>
 
-                        <div className="ml-4 flow-root flex-shrink-0">
+                        <div className="flex-shrink-0 flow-root ml-4">
                           <button
                             type="button"
                             className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
                           >
                             <span className="sr-only">Remove</span>
-                            <TrashIcon className="h-5 w-5" aria-hidden="true" />
+                            {/* <TrashIcon className="w-5 h-5" aria-hidden="true" /> */}
                           </button>
                         </div>
                       </div>
 
-                      <div className="flex flex-1 items-end justify-between pt-2">
-                        <p className="mt-1 text-sm font-medium text-gray-900">
-                          {product.price}
-                        </p>
+                      <div className="flex items-end justify-between flex-1 pt-2">
+                        <p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
 
                         <div className="ml-4">
                           <label htmlFor="quantity" className="sr-only">
@@ -513,7 +452,7 @@ export default function Example() {
                           <select
                             id="quantity"
                             name="quantity"
-                            className="rounded-md border border-gray-300 text-left text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                            className="text-base font-medium text-left text-gray-700 border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
                           >
                             <option value={1}>1</option>
                             <option value={2}>2</option>
@@ -530,7 +469,7 @@ export default function Example() {
                   </li>
                 ))}
               </ul>
-              <dl className="space-y-6 border-t border-gray-200 px-4 py-6 sm:px-6">
+              <dl className="px-4 py-6 space-y-6 border-t border-gray-200 sm:px-6">
                 <div className="flex items-center justify-between">
                   <dt className="text-sm">Subtotal</dt>
                   <dd className="text-sm font-medium text-gray-900">$64.00</dd>
@@ -543,19 +482,17 @@ export default function Example() {
                   <dt className="text-sm">Taxes</dt>
                   <dd className="text-sm font-medium text-gray-900">$5.52</dd>
                 </div>
-                <div className="flex items-center justify-between border-t border-gray-200 pt-6">
+                <div className="flex items-center justify-between pt-6 border-t border-gray-200">
                   <dt className="text-base font-medium">Total</dt>
-                  <dd className="text-base font-medium text-gray-900">
-                    $75.52
-                  </dd>
+                  <dd className="text-base font-medium text-gray-900">$75.52</dd>
                 </div>
               </dl>
 
-              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+              <div className="px-4 py-6 border-t border-gray-200 sm:px-6">
                 <button
                   onClick={handlePayment}
                   type="submit"
-                  className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                  className="w-full px-4 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                 >
                   Confirm order
                 </button>

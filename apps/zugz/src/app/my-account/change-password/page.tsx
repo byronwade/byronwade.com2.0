@@ -1,24 +1,21 @@
-import Sidebar from "@/components/account/Sidebar";
-
 export default function ChangePassword() {
   return (
-    <div className="py-16 lg:py-20 px-0 xl:max-w-screen-xl mx-auto flex md:flex-row w-full ">
-      <div className="flex flex-col md:flex-row w-full gap-6">
-        <Sidebar />
-        <div className="md:w-4/6 2xl:w-8/12 mt-4 md:mt-0 bg-black rounded-md border border-neutral-800 p-4">
-          <h2 className="text-lg md:text-xl xl:text-2xl font-bold text-heading mb-6 xl:mb-8">
+    <div className="flex w-full px-0 py-16 mx-auto lg:py-20 xl:max-w-screen-xl md:flex-row ">
+      <div className="flex flex-col w-full gap-6 md:flex-row">
+        <div className="p-4 mt-4 bg-black border rounded-md md:w-4/6 2xl:w-8/12 md:mt-0 border-neutral-800">
+          <h2 className="mb-6 text-lg font-bold md:text-xl xl:text-2xl text-heading xl:mb-8">
             Change Password
           </h2>
           <div
-            className="w-full flex  h-full lg:w-8/12 flex-col"
-            style={{ position: "relative", top: 0, opacity: 1 }}
+            className="flex flex-col w-full h-full lg:w-8/12"
+            style={{ position: 'relative', top: 0, opacity: 1 }}
           >
-            <form className="w-full mx-auto flex flex-col justify-center ">
+            <form className="flex flex-col justify-center w-full mx-auto ">
               <div className="flex flex-col space-y-3">
                 <div className="mb-4">
                   <label
                     htmlFor="oldPassword"
-                    className="block text-gray-600 font-semibold text-sm leading-none mb-3 cursor-pointer"
+                    className="block mb-3 text-sm font-semibold leading-none text-gray-600 cursor-pointer"
                   >
                     Old Password
                   </label>
@@ -27,14 +24,14 @@ export default function ChangePassword() {
                       id="oldPassword"
                       name="oldPassword"
                       type="password"
-                      className="py-2 px-4 md:px-5 w-full appearance-none transition duration-150 ease-in-out text-input text-xs lg:text-sm font-body placeholder-gray-600  transition duration-200 ease-in-out bg-black rounded-md border border-neutral-800 focus:outline-none focus:border-heading h-11 md:h-12"
+                      className="w-full px-4 py-2 text-xs placeholder-gray-600 transition duration-150 duration-200 ease-in-out bg-black border rounded-md appearance-none md:px-5 text-input lg:text-sm font-body border-neutral-800 focus:outline-none focus:border-heading h-11 md:h-12"
                       autoComplete="off"
                       autoCapitalize="off"
                       spellCheck="false"
                     />
                     <label
                       htmlFor="oldPassword"
-                      className="absolute ltr:right-4 rtl:left-4 top-5 -mt-2 text-gray-500 cursor-pointer"
+                      className="absolute -mt-2 text-gray-500 cursor-pointer ltr:right-4 rtl:left-4 top-5"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +59,7 @@ export default function ChangePassword() {
                 <div className="mb-4">
                   <label
                     htmlFor="newPassword"
-                    className="block text-gray-600 font-semibold text-sm leading-none mb-3 cursor-pointer"
+                    className="block mb-3 text-sm font-semibold leading-none text-gray-600 cursor-pointer"
                   >
                     New Password
                   </label>
@@ -71,14 +68,14 @@ export default function ChangePassword() {
                       id="newPassword"
                       name="newPassword"
                       type="password"
-                      className="py-2 px-4 md:px-5 w-full appearance-none transition duration-150 ease-in-out text-input text-xs lg:text-sm font-body placeholder-gray-600  transition duration-200 ease-in-out bg-black rounded-md border border-neutral-800 focus:outline-none focus:border-heading h-11 md:h-12"
+                      className="w-full px-4 py-2 text-xs placeholder-gray-600 transition duration-150 duration-200 ease-in-out bg-black border rounded-md appearance-none md:px-5 text-input lg:text-sm font-body border-neutral-800 focus:outline-none focus:border-heading h-11 md:h-12"
                       autoComplete="off"
                       autoCapitalize="off"
                       spellCheck="false"
                     />
                     <label
                       htmlFor="newPassword"
-                      className="absolute ltr:right-4 rtl:left-4 top-5 -mt-2 text-gray-500 cursor-pointer"
+                      className="absolute -mt-2 text-gray-500 cursor-pointer ltr:right-4 rtl:left-4 top-5"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

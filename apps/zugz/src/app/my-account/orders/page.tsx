@@ -1,22 +1,19 @@
-import Sidebar from "@/components/account/Sidebar";
-
 export default function Orders() {
   return (
-    <div className="py-16 lg:py-20 px-0 xl:max-w-screen-xl mx-auto flex md:flex-row w-full">
-      <div className="flex flex-col md:flex-row w-full gap-6">
-        <Sidebar />
-        <div className="md:w-4/6 2xl:w-8/12 mt-4 md:mt-0">
+    <div className="flex w-full px-0 py-16 mx-auto lg:py-20 xl:max-w-screen-xl md:flex-row">
+      <div className="flex flex-col w-full gap-6 md:flex-row">
+        <div className="mt-4 md:w-4/6 2xl:w-8/12 md:mt-0">
           <h2 className="mb-6 text-lg font-bold md:text-xl xl:text-2xl text-heading xl:mb-8">
             Orders
           </h2>
           <div
-            className="w-full flex flex-col"
+            className="flex flex-col w-full"
             style={{
-              position: "relative",
+              position: 'relative',
               top: 0,
               opacity: 1,
-              transform: "none",
-              transformOrigin: "50% 50% 0px",
+              transform: 'none',
+              transformOrigin: '50% 50% 0px'
             }}
           >
             <table>
