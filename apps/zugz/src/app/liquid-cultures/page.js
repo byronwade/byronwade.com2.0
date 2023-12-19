@@ -98,7 +98,7 @@ export default function ProductPage() {
             href="/cart"
             className="w-full p-4 text-black bg-orange-600 rounded-md shadow-lg border-neutral-800"
           >
-            <div className="flex flex-row justify-between">
+            <div className="relative flex flex-row justify-between">
               <span>Buy Now</span>
               <span className="font-bold">$20.00/10ml</span>
             </div>
