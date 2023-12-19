@@ -51,7 +51,7 @@ export async function GET(request: Request) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const fetchPageData = async (link: string): Promise<Record<string, any>> => {
+export const fetchPageData = async (link: string): Promise<Record<string, any>> => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result: Record<string, any> = {};
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,7 +65,7 @@ const fetchPageData = async (link: string): Promise<Record<string, any>> => {
 
   const domain = new URL(link).hostname;
   const content = await page.content();
-  console.log(content);
+  //console.log(content);
   //const headers = response?.headers();
 
   const promises = [

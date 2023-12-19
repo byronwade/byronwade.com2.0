@@ -1,18 +1,47 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{ts,tsx,js,jsx}',
+    './components/**/*.{ts,tsx,js,jsx}',
+    './app/**/*.{ts,tsx,js,jsx}',
+    './src/**/*.{ts,tsx,js,jsx}'
   ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
-    },
+  future: {
+    hoverOnlyWhenSupported: true
   },
-  plugins: [],
-}
+  theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px'
+      }
+    },
+    extend: {
+      colors: {
+        // gray: {
+        //   ...colors.neutral
+        // }
+      },
+      transitionDuration: {
+        1200: '1200ms',
+        1500: '1500ms'
+      },
+      keyframes: {
+        shimmer: {
+          '0%': {
+            transform: 'translateX(-100%)'
+          },
+          '100%': {
+            transform: 'translateX(100%)'
+          }
+        }
+      },
+      animation: {
+        shimmer: 'shimmer 2s ease-in-out infinite'
+      }
+    }
+  },
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
+};
+
+export default config;

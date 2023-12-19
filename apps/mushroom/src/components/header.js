@@ -1,39 +1,55 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Moon, Menu } from 'react-feather';
-import { FloatingAI } from './floatingAI';
 
 export default function Header() {
   return (
-    <div className="header fixed sm:fixed xl:static left-0 top-0 right-0 h-[70px] w-full flex justify-between items-center px-4 pr-4 z-10 bg-white dark:bg-black dark:border-b dark:border-b-neutral-800">
-      <div className="flex flex-row">
-        <Link href="/" className="mr-2">
-          <Image src="https://copyui.com/favicon.ico" width={40} height={40} alt="Favicon" />
-        </Link>
-        <FloatingAI />
-      </div>
-      <div className="flex items-center justify-end">
-        <button className="hidden px-3 py-2 ml-2 text-sm text-black transition rounded-full  dark:text-white dark:hover:bg-dark-500 hover:bg-light-100 sm:hidden md:block lg:block xl:block">
-          <Moon strokeWidth="1" className="w-5 h-5" />
-        </button>
-        <div className="flex h-fit w-fit font-[400] ">
-          <Link
-            href="/signin"
-            className="py-1.5 text-sm ml-2 border border-1 border-light-200 text-black dark:border-neutral-800 dark:text-neutral-400 px-3 rounded-lg"
+    <header className="sticky top-0 z-20 flex flex-col w-full gap-3 p-3 md:flex-row md:items-center lg:px-4 md:h-16">
+      <div className="flex items-center w-full gap-8">
+        <div className="flex items-center gap-2">
+          <a
+            className="flex flex-row items-center justify-center rounded focus-visible:bg-zinc-200 focus:ring-0 focus:outline-0"
+            href="/"
           >
-            Sign in
-          </Link>
-          <Link
-            href="/signup"
-            className="py-1.5 text-sm ml-2 bg-black text-white dark:bg-white dark:text-black px-3 rounded-lg"
-          >
-            Sign up
-          </Link>
+            <span className="sr-only">Home</span>
+            <Image
+              className="p-1 mr-2 rounded-lg bg-neutral-300"
+              src="/shroomageddon_black.png"
+              alt="Shroomageddon"
+              width={50}
+              height={50}
+            />
+            <span className="text-2xl font-black dark:text-neutral-300">Shroomageddon</span>
+          </a>
+          <div className="hidden md:flex">
+            <div className="flex items-center w-full gap-2" />
+          </div>
         </div>
-        <button className="block px-3 py-2 ml-2 text-sm text-black rounded-full dark:text-white md:block lg:block xl:hidden">
-          <Menu strokeWidth="1" className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2 ml-auto">
+          <Link href="/upload" className="mr-4 text-sm hover:underline dark:text-neutral-300">
+            Upload a Shroom
+          </Link>
+          <div className="flex items-center h-8 px-3 text-xs font-medium text-center bg-[#503014] text-white rounded-full">
+            Beta
+          </div>
+          {/* <button
+            className="inline-flex items-center justify-center w-8 h-8 text-sm font-medium text-gray-500 transition-colors border rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-100 hover:text-gray-900 shrink-0"
+            id="menu-trigger-button"
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            data-state="closed"
+          >
+            <img
+              alt="bcw1995"
+              width={32}
+              height={32}
+              className="rounded-full select-none shrink-0"
+              src="https://vercel.com/api/www/avatar/QAmJlLcxVwNZxmxaJtzppe1n?s=64"
+            />
+            <span className="sr-only">Toggle Menu</span>
+          </button> */}
+        </div>
       </div>
-    </div>
+    </header>
   );
 }

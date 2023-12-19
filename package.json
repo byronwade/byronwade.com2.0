@@ -19,6 +19,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
     "jsdom": "^23.0.1"
   }
 }

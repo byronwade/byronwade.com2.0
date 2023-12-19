@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Header from '../components/header';
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,8 +37,9 @@ export default function Search() {
 
   return (
     <>
+      <Header />
       <main className="flex-1 overflow-auto">
-        <div className="flex py-[26vh] my-12 justify-center items-center">
+        <div className="flex py-[10vh] my-12 justify-center items-center">
           <div className="relative flex flex-col items-center w-full px-6">
             <div className="overflow-hidden max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px]">
               <div className="relative z-10 flex items-center flex-1 min-w-0 px-3 bg-gray-900 md:pl-4">
@@ -159,11 +161,15 @@ function SearchResult({ jsonData }) {
     nutritional_value, // This is an object
     user_experience, // This is an object
     scientific_profile, // This is an object
-    classification // This is an object
+    classification, // This is an object
+    confidenceScore
   } = jsonData;
 
   return (
     <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-xl bg-neutral-200">
+      <h2>Confidence Score:</h2>
+      <p>{confidenceScore}</p>
+
       <h1>Common Name</h1>
       <p>{common_name}</p>
 

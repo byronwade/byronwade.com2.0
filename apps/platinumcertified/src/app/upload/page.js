@@ -1,16 +1,13 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Related } from '../../components/related';
-import { FloatingAI } from '../../components/floatingAI';
 import { ScrollingImage } from '../../components/scrollingImage';
 import Header from '../../components/header';
 import { ArrowUpRight } from 'react-feather';
 import { ensureHttps } from '../api/seo/utils/utils';
-import { analyzeBusiness } from './analyzeBusiness';
+// import { Related } from '../../components/related';
 import { CornerDownLeft } from 'react-feather';
-
-export const runtime = 'edge';
+import { analyzeBusiness } from './analyzeBusiness';
 
 // Define your default business data
 const defaultBusinessData = {
@@ -469,8 +466,7 @@ export default function Page() {
           </div>
         </>
       )}
-      <Related />
-      <FloatingAI />
+      {/* <Related /> */}
     </div>
   );
 }
