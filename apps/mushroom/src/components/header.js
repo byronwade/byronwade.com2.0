@@ -18,7 +18,9 @@ export default function Header() {
               width={50}
               height={50}
             />
-            <span className="text-2xl font-black dark:text-neutral-300">Shroomageddon</span>
+            <span className="hidden text-2xl font-black dark:text-neutral-300 md:block">
+              Shroomageddon
+            </span>
           </a>
           <div className="hidden md:flex">
             <div className="flex items-center w-full gap-2" />
