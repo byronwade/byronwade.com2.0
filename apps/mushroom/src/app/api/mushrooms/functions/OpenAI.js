@@ -81,7 +81,12 @@ Please provide the Content Quality for each key in the JSON object and the overa
             "origin": "Thailand, Island of Koh Samui",
             "genetic_lineage": "Information not available",
             "year_discovered": "1864",
-            "description": "Brief description about the strain...",
+            "description": "Reishi
+            mushrooms, also known as Ganoderma
+            lucidum, belong to the genus Ganoderma. Ganoderma is a genus of polypore
+            fungi in the Ganodermataceae
+            family, which includes about 80 species. Ganoderma fungi have a high genetic diversity
+            and are used in traditional Asian medicines.", // I would like to see the descriptions labled like this
             "poisonous": {
               "is_poisonous": false,
               "effects": "Information not available",

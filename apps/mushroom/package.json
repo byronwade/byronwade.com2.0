@@ -10,6 +10,8 @@
   "dependencies": {
     "@react-spring/web": "^9.7.3",
     "@supabase/supabase-js": "^2.39.0",
+    "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.2",
     "api": "^6.1.1",
     "cheerio": "^1.0.0-rc.12",
     "dompurify": "^3.0.6",
@@ -23,6 +25,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-feather": "^2.0.10",
+    "react-grid-layout": "^1.4.4",
     "sharp": "^0.33.0",
     "tailwindcss-animate": "^1.0.7",
     "zlib": "^1.0.5"

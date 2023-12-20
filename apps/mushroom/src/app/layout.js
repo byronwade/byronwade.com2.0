@@ -1,3 +1,6 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
+
 import { GeistSans } from 'geist/font/sans';
 import './globals.css';
 
@@ -10,6 +13,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="w-full min-h-screen">
       <body className={`bg-[#bbbcb0] dark:bg-black ${GeistSans.className}`}>{children}</body>
+      <SpeedInsights />
+      <Analytics />
     </html>
   );
 }

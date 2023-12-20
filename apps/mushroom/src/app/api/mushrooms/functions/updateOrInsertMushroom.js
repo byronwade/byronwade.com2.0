@@ -419,7 +419,18 @@ export async function updateOrInsertMushroom(existingMushroomResponse, newMushro
 }
 
 function isInvalidValue(value) {
-  // Define your invalid value checks here
-  const invalidValues = ['Not available', 'Information not available', 'N/A', 'Null'];
-  return invalidValues.includes(value) || value === false; // Consider "false" as an invalid value
+  const invalidValues = [
+    'Not available',
+    'Information not available',
+    'N/A',
+    'Null',
+    undefined,
+    null,
+    false,
+    '',
+    ' ',
+    '[]',
+    '{}'
+  ];
+  return invalidValues.includes(value);
 }
