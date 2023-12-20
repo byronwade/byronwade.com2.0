@@ -1,6 +1,6 @@
 import { fetchOpenAIContent } from './functions/OpenAI';
 import { fetchPageData } from './functions/webScrape/fetchPageData';
-import { findExistingCommonName } from './functions/FindExisting';
+import { findExisting } from './functions/FindExisting';
 import { updateOrInsertMushroom } from './functions/updateOrInsertMushroom';
 import { calculateConfidenceScore } from './functions/calculateConfidenceScore';
 import { compareObjectsAndReturnBest } from './functions/compareObjectsAndReturnBest';
@@ -36,16 +36,16 @@ export async function GET(req) {
       return Response.json({ error: 'No search term provided' });
     }
 
+    // check if the mushroom already exists in the database
+    const existingMushroomResponse = await findExisting(term);
+
     // retrieve OpenAI content for the search term
-    const openAIContent = await fetchOpenAIContent(business, term);
+    const openAIContent = await fetchOpenAIContent(business, existingMushroomResponse, term);
     console.log('openAIContent', openAIContent);
     if (!openAIContent) {
       console.error('Failed to get OpenAI content');
       return Response.json({ error: 'Failed to get OpenAI content' });
     }
-
-    // check if the mushroom already exists in the database
-    const existingMushroomResponse = await findExistingCommonName(term);
 
     // calculate the confidence score for the OpenAI content
     //const confidenceScore = await calculateConfidenceScore(openAIContent);
@@ -55,13 +55,13 @@ export async function GET(req) {
     const mushroomId = await updateOrInsertMushroom(existingMushroomResponse, openAIContent);
     console.log('mushroomId', mushroomId);
 
-    compareObjectsAndReturnBest(existingMushroomResponse, openAIContent)
-      .then((result) => {
-        console.log('The better object based on the criteria:', result);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    // compareObjectsAndReturnBest(existingMushroomResponse, openAIContent)
+    //   .then((result) => {
+    //     console.log('The better object based on the criteria:', result);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   });
 
     // return the OpenAI content
     return Response.json({

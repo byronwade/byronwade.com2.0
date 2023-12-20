@@ -4,13 +4,13 @@ const openai = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] });
 
 export async function compareObjectsAndReturnBest(oldObject, newObject) {
   // Construct the prompt for comparison
-  let prompt = `I am comparing two pieces of content based on the following criteria: clarity, depth of information, and relevance to the topic of mushrooms and mycology. Here are the two contents:
+  let prompt = `I have two JSON objects representing information about mushrooms. I need to create a new JSON object that combines the best aspects of both objects. Here are the objects:
 
-  Old Content: ${oldObject.content}
+  Old Object: ${JSON.stringify(oldObject, null, 2)}
   
-  New Content: ${newObject.content}
+  New Object: ${JSON.stringify(newObject, null, 2)}
   
-  Given these criteria, which content is better, update the JSON object keeping all the keys and making sure to fill all information available. The output should be in the exact same structure as the 2 objects being compared`;
+  Create a new JSON object with the best combined content from both objects:`;
 
   try {
     const response = await openai.chat.completions.create({
@@ -23,16 +23,20 @@ export async function compareObjectsAndReturnBest(oldObject, newObject) {
       model: 'gpt-3.5-turbo-1106',
       response_format: { type: 'json_object' }
     });
+    console.log('response', JSON.parse(response.choices[0].content));
 
-    if (response && response.data && response.data.choices && response.data.choices.length > 0) {
-      let chosenObject = response.data.choices[0].text.includes('Old Content is better')
-        ? oldObject
-        : newObject;
+    if (response && response.choices && response.choices.length > 0) {
+      const combinedContent = response.data.choices[0].text.trim();
 
-      return {
-        ...chosenObject,
-        comparisonResult: response.data.choices[0].text.trim()
-      };
+      // Attempt to parse the combined content into JSON
+      try {
+        const newJsonObject = JSON.parse(combinedContent);
+        console.log('newJsonObject', newJsonObject);
+        return newJsonObject;
+      } catch (parseError) {
+        console.error('Error parsing AI response into JSON:', parseError);
+        throw new Error('AI response could not be parsed into JSON.');
+      }
     } else {
       throw new Error('Invalid response structure from OpenAI API.');
     }

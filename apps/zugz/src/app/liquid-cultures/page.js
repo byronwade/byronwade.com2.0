@@ -7,6 +7,8 @@ import Link from 'next/link';
 
 import { Heart } from 'react-feather';
 
+import Comments from '../../components/comments';
+
 export default function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -500,7 +502,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <div className="relative flex flex-col gap-4 p-10 mx-auto max-w-7xl">
+      <div className="flex flex-col gap-4 p-10 mx-auto max-w-7xl">
         {/* <div className="absolute top-0 right-0 inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-red-500 rounded-md shadow-lg">
           20% Sale
         </div> */}
@@ -508,26 +510,23 @@ export default function ProductPage() {
         <div className="flex flex-row w-full gap-4 space-y-4">
           <div className="flex flex-row w-full gap-4">
             {strains.slice(0, 16).map((strain, index) => (
-              <>
-                <div className="flex-1 mb-10" key={index} onClick={() => setSelectedImage(index)}>
-                  <Image
-                    src={strain.imageSrc}
-                    height={100}
-                    width={100}
-                    layout="responsive"
-                    className={`rounded-md shadow-lg aspect-square border-2 border-transparent ${
-                      selectedImage === index ? 'border-blue-500' : ''
-                    }`}
-                  />
-                  <div className="mt-1 text-xs font-bold">{strain.name}</div>
-                </div>
-              </>
+              <div className="flex-1 mb-10" key={index} onClick={() => setSelectedImage(index)}>
+                <Image
+                  src={strain.imageSrc}
+                  height={100}
+                  width={100}
+                  className={`rounded-md shadow-lg aspect-square border-2 border-transparent ${
+                    selectedImage === index ? 'border-blue-500' : ''
+                  }`}
+                />
+                <div className="mt-1 text-xs font-bold">{strain.name}</div>
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-row w-full gap-4">
-          <div className="relative flex-1 space-y-4">
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-12">
+          <div className="relative space-y-4 lg:col-span-4">
             <div className="p-4 space-y-2 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
               <h2 className="text-2xl font-bold">Strain</h2>
               <p className="text-sm">Full Moon Party</p>
@@ -587,7 +586,7 @@ export default function ProductPage() {
             </div>
           </div>
 
-          <div className="relative flex-1 space-y-4">
+          <div className="relative space-y-4 lg:col-span-4">
             <Image
               src="/Liquid-Culture.png"
               height={1600}
@@ -595,35 +594,20 @@ export default function ProductPage() {
               className="w-full !mt-0 rounded-md shadow-lg aspect-square"
             />
             <div className="flex flex-row w-full gap-4">
-              {[...Array(3)].map((_, index) => (
+              {[...Array(4)].map((_, index) => (
                 <div className="flex-1" key={index}>
                   <Image
                     src="/images/bg/bg.png"
                     height={100}
                     width={100}
-                    layout="responsive"
-                    className="rounded-md shadow-lg aspect-square"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-row w-full gap-4">
-              {[...Array(3)].map((_, index) => (
-                <div className="flex-1" key={index}>
-                  <Image
-                    src="/images/bg/bg.png"
-                    height={100}
-                    width={100}
-                    layout="responsive"
-                    className="rounded-md shadow-lg aspect-square"
+                    className="w-full rounded-md shadow-lg aspect-square"
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="relative flex-1 space-y-4">
+          <div className="relative space-y-4 lg:col-span-4">
             <div className="p-4 text-black rounded-md shadow-lg border-neutral-800 bg-sky-200">
               <h2 className="text-2xl font-bold">Liquid Cultures</h2>
               <p className="text-sm">
@@ -638,11 +622,11 @@ export default function ProductPage() {
                 <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
                   <div className="text-sm">
                     <span aria-hidden="true">
-                      <span class="a-price-symbol">$</span>
-                      <span class="a-price-whole">
-                        31<span class="a-price-decimal">.</span>
+                      <span className="a-price-symbol">$</span>
+                      <span className="a-price-whole">
+                        31<span className="a-price-decimal">.</span>
                       </span>
-                      <span class="a-price-fraction">99</span>
+                      <span className="a-price-fraction">99</span>
                       <span>/</span>
                       <span>10 ml</span>
                     </span>
@@ -690,7 +674,7 @@ export default function ProductPage() {
               </div>
             </div> */}
 
-            <div className="flex">
+            <div className="sticky flex top-10">
               <Link
                 href="/cart"
                 className="relative inline-flex items-center w-full p-4 text-sm font-medium text-black transition-colors bg-green-600 rounded-md shadow-lg wiggle-animation whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-green-600/90"
@@ -729,6 +713,7 @@ export default function ProductPage() {
             </div> */}
           </div>
         </div>
+        <Comments />
       </div>
     </>
   );

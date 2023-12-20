@@ -2,14 +2,15 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] });
 
-export async function fetchOpenAIContent(businessData, term) {
+export async function fetchOpenAIContent(businessData, existingMushroomResponse, term) {
   let combinedData;
 
   if (businessData) {
     combinedData = {
       searchTerm: term,
       checkMetadata: businessData.websiteData.checkMetadata,
-      companyData: businessData.websiteData.companyData
+      companyData: businessData.websiteData.companyData,
+      existingMushroomData: existingMushroomResponse
     };
   } else {
     combinedData = { searchTerm: term };
@@ -20,37 +21,45 @@ export async function fetchOpenAIContent(businessData, term) {
       messages: [
         {
           role: 'system',
-          content: `You are to assume the role of a mycological expert, tasked with conducting comprehensive research on various mushroom strains. Your responsibility is to collate and present detailed, factual information about each strain in a well-structured JSON format. This format must be meticulously followed, ensuring that every key within the JSON object is populated with accurate, relevant, and verifiable data pertaining to the specific mushroom strain under investigation. In cases where data is not available or uncertain, you are to use "Information not available" as a placeholder. It is imperative that all information provided is factual and supported by credible sources.
-      
-          1. Mushroom Identity: Common name, strain name, scientific name, nicknames, and synonyms.
-          2. Classification: Kingdom, division, class, order, family, genus, species.
-          3. Origin: Geographical origin, genetic lineage, year of discovery.
-          4. Description: A brief description of the strain.
-          5. Edibility: Information on whether it is poisonous, edible, and any related effects or symptoms.
-          6. Physical Characteristics: Habitat, ecology, cap, gills, stem, flesh, odor and taste, spore print.
-          7. Microscopic Features: Spores, basidia, cheilocystidia, pileipellis, clamp connections.
-          8. Growth Information: Season, difficulty, yield, cultivation time, substrate, mycelium appearance, fruiting conditions.
-          9. Potency Information: Level, effects, psychoactive compounds.
-          10. Legal Status: General legal status, specific regulations.
+          content: `You are to assume the role of a mycological expert tasked with synthesizing comprehensive information about various mushroom strains into a structured JSON object. Your primary responsibilities include:
 
-          Calculate a Content Quality for the content provided, which is in JSON format. Ensure that the Content Quality for each key is based on the accuracy and reliability of the data. If the data is "Information not available" or equivalent, assign a lower score. If a key is null or empty, assign a much lower score.
-
-1. Content Quality for Each Key: Calculate a Content Quality for each key in the JSON object based on the quality of the data. Use a higher score for accurate and reliable data and a lower score for missing or unreliable data.
-
-2. Overall Content Quality: Calculate an overall Content Quality for the entire response, taking into account all the Content Quality for each key. If a key is null or empty, the overall score should reflect that with a much lower value.
-
-Ensure that all Content Quality fall within the range of 0 to 1.
-
-Please provide the Content Quality for each key in the JSON object and the overall Content Quality for the entire response.
-
-
-          If the mushroom is hallucinogenic, psychedelic, medical, or a magic mushroom it is considered edible for the purpose of this project.
-          Make sure to always use the same JSON object format for the response, even if the Content Quality is 0.0. This will make it easier to parse the response. All keys should be included in the response.
-
-          Please structure your response as a JSON object following this format:
+          Referencing Existing Data: Utilize existing mushroom data as a benchmark. If the new data lacks certain information present in the existing data, maintain the existing details in your final JSON output.
+          
+          Data Evaluation Algorithm:
+          
+          Incorporate new data into the final JSON object if it offers more accurate or additional insights compared to the existing data.
+          Retain existing data if it proves to be more informative or accurate than the new data.
+          Use "NULL" as a placeholder for missing information in both new and existing data.
+          Content Quality Calculation:
+          
+          Assign a Content Quality score (0-100) to each key, reflecting the data's accuracy, completeness, and reliability.
+          Assign lower scores to data marked "NULL".
+          Significantly lower the score for keys with null or empty values.
+          Compute an Overall Content Quality Score for the entire JSON object, representing the average quality of all keys.
+          Consistent Format Maintenance:
+          
+          Ensure all keys are included in the final JSON object, even if their Content Quality score is 0.0.
+          JSON Object Components:
+          Your JSON object should encompass the following aspects for each mushroom strain:
+          
+          Mushroom Identity: Common name, strain name, scientific name, nicknames, synonyms.
+          Classification: Kingdom, division, class, order, family, genus, species.
+          Origin: Geographical origin, genetic lineage, year of discovery.
+          Description: A concise strain description.
+          Edibility: Poisonous or edible status, effects, symptoms.
+          Physical Characteristics: Habitat, ecology, cap, gills, stem, flesh, odor and taste, spore print.
+          Microscopic Features: Spores, basidia, cheilocystidia, pileipellis, clamp connections.
+          Growth Information: Season, difficulty, yield, cultivation time, substrate, mycelium appearance, fruiting conditions.
+          Potency Information: Level, effects, psychoactive compounds.
+          Legal Status: General legal status, specific regulations.
+          Additional Information: Flavor profile, medical effects, cultural significance, availability, category, intended use, historical significance, preparation methods, recipes, conservation status.
+          Nutritional Value: Protein, carbohydrate, vitamin, and mineral content.
+          Medicinal Properties: Active compounds, traditional uses, clinical trials.
+          Overall Content Quality: A composite score reflecting the quality of the entire JSON object.
+          Task: Calculate and provide the Content Quality for each key in the JSON object and the Overall Content Quality for the entire response. Ensure your response adheres to the format exemplified in the openAIResponse example.    
 
           {
-            "common_name": "Thai", // The name of the mushroom but without the mushroom part (e.g. "Thai" instead of "Thai Mushroom"),
+            "common_name": "Thai", // The name of the mushroom but without the mushroom part (e.g. "Thai" instead of "Thai Mushroom"), the name should be what is most commonly used to refer to this mushroom as, count the most commonly used name and whatever is used most use that as the name, if there is no common name, this should be the Scientific Name. First letter of each word should be capitalized.
             "scientific_profile": {
               "strain_name": "Full Moon Party",
               "scientific_name": "Psilocybe Cubensis",
@@ -66,7 +75,7 @@ Please provide the Content Quality for each key in the JSON object and the overa
                 "Koh Samui Super Strain",
                 "Psilocybe Samuiensis Thailand"
               ],
-              "contentQuality": 0.89 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 89 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "classification": {
               "kingdom": "Fungi",
@@ -76,10 +85,10 @@ Please provide the Content Quality for each key in the JSON object and the overa
               "family": "Strophariaceae",
               "genus": "Psilocybe",
               "species": "Cubensis",
-              "contentQuality": 0.65 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 65 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "origin": "Thailand, Island of Koh Samui",
-            "genetic_lineage": "Information not available",
+            "genetic_lineage": "NULL",
             "year_discovered": "1864",
             "description": "Reishi
             mushrooms, also known as Ganoderma
@@ -89,18 +98,18 @@ Please provide the Content Quality for each key in the JSON object and the overa
             and are used in traditional Asian medicines.", // I would like to see the descriptions labled like this
             "poisonous": {
               "is_poisonous": false,
-              "effects": "Information not available",
-              "symptoms": "Information not available",
-              "treatment": "Information not available",
-              "death_rate": "Information not available",
-              "poisonous_lookalikes": "Information not available",
-              "contentQuality": 0.00 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50, for instance the data in this block is currently nothing so this score should be 0.0
+              "effects": "NULL",
+              "symptoms": "NULL",
+              "treatment": "NULL",
+              "death_rate": "NULL",
+              "poisonous_lookalikes": "NULL",
+              "contentQuality": 00 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50, for instance the data in this block is currently nothing so this score should be 0
             },
             "edible": false,
             "categories": [
-              { "alias": "psychedelic-mushrooms", "title": "Psychedelic Mushrooms", "contentQuality": "0.78" },
-              { "alias": "medicinal-properties", "title": "Medicinal Properties", "contentQuality": "0.61" },
-              { "alias": "mycology-research", "title": "Mycology Research", "contentQuality": "0.54" }
+              { "alias": "psychedelic-mushrooms", "title": "Psychedelic Mushrooms", "contentQuality": "78" },
+              { "alias": "medicinal-properties", "title": "Medicinal Properties", "contentQuality": "61" },
+              { "alias": "mycology-research", "title": "Mycology Research", "contentQuality": "54" }
             ],
             "tags": [
               "psilocybin",
@@ -127,10 +136,10 @@ Please provide the Content Quality for each key in the JSON object and the overa
               "per_gram": {
                 "low": 4.38,
                 "high": 7.71,
-                "contentQuality": 0.65 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 65 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "our_price_per_gram": 5.99,
-              "contentQuality": 0.72 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 72 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "physical_characteristics": {
               "habitat": "Subtropical regions",
@@ -141,13 +150,13 @@ Please provide the Content Quality for each key in the JSON object and the overa
                 "color": "Pale tan to buff",
                 "surface": "Sticky when fresh, soon dry, bald, hygrophanous, finely grooved near margin",
                 "margin": "Fibrils from partial veil when young",
-                "contentQuality": 0.67 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 67 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "gills": {
                 "attachment": "Broadly attached to stem",
                 "spacing": "Close or nearly distant",
                 "color": "Pale brown, purplish brown with whitish edges",
-                "contentQuality": 0.71 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 71 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "stem": {
                 "size": "4–6 cm long; 1–2 mm thick",
@@ -155,19 +164,19 @@ Please provide the Content Quality for each key in the JSON object and the overa
                 "surface": "Dry, bald above, finely fuzzy toward base",
                 "veil": "No ring or ring zone after veil breaks",
                 "mycelium": "White before bluing",
-                "contentQuality": 0.62 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 62 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "flesh": {
                 "color": "Whitish",
                 "changes": "Unchanging when sliced",
-                "contentQuality": 0.55 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 55 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "odor_and_taste": "Not distinctive",
               "spore_print": "Purplish brown",
-              "contentQuality": 0.48 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 48 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "growth_info": {
-              "season": "Information not available",
+              "season": "NULL",
               "difficulty": "Intermediate",
               "yield": "High",
               "cultivation_time": "4-6 weeks",
@@ -177,15 +186,15 @@ Please provide the Content Quality for each key in the JSON object and the overa
                 "temperature_range": "21-24°C (70-75°F)",
                 "relative_humidity": "90-95%",
                 "lighting": "Indirect sunlight or fluorescent light",
-                "contentQuality": 0.65 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 65 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "incubation_period": "10-14 days",
               "fruiting_time": "5-12 days from pinning",
               "typical_yield": "Varies based on conditions, generally several flushes",
-              "spawn_type": "Information not available",
-              "fruiting_frequency": "Information not available",
-              "common_contaminants": "Information not available",
-              "contentQuality": 0.66 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "spawn_type": "NULL",
+              "fruiting_frequency": "NULL",
+              "common_contaminants": "NULL",
+              "contentQuality": 66 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "potency_info": {
               "level": "Moderate to High",
@@ -196,9 +205,9 @@ Please provide the Content Quality for each key in the JSON object and the overa
                 "Delayed onset leading to sudden intense effects"
               ],
               "psychoactive_compounds": "Typical Psilocybin, Psilocin, Baeocystin composition",
-              "dosage_recommendations_specific_effects": "Information not available",
-              "individual_sensitivity": "Information not available",
-              "contentQuality": 0.79 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "dosage_recommendations_specific_effects": "NULL",
+              "individual_sensitivity": "NULL",
+              "contentQuality": 79 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "dosage_recommendations": {
               "very_low": "0.2-0.5g",
@@ -206,29 +215,29 @@ Please provide the Content Quality for each key in the JSON object and the overa
               "medium": "1-2.5g",
               "high": "2.5-5g",
               "very_high": "5g+",
-              "contentQuality": 0.68 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 68 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "storage": {
               "spore_storage": {
                 "temperature": "2-8°C (35-46°F)",
                 "environment": "Dark, dry place",
                 "shelf_life": "Several years if stored properly",
-                "contentQuality": 0.74 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 74 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "harvested_mushroom_storage": {
                 "fresh": {
                   "temperature": "2-4°C (35-39°F)",
                   "humidity": "High, in a paper bag",
                   "shelf_life": "Up to 1 week",
-                  "contentQuality": 0.57 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                  "contentQuality": 57 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
                 },
                 "dried": {
                   "environment": "Airtight container with desiccant",
                   "shelf_life": "Several months to years",
-                  "contentQuality": 0.63 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                  "contentQuality": 63 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
                 }
               },
-              "contentQuality": 0.71 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 71 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "user_experience": {
               "common_reports": [
@@ -237,17 +246,17 @@ Please provide the Content Quality for each key in the JSON object and the overa
                 "General positive experience"
               ],
               "suitability": "Suitable for those seeking enhanced visuals and higher than average potency",
-              "trip_reports": "Information not available",
-              "risk_profile": "Information not available",
-              "safety_precautions": "Information not available",
-              "contentQuality": 0.58 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "trip_reports": "NULL",
+              "risk_profile": "NULL",
+              "safety_precautions": "NULL",
+              "contentQuality": 58 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "legal_status": {
               "general": "Varies by country and region",
               "note": "Possession, sale, and use of psychedelic mushrooms is illegal in many countries. Users are advised to consult local regulations.",
-              "specific_regulations": "Information not available",
-              "legal_resources_links": "Information not available",
-              "contentQuality": 0.44 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "specific_regulations": "NULL",
+              "legal_resources_links": "NULL",
+              "contentQuality": 44 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "additional_info": {
               "flavor_profile": "Mild and earthy",
@@ -256,68 +265,68 @@ Please provide the Content Quality for each key in the JSON object and the overa
               "availability": "Various online sources, occasionally out of stock due to high demand",
               "category": "Magic Mushroom",
               "intended_use": "For Mycology and Research Purposes Only",
-              "historical_significance": "Information not available",
-              "preparation_methods": "Information not available",
-              "recipes": "Information not available",
-              "conservation_status": "Information not available",
-              "contentQuality": 0.76 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "historical_significance": "NULL",
+              "preparation_methods": "NULL",
+              "recipes": "NULL",
+              "conservation_status": "NULL",
+              "contentQuality": 76 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "cite_sources": {
               "source_1": {
-                "title": "Information not available",
-                "url": "Information not available",
+                "title": "NULL",
+                "url": "NULL",
                 "data_gathered": "Gathered legal status, availability, and pricing data from this source",
-                "contentQuality": 0.53 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 53 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "source_2": {
-                "title": "Information not available",
-                "url": "Information not available",
+                "title": "NULL",
+                "url": "NULL",
                 "data_gathered": "Gathered legal status, availability, and pricing data from this source",
-                "contentQuality": 0.49 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 49 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
               "source_3": {
-                "title": "Information not available",
-                "url": "Information not available",
+                "title": "NULL",
+                "url": "NULL",
                 "data_gathered": "Gathered legal status, availability, and pricing data from this source",
-                "contentQuality": 0.51 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+                "contentQuality": 51 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
               },
-              "contentQuality": 0.51 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 51 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "educational_summary": {
               "description": "A brief, user-friendly description of the mushroom...",
               "significance": "Explains the mushroom's importance in mycology, its role in ecosystems, cultural significance, etc.",
               "safety_information": "Details on edibility, potential hazards, and first aid information.",
-              "contentQuality": 0.62 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 62 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "research_data": {
               "genetic_information": "Detailed genetic lineage and any known genetic variations.",
               "habitat_and_distribution": "Information on where the mushroom grows and its environmental needs.",
               "morphological_details": "Detailed description of physical characteristics.",
               "psychoactive_properties": "Information on psychoactive compounds and effects, if applicable.",
-              "contentQuality": 0.57 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "contentQuality": 57 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "growth_conditions": {
-              "altitude_range": "Information not available",
-              "soil_type": "Information not available",
-              "pH_preference": "Information not available",
-              "light_intensity": "Information not available",
-              "contentQuality": 0.59 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "altitude_range": "NULL",
+              "soil_type": "NULL",
+              "pH_preference": "NULL",
+              "light_intensity": "NULL",
+              "contentQuality": 59 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "nutritional_value":  {
-              "protein_content": "Information not available",
-              "carbohydrate_content": "Information not available",
-              "vitamin_content": "Information not available",
-              "mineral_content": "Information not available",
-              "contentQuality": 0.45 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "protein_content": "NULL",
+              "carbohydrate_content": "NULL",
+              "vitamin_content": "NULL",
+              "mineral_content": "NULL",
+              "contentQuality": 45 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
             "medicinal_properties": {
-              "active_compounds": "Information not available",
-              "traditional_uses": "Information not available",
-              "clinical_trials": "Information not available",
-              "contentQuality": 0.56 // this is the score for only this block of data, if there is no data for this block of is "Information not available", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 0.50
+              "active_compounds": "NULL",
+              "traditional_uses": "NULL",
+              "clinical_trials": "NULL",
+              "contentQuality": 56 // this is the score for only this block of data, if there is no data for this block of is "NULL", the score should be 0.0, if there is data, but it is not accurate or reliable, the score should be lower than 50
             },
-            confidence_score: 0.73, // This is the confidence score for the entire response, this score should be based on the confidence score for each key, if 1 key is null or empty, the confidence score should reflect that with a much lower value.
-            overall_content_quality_score: 0.73 // This is the Content Quality for the entire response taking into account all the Content Quality for each key, this score should take into account that there are 25 main keys in the object, so if 1 key is null or empty, the overall score should reflect that with a much lower value.
+            confidence_score: 73, // This is the confidence score for the entire response, this score should be based on the confidence score for each key, if 1 key is null or empty, the confidence score should reflect that with a much lower value.
+            overall_content_quality_score: 73 // This is the Content Quality for the entire response taking into account all the Content Quality for each key, this score should take into account that there are 25 main keys in the object, so if 1 key is null or empty, the overall score should reflect that with a much lower value.
           }`
         },
         {

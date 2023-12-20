@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-20 flex flex-col w-full gap-3 p-3 md:flex-row md:items-center lg:px-4 md:h-16">
+    <header className="sticky top-0 z-20 flex flex-col w-full gap-3 p-3 md:flex-row md:items-center md:h-16">
       <div className="flex items-center w-full gap-8">
         <div className="flex items-center gap-2">
           <a

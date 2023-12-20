@@ -7,29 +7,37 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Function to find an existing common name in the mushrooms table with the highest confidenceScore
-export async function findExistingCommonName(commonName) {
-  console.log('commonName', commonName.replace('Mushroom', '').trim());
-
+export async function findExisting(term) {
+  console.log('findExisting', term);
   try {
-    const existingMushroomResponse = await supabase
+    // Construct a query that checks multiple fields, including arrays
+    const { data: common, error: errorCommon } = await supabase
       .from('mushrooms')
-      .select('*')
-      .eq('common_name', commonName.replace(/mushroom/i, '').trim()) // Use eq to match the term within the "name" field
-      .order('overall_content_quality_score', { ascending: false }) // Order by confidenceScore in descending order
-      .limit(1); // Limit the result to 1 row
+      .select()
+      .textSearch('common_name', term);
 
-    console.log('existingMushroomResponse', existingMushroomResponse);
+    const { data: scientific, error: errorScientific } = await supabase
+      .from('mushrooms')
+      .select()
+      .ilike('scientific_profile->>scientific_name', `%${term}%`);
 
-    if (existingMushroomResponse.data.length > 0) {
-      const highestConfidenceMushroom = existingMushroomResponse.data[0];
-      return {
-        ...highestConfidenceMushroom
-      };
-    } else {
-      return null; // Common name not found
+    console.log('common', common);
+    console.log('scientific', scientific);
+
+    if (error) {
+      throw error;
     }
+
+    let result;
+    if (data && data.length > 0) {
+      result = data[0];
+    } else {
+      result = null; // No matching term found
+    }
+
+    return result;
   } catch (error) {
-    console.error('Error finding existing common name:', error.message);
-    throw error;
+    console.error('Error finding existing term:', error.message);
+    return null;
   }
 }

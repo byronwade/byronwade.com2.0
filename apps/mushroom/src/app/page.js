@@ -1,5 +1,7 @@
 'use client';
 import React, { useState } from 'react';
+import { track } from '@vercel/analytics';
+
 import Header from '../components/header';
 
 export default function Search() {
@@ -23,6 +25,7 @@ export default function Search() {
       console.log('Data received:', responseData);
 
       if (Array.isArray(responseData.data)) {
+        track('Searched For', { term: searchTerm, payload: responseData });
         setResults(responseData.data);
       } else {
         console.error('Received data is not an array:', responseData.data);
@@ -166,7 +169,7 @@ function SearchResult({ jsonData }) {
   } = jsonData;
 
   return (
-    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-xl bg-neutral-200">
+    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-neutral-200">
       <h2>Confidence Score:</h2>
       <p>{confidenceScore}</p>
 
