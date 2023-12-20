@@ -2,7 +2,6 @@
 
 # dev stuff
 /src/app/api/seo/*
-/src/app/upload/*
 
 # dependencies
 /node_modules
