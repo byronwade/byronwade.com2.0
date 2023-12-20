@@ -24,13 +24,13 @@ export async function findExisting(term) {
     console.log('common', common);
     console.log('scientific', scientific);
 
-    if (error) {
-      throw error;
+    if (errorCommon || errorScientific) {
+      throw errorScientific || errorCommon;
     }
 
     let result;
-    if (data && data.length > 0) {
-      result = data[0];
+    if ((common && common.length > 0) || (scientific && scientific.length > 0)) {
+      result = scientific[0] || common[0];
     } else {
       result = null; // No matching term found
     }
