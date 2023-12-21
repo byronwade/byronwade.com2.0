@@ -1,8 +1,7 @@
-'use client';
-import React, { useState, useEffect } from 'react';
-
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { ExternalLink } from 'react-feather';
 
 const contentData = [
   {
@@ -87,32 +86,7 @@ const contentData = [
   }
 ];
 
-function generateRandomWidths() {
-  let widths = [3, 4, 5]; // Starting point
-  let total = 12;
-  let min = 2; // Minimum width to ensure readability
-
-  // Randomly adjust the first two columns
-  for (let i = 0; i < 2; i++) {
-    let max = total - min * (3 - i - 1);
-    let randomWidth = Math.min(Math.max(Math.floor(Math.random() * max), min), max);
-    widths[i] = randomWidth;
-    total -= randomWidth;
-  }
-
-  // The last column takes the remaining width
-  widths[2] = total;
-
-  return widths.map((w) => `w-${w}/12`);
-}
-
 export default function Learn() {
-  const [randomWidths, setRandomWidths] = useState([]);
-
-  useEffect(() => {
-    setRandomWidths(generateRandomWidths());
-  }, []);
-
   function chunkArray(array, chunkSize) {
     const result = [];
     for (let i = 0; i < array.length; i += chunkSize) {
@@ -121,30 +95,35 @@ export default function Learn() {
     return result;
   }
 
-  const chunkedItems = chunkArray(contentData, 3);
-
-  const fullRow = 12; // Total columns in Tailwind
-  const gapWidth = 1; // Assuming gap-4, which is 1rem, so we'll subtract 1 from each column unit for the gaps
-
-  function getRandomWidthSet(numberOfItems) {
+  function getRandomWidthsForThree() {
     let widths = [];
-    let remainingWidth = fullRow - (numberOfItems - 1) * gapWidth; // Subtract gaps upfront
+    let total = 12;
 
-    for (let i = 0; i < numberOfItems - 1; i++) {
-      // Reserve at least 2 units for each remaining item
-      let maxPossibleWidth = remainingWidth - 2 * (numberOfItems - i - 1);
-      let randomWidth = Math.floor(Math.random() * (maxPossibleWidth - 2)) + 2;
-      widths.push(randomWidth);
-      remainingWidth -= randomWidth;
+    // First random width, ensuring at least 3 for the smallest
+    let random1 = Math.floor(Math.random() * (total - 6 - 3)) + 3;
+
+    // Second random width, ensuring at least 3 for the smallest
+    let random2 = Math.floor(Math.random() * (total - random1 - 3 - 3)) + 3;
+
+    // The third width is whatever is left, but must be at least 3
+    let random3 = total - random1 - random2;
+
+    // If the last width is less than 3, adjust the other widths down
+    if (random3 < 3) {
+      let adjustment = 3 - random3;
+      if (random1 > random2) {
+        random1 -= adjustment;
+      } else {
+        random2 -= adjustment;
+      }
+      random3 = 3;
     }
 
-    // The last item takes whatever width remains
-    widths.push(remainingWidth);
-
-    return widths.map((width) => `w-${width}/12`);
+    widths.push(random1, random2, random3);
+    return widths;
   }
 
-  const numberOfItemsPerRow = 3;
+  const rows = chunkArray(contentData, 3); // This function needs to be defined to split the data into rows of 3
 
   return (
     <div className="flex flex-col gap-4 px-4 py-10 mx-auto max-w-screen-2xl">
@@ -303,71 +282,40 @@ export default function Learn() {
           </div>
         </div>
       </div> */}
-      <div className="w-full p-10 space-y-4">
-        {chunkedItems.map((chunk, rowIndex) => {
-          // Get random widths for the number of items in the current chunk
-          const randomWidths = getRandomWidthSet(chunk.length);
+      <div className="w-full p-10 space-y-10">
+        {rows.map((row, rowIndex) => {
+          // Get random widths for each set of 3 items
+          const widths = getRandomWidthsForThree();
           return (
-            <div className="flex flex-row w-full gap-4 mb-4" key={rowIndex}>
-              {chunk.map((item, itemIndex) => (
+            <div className="flex flex-row w-full gap-10" key={rowIndex}>
+              {row.map((item, itemIndex) => (
                 <div
-                  className={`${randomWidths[itemIndex]} p-4 border rounded-md border-neutral-800 bg-neutral-100 dark:bg-neutral-900`}
+                  className={`hover:cursor-pointer group relative w-${widths[itemIndex]}/12 h-64 p-4 border rounded-md border-neutral-800 bg-neutral-100 dark:bg-neutral-900 overflow-hidden`}
                   key={itemIndex}
                 >
-                  {item.title}
+                  {/* Text container */}
+                  <div className="absolute z-20 flex bottom-5 left-5">
+                    <h1 className="text-xl font-bold text-white">{item.title}</h1>
+                  </div>
+
+                  {/* Feather icon, hidden by default and shown on hover */}
+                  <div className="absolute z-20 text-white opacity-0 top-5 right-5 group-hover:opacity-100">
+                    <ExternalLink className="w-5 h-5" />
+                  </div>
+
+                  {/* Image */}
+                  <Image
+                    alt="blog thumbnail"
+                    src={item.imagesrc}
+                    width={1200}
+                    height={600}
+                    className="absolute inset-0 z-10 object-cover w-full h-full transition-all duration-300 ease-in-out bg-black rounded-md opacity-50 hover:blur-sm"
+                  />
                 </div>
               ))}
             </div>
           );
         })}
-      </div>
-
-      <div className="flex gap-4 py-10 lg:py-16">
-        {contentData.slice(0, 3).map((content, index) => (
-          <div key={index} className={`${randomWidths[index] || 'w-4/12'}`}>
-            <Link className="inline-block min-w-full group" href="/">
-              <div className="flex flex-col space-y-6">
-                <div className="flex flex-col">
-                  <div className="border-default border-b-0 relative w-full aspect-[2/1] lg:aspect-[3/2] overflow-hidden rounded-t-md border border-neutral-800 shadow-sm">
-                    <Image
-                      alt="blog thumbnail"
-                      src={content.imagesrc}
-                      className="object-cover"
-                      width={600}
-                      height={300}
-                      style={{
-                        position: 'absolute',
-                        inset: '0px',
-                        boxSizing: 'border-box',
-                        padding: '0px',
-                        border: 'none',
-                        margin: 'auto',
-                        display: 'block',
-                        width: '0px',
-                        height: '0px',
-                        minWidth: '100%',
-                        maxWidth: '100%',
-                        minHeight: '100%',
-                        maxHeight: '100%'
-                      }}
-                    />
-                  </div>
-                  <div className="p-4 pt-6 space-y-3 bg-black border border-t-0 rounded-b-md border-neutral-800">
-                    <h3 className="max-w-sm text-xl font-bold text-foreground">{content.title}</h3>
-                    <p className="max-w-sm text-base text-foreground-light">
-                      {content.description}
-                    </p>
-                    <div className="text-foreground-light flex items-center space-x-1.5 text-sm">
-                      <p>{content.date}</p>
-                      <p>•</p>
-                      <p>9 minute read</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          </div>
-        ))}
       </div>
     </div>
   );

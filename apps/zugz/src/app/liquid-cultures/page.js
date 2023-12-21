@@ -500,7 +500,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 px-4 py-10 mx-auto max-w-screen-2xl">
+      <div className="flex flex-col gap-4 p-2 px-4 py-10 mx-auto max-w-screen-2xl md:px-6">
         {/* <div className="absolute top-0 right-0 inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-red-500 rounded-md shadow-lg">
           20% Sale
         </div> */}
