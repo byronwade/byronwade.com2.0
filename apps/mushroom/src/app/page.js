@@ -43,6 +43,17 @@ export default function Search() {
       <main className="flex-1 overflow-auto">
         <div className="flex py-[10vh] my-12 justify-center items-center">
           <div className="relative flex flex-col items-center w-full px-6">
+            <div className="mb-10">
+              <h1 className="text-lg font-bold dark:text-white">Quick Notice</h1>
+              <p className="max-w-md text-sm dark:text-white">
+                Some data may not be accurate, we are in the process of improving the data while
+                Shroomageddon is still in beta, if anyone would like to contribute or suggest a
+                feature please email me at{' '}
+                <a href="mailto:bw@wadesinc.io" className="underline">
+                  bw@wadesinc.io
+                </a>
+              </p>
+            </div>
             <div className="overflow-hidden max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px]">
               <div className="relative z-10 flex items-center flex-1 min-w-0 px-3 bg-gray-900 md:pl-4">
                 <form className="w-full h-full" onSubmit={handleSearch}>
