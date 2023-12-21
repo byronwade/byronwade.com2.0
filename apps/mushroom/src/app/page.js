@@ -1,40 +1,39 @@
 'use client';
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { track } from '@vercel/analytics';
 
 import Header from '../components/header';
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]); // Initialize as an empty array
   const [searchPerformed, setSearchPerformed] = useState(false); // New state to track if search has been performed
   const [isLoading, setIsLoading] = useState(false); // New state for loading
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setSearchPerformed(true);
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
+
     try {
       const response = await fetch(`/api/search?query=${searchTerm}`);
-
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
 
       const responseData = await response.json();
-      console.log('Data received:', responseData);
 
       if (Array.isArray(responseData.data)) {
-        track('Searched For', { term: searchTerm, payload: responseData });
         setResults(responseData.data);
       } else {
-        console.error('Received data is not an array:', responseData.data);
-        setResults([]); // Reset results
+        setResults([]);
       }
     } catch (error) {
-      console.error('There was an error fetching the search results:', error);
+      console.error('There was an error:', error);
+      setResults([]); // Ensure results are set to an empty array on error
     } finally {
-      setIsLoading(false); // Stop loading regardless of outcome
+      setIsLoading(false);
     }
   };
 
@@ -91,22 +90,30 @@ export default function Search() {
               </div>
             </div>
             <div className="block w-full mx-auto mt-10">
-              {
-                // Conditional rendering based on loading and searchPerformed
-                isLoading ? (
-                  <p className="w-full p-4 mx-auto mb-10 text-center">Loading...</p>
-                ) : searchPerformed ? (
-                  Array.isArray(results) && results.length > 0 ? (
-                    results.map((item, index) => (
-                      <div key={index}>
-                        <SearchResult jsonData={item} />
-                      </div>
-                    ))
-                  ) : (
-                    <p className="w-full p-4 mx-auto mb-10 text-center">No data</p>
-                  )
-                ) : null
-              }
+              {console.log('Rendering states:', {
+                isLoading,
+                searchPerformed,
+                results,
+                resultsLength: results.length
+              })}
+
+              {isLoading ? (
+                <div className="w-full p-4 mx-auto mb-10 text-center">
+                  <div className="mx-auto spinner"></div>
+                </div>
+              ) : !isLoading && searchPerformed && results.length === 0 ? (
+                <div className="text-center dark:text-white">
+                  <p className="w-full p-4 mx-auto">No data</p>
+                  <Link
+                    href="/upload"
+                    className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md whitespace-nowrap ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90"
+                  >
+                    Upload a shroom
+                  </Link>
+                </div>
+              ) : (
+                results.map((item, index) => <SearchResult key={index} jsonData={item} />)
+              )}
             </div>
           </div>
         </div>
@@ -164,15 +171,11 @@ function SearchResult({ jsonData }) {
     nutritional_value, // This is an object
     user_experience, // This is an object
     scientific_profile, // This is an object
-    classification, // This is an object
-    confidenceScore
+    classification // This is an object
   } = jsonData;
 
   return (
     <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-neutral-200">
-      <h2>Confidence Score:</h2>
-      <p>{confidenceScore}</p>
-
       <h1>Common Name</h1>
       <p>{common_name}</p>
 
