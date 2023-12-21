@@ -50,6 +50,26 @@ export async function updateOrInsertMushroom(existingMushroomResponse, newMushro
   }
 }
 
+/**
+ * Merges new mushroom data into existing data.
+ * 
+ * @param {object} existingData - The existing mushroom data.
+ * @param {object} newData - The new mushroom data to be merged.
+ * @returns {object} - The merged mushroom data.
+ */
+function mergeData(existingData, newData) {
+  const mergedData = { ...existingData };
+
+  Object.keys(newData).forEach(key => {
+    if (!isInvalidValue(newData[key])) {
+      mergedData[key] = newData[key];
+    }
+  });
+
+  return mergedData;
+}
+
+
 function isInvalidValue(value) {
   const invalidValues = [
     'Not available',

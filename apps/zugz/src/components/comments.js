@@ -96,8 +96,8 @@ export default function Comments() {
     <>
       <div>
         <div className="relative gap-4 overflow-hidden transition-all columns-1 sm:columns-2 lg:columns-3">
-          {comments.map((comment) => (
-            <div className="z-0 mb-4 break-inside-avoid-column">
+          {comments.map((comment, index) => (
+            <div key={index} className="z-0 mb-4 break-inside-avoid-column">
               <a target="_blank" href="https://twitter.com/IxoyeDesign/status/1497473731777728512">
                 <div className="p-6 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
                   <div className="relative">

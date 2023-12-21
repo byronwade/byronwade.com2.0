@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { Heart } from 'react-feather';
 
 import Comments from '../../components/comments';
 
@@ -18,7 +16,7 @@ export default function ProductPage() {
       name: 'Full Moon Party',
       description:
         'Experience the vibrant, dynamic nature of the Full Moon Party strain, known for its unique characteristics and strong growth patterns.',
-      imageSrc: '/images/strains/full-moon-party.png', // Replace with actual image URL
+      imageSrc: '/images/strains/full-moon-party_noBackground.png', // Replace with actual image URL
       imageAlt: 'Close-up view of the Full Moon Party mycology strain.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -49,7 +47,7 @@ export default function ProductPage() {
       name: 'Hillbilly',
       description:
         'Learn about the ideal conditions for cultivating the Hillbilly strain, including temperature, humidity, and light requirements.',
-      imageSrc: '/images/strains/hillbilly.png', // Replace with actual image URL
+      imageSrc: '/images/strains/hillbilly_noBackground.png', // Replace with actual image URL
       imageAlt: 'Illustration of optimal growth conditions for mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -79,7 +77,7 @@ export default function ProductPage() {
       name: 'Golden Halo',
       description:
         'Detailed guidance on advanced cultivation techniques tailored specifically for the Golden Halo strain, ensuring successful growth.',
-      imageSrc: '/images/strains/golden-halo.png', // Replace with actual image URL
+      imageSrc: '/images/strains/golden-halo_noBackground.png', // Replace with actual image URL
       imageAlt: 'Hands cultivating mycology strains, demonstrating specialized techniques.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -111,7 +109,7 @@ export default function ProductPage() {
       name: 'Tidalwave',
       description:
         'Join a community of enthusiasts and experts sharing insights, experiences, and tips on cultivating the Tidalwave strain.',
-      imageSrc: '/images/strains/tidalwave.png', // Replace with actual image URL
+      imageSrc: '/images/strains/tidalwave_noBackground.png', // Replace with actual image URL
       imageAlt: 'Group of mycologists discussing and examining mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -141,7 +139,7 @@ export default function ProductPage() {
       name: 'Golden Teachers',
       description:
         'Explore the world of Golden Teachers strain with its unique characteristics and growth patterns.',
-      imageSrc: '/images/strains/golden-teachers.png', // Replace with actual image URL
+      imageSrc: '/images/strains/golden-teachers_noBackground.png', // Replace with actual image URL
       imageAlt: 'Close-up view of the Golden Teachers mycology strain.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -172,7 +170,7 @@ export default function ProductPage() {
       name: 'Albino Golden Teachers',
       description:
         'Learn about the Albino Golden Teachers strain and its ideal cultivation conditions, including temperature, humidity, and light requirements.',
-      imageSrc: '/images/strains/albino-golden-teachers.png', // Replace with actual image URL
+      imageSrc: '/images/strains/albino-golden-teachers_noBackground.png', // Replace with actual image URL
       imageAlt: 'Illustration of optimal growth conditions for mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -202,7 +200,7 @@ export default function ProductPage() {
       name: 'Stargazer',
       description:
         'Get insights into the Stargazer strain, known for its unique features and successful cultivation techniques.',
-      imageSrc: '/images/strains/stargazer.png',
+      imageSrc: '/images/strains/stargazer_noBackground.png',
       imageAlt: 'Hands cultivating mycology strains, demonstrating specialized techniques.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -232,7 +230,7 @@ export default function ProductPage() {
       name: 'Mexi',
       description:
         'Discover the Mexi strain and its growth requirements, including temperature, humidity, and light conditions.',
-      imageSrc: '/images/strains/mexi.png',
+      imageSrc: '/images/strains/mexi_noBackground.png',
       imageAlt: 'Group of mycologists discussing and examining mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -263,7 +261,7 @@ export default function ProductPage() {
       name: 'White Rabbit',
       description:
         'Learn about the White Rabbit strain and its unique cultivation techniques for successful growth.',
-      imageSrc: '/images/strains/white-rabbit.png',
+      imageSrc: '/images/strains/white-rabbit_noBackground.png',
       imageAlt: 'Close-up view of the White Rabbit mycology strain.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -293,7 +291,7 @@ export default function ProductPage() {
       name: 'Jedi Mind Fuck',
       description:
         'Explore the world of the Jedi Mind Fuck strain, known for its distinct features and growth patterns.',
-      imageSrc: '/images/strains/jedi-mind-fuck.png',
+      imageSrc: '/images/strains/jedi-mind-fuck_noBackground.png',
       imageAlt: 'Illustration of optimal growth conditions for mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -325,7 +323,7 @@ export default function ProductPage() {
       name: 'Penis Envy',
       description:
         'Get detailed guidance on cultivating the Penis Envy strain, with specialized techniques for successful growth.',
-      imageSrc: '/images/strains/penis-envy.png',
+      imageSrc: '/images/strains/penis-envy_noBackground.png',
       imageAlt: 'Hands cultivating mycology strains, demonstrating specialized techniques.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -358,7 +356,7 @@ export default function ProductPage() {
       name: 'Vader',
       description:
         'Discover the Vader strain and its ideal growth conditions, including temperature, humidity, and light requirements.',
-      imageSrc: '/images/strains/vader.png', // Replace with actual image URL
+      imageSrc: '/images/strains/vader_noBackground.png', // Replace with actual image URL
       imageAlt: 'Group of mycologists discussing and examining mycology strains.',
       price: '$220'
     },
@@ -367,7 +365,7 @@ export default function ProductPage() {
       name: 'Gandoff',
       description:
         'Experience the world of the Gandoff strain, known for its unique characteristics and strong growth patterns.',
-      imageSrc: '/images/strains/gandoff.png',
+      imageSrc: '/images/strains/gandoff_noBackground.png',
       imageAlt: 'Close-up view of the Gandoff mycology strain.',
       price: '$220',
       species: 'Psilocybe Cubensis',
@@ -403,7 +401,7 @@ export default function ProductPage() {
       name: 'Jack Frost',
       description:
         'Learn about the Jack Frost strain and its growth requirements, including temperature, humidity, and light conditions.',
-      imageSrc: '/images/strains/jack-frost.png',
+      imageSrc: '/images/strains/jack-frost_noBackground.png',
       imageAlt: 'Illustration of optimal growth conditions for mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -438,7 +436,7 @@ export default function ProductPage() {
       name: 'Treasure Coast',
       description:
         'Discover the Treasure Coast strain and its unique cultivation techniques for successful growth.',
-      imageSrc: '/images/strains/treasure-coast.png',
+      imageSrc: '/images/strains/treasure-coast_noBackground.png',
       imageAlt: 'Hands cultivating mycology strains, demonstrating specialized techniques.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -470,7 +468,7 @@ export default function ProductPage() {
       name: 'Bees Knees B+',
       description:
         'Join a community of enthusiasts and experts sharing insights, experiences, and tips on cultivating the Bees Knees B+ strain.',
-      imageSrc: '/images/strains/bees-knees-b+.png',
+      imageSrc: '/images/strains/bees-knees-b+_noBackground.png',
       imageAlt: 'Group of mycologists discussing and examining mycology strains.',
       price: '$220',
       species: 'Psilocybe cubensis',
@@ -502,20 +500,22 @@ export default function ProductPage() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 p-10 mx-auto max-w-7xl">
+      <div className="flex flex-col gap-4 px-4 py-10 mx-auto max-w-screen-2xl">
         {/* <div className="absolute top-0 right-0 inline-flex items-center px-2 py-1 text-xs font-medium text-white bg-red-500 rounded-md shadow-lg">
           20% Sale
         </div> */}
 
-        <div className="flex flex-row w-full gap-4 space-y-4">
+        {/* STRAINS */}
+        <div className="flex-row hidden w-full gap-4 space-y-4 lg:flex">
           <div className="flex flex-row w-full gap-4">
             {strains.slice(0, 16).map((strain, index) => (
               <div className="flex-1 mb-10" key={index} onClick={() => setSelectedImage(index)}>
                 <Image
                   src={strain.imageSrc}
+                  alt={strain.imageAlt}
                   height={100}
                   width={100}
-                  className={`rounded-md shadow-lg aspect-square border-2 border-transparent ${
+                  className={`rounded-md shadow-lg aspect-square border-2 border-transparent bg-neutral-800/80 ${
                     selectedImage === index ? 'border-blue-500' : ''
                   }`}
                 />
@@ -525,194 +525,249 @@ export default function ProductPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-12">
-          <div className="relative space-y-4 lg:col-span-4">
-            <div className="p-4 space-y-2 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-              <h2 className="text-2xl font-bold">Strain</h2>
-              <p className="text-sm">Full Moon Party</p>
-            </div>
-
-            <div className="flex flex-row w-full gap-4">
-              <div className="flex-1 space-y-4">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span className="font-bold">$20.00</span>
-                    <span>/10ml</span>
-                  </div>
-                </div>
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span>300 In Stock</span>
-                  </div>
-                </div>
-              </div>
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <h2 className="text-2xl font-bold">Views</h2>
-                  <p className="text-sm">1000 people have viewed this in the last hour</p>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row w-full gap-4">
-              <div className="flex-1 space-y-4">
-                <div className="p-4 bg-pink-100 border border-pink-800 rounded-md shadow-lg dark:bg-pink-600">
-                  <Heart className="" />
-                  <h2>Healthy & Safe</h2>
-                </div>
-              </div>
-              <div className="relative flex-1">
-                <div className="text-black p-4 bg-pink-100 border border-[#ADD8E6] rounded-md shadow-lg dark:bg-[#ADD8E6] flex flex-row items-center">
-                  <p className="text-sm">Guaranteed no contaminants</p>
-                  <Image className="aspect-square" src="/images/safe.png" height={50} width={50} />
-                </div>
-              </div>
-            </div>
-
-            <div className="relative p-4 overflow-hidden rounded-md shadow-lg border-neutral-800 bg-zugz-50">
-              <Image
-                src="/icon.png"
-                height={300}
-                width={300}
-                className="absolute opacity-30 -top-28 -right-28"
-              />
-              <div className="relative z-10 pt-20 pr-36">
-                <h2 className="text-2xl font-bold">Description</h2>
-                <p className="text-sm">
-                  Dive into the cosmic fiesta with the Full Moon Party strain of magic mushroom
-                  liquid culture, where each drop is a VIP ticket to intergalactic enlightenment,
-                  sprinkled with cosmic chuckles and served up on Earth with a side of 🌕✨🍄.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative space-y-4 lg:col-span-4">
+        <div className="grid gap-4 mb-20 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="relative space-y-4 lg:col-span-5">
             <Image
               src="/Liquid-Culture.png"
               height={1600}
               width={600}
-              className="w-full !mt-0 rounded-md shadow-lg aspect-square"
+              alt="alt"
+              className="w-full !mt-0 rounded-md shadow-lg aspect-square bg-neutral-800/80"
             />
-            <div className="flex flex-row w-full gap-4">
-              {[...Array(4)].map((_, index) => (
-                <div className="flex-1" key={index}>
+            <div className="grid w-full grid-cols-4 gap-4 sm:grid-cols-4">
+              {[...Array(6)].map((_, index) => (
+                <div key={index}>
                   <Image
                     src="/images/bg/bg.png"
                     height={100}
                     width={100}
-                    className="w-full rounded-md shadow-lg aspect-square"
+                    alt="alt"
+                    className="w-full rounded-md shadow-lg aspect-square bg-neutral-800/80"
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="relative space-y-4 lg:col-span-4">
-            <div className="p-4 text-black rounded-md shadow-lg border-neutral-800 bg-sky-200">
-              <h2 className="text-2xl font-bold">Liquid Cultures</h2>
-              <p className="text-sm">
-                Liquid cultures are nutrient-rich solutions used for growing and rapidly propagating
-                microorganisms, such as bacteria, fungi, and yeasts, in a controlled and efficient
-                manner.
-              </p>
+          <div className="relative hidden space-y-4 lg:block lg:col-span-4">
+            <div className="relative p-4 space-y-2 overflow-hidden border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+              <h2 className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-gray-300 inline-block">
+                Strain
+              </h2>
+              <p className="text-2xl font-bold">Full Moon Party</p>
+              <Image
+                src="/images/strains/full-moon-party_noBackground.png"
+                height={300}
+                width={300}
+                alt="alt"
+                className="absolute opacity-30 -top-28 -right-28"
+              />
             </div>
 
             <div className="flex flex-row w-full gap-4">
-              <div className="flex-1 space-y-4">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span aria-hidden="true">
-                      <span className="a-price-symbol">$</span>
-                      <span className="a-price-whole">
-                        31<span className="a-price-decimal">.</span>
-                      </span>
-                      <span className="a-price-fraction">99</span>
-                      <span>/</span>
-                      <span>10 ml</span>
-                    </span>
-                  </div>
+              <div className="flex-1 h-full space-y-4">
+                <div className="p-4 bg-pink-100 rounded-md shadow-lg dark:bg-[#FF69B4] flex flex-row items-center justify-between">
+                  <h2>Healthy & Safe</h2>
+                  <Image
+                    className="aspect-square"
+                    src="/health.png"
+                    alt="alt"
+                    height={50}
+                    width={50}
+                  />
                 </div>
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span>300 In Stock</span>
+              </div>
+              <div className="relative flex-1 h-full">
+                <div className="text-black p-4 bg-pink-100 border border-[#ADD8E6] rounded-md shadow-lg dark:bg-[#ADD8E6] flex flex-row items-center justify-between">
+                  <p className="text-sm">Guaranteed no contaminants</p>
+                  <Image
+                    className="aspect-square"
+                    alt="alt"
+                    src="/images/safe.png"
+                    height={50}
+                    width={50}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex w-full gap-4">
+              <div className="w-4/6">
+                <div className="h-full p-4 text-black bg-yellow-200 rounded-md shadow-lg border-neutral-800">
+                  <h2 className="text-2xl font-bold">Liquid Cultures</h2>
+                  <p className="text-sm">
+                    Liquid cultures are nutrient-rich solutions used for growing and rapidly
+                    propagating microorganisms, such as bacteria, fungi, and yeasts, in a controlled
+                    and efficient manner.
+                  </p>
+                </div>
+              </div>
+
+              <div className="w-2/6">
+                <div className="flex items-center justify-center h-full p-4 bg-purple-100 border border-purple-500 rounded-md shadow-lg dark:bg-purple-500">
+                  <Image
+                    className="aspect-square"
+                    alt="alt"
+                    src="/quality.png"
+                    height={150}
+                    width={150}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-stretch w-full gap-4">
+              <div className="w-1/12">
+                <div className="flex flex-col h-full p-4 bg-red-100 border border-red-800 rounded-md shadow-lg dark:bg-red-900">
+                  <div className="flex-grow">
+                    <div className="flex items-center justify-center h-full">
+                      <div className="font-mono origin-center transform -rotate-90 text-md whitespace-nowrap">
+                        <span>20% Off This Week</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex-1">
-                <div className="p-4 bg-yellow-600 border-4 border-yellow-900 rounded-md shadow-lg">
-                  <h2 className="text-2xl font-bold">Free Shipping</h2>
-                  <p className="text-sm">Anywhere in the us.</p>
+              <div className="w-11/12">
+                <div className="relative flex flex-col h-full p-4 mb-4 overflow-hidden rounded-md shadow-lg border-neutral-800 bg-zugz-50">
+                  <div className="flex-grow">
+                    <Image
+                      src="/icon.png"
+                      height={300}
+                      width={300}
+                      alt="alt"
+                      className="absolute opacity-30 -top-28 -right-28"
+                    />
+                    <div className="relative z-10 pr-36">
+                      <h2 className="text-2xl font-bold">Description</h2>
+                      <p className="text-sm">
+                        Dive into the cosmic fiesta with the Full Moon Party strain of magic
+                        mushroom liquid culture, where each drop is a VIP ticket to intergalactic
+                        enlightenment, sprinkled with cosmic chuckles and served up on Earth with a
+                        side of 🌕✨🍄.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center h-1 rounded-md shadow-lg bg-neutral-600"></div>
 
-            {/* <div className="flex flex-row w-full space-x-4">
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900 ">
-                  <div className="text-sm">
-                    <span>$20/10ml</span>
+            <div className="hidden w-full flex-2 lg:block">
+              <div className="flex flex-col h-full rounded-md shadow-lg">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Substrate:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      Hardwoods, sawdust
+                    </span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Difficulty:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      Intermediate
+                    </span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Fruiting Time:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      14 days from pinning
+                    </span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Typical Yield:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      1-2 kg per log
+                    </span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Cultivation Time:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">6 months</span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Incubation Period:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      30-60 days
+                    </span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Fruiting Conditions:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      Low light, indirect sunlight
+                    </span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Relative Humidity:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">90-95%</span>
+                  </div>
+                  <div className="flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    Temperature Range:{' '}
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      20-24°C (68-75°F)
+                    </span>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span>300 In Stock</span>
+          <div className="relative space-y-4 lg:col-span-3">
+            <div className="flex-1">
+              <div className="flex flex-row items-center justify-between p-4 text-black border-4 rounded-md shadow-lg bg-zugz-600 border-zugz-300">
+                <div>
+                  <h2 className="text-2xl font-bold">Free Shipping</h2>
+                  <p className="text-sm">Anywhere in the us.</p>
+                </div>
+                <Image
+                  src="/free-shipping.png"
+                  alt="alt"
+                  className="aspect-square"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            </div>
+            <div className="sticky flex flex-col p-4 space-y-4 border rounded-md shadow-lg top-10 border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+              <div className="space-y-4 text-white">
+                <h1 className="text-5xl font-black">Full Moon Party</h1>
+                <h2 className="text-xl font-black">Liquid Culture</h2>
+                <ul className="ml-4 text-sm list-disc">
+                  <li>10/mil</li>
+                  <li>Free Shipping</li>
+                  <li>One per package</li>
+                  <li>1000 people have viewed this in the last hour</li>
+                  <li>Guaranteed no contaminants</li>
+                </ul>
+
+                <div className="flex flex-row w-full gap-4">
+                  <div className="w-full p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    <div className="text-sm">
+                      <span className="font-bold">$20.00</span>
+                      <span>/10ml</span>
+                    </div>
+                  </div>
+                  <div className="w-full p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+                    <div className="text-sm">
+                      <span>300 In Stock</span>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span>300 In Stock</span>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
-            <div className="sticky flex top-10">
               <Link
                 href="/cart"
-                className="relative inline-flex items-center w-full p-4 text-sm font-medium text-black transition-colors bg-green-600 rounded-md shadow-lg wiggle-animation whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-green-600/90"
+                className="relative inline-flex items-center w-full p-4 text-sm font-medium text-black transition-colors bg-green-600 rounded-md shadow-lg whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-green-600/90"
               >
                 <div className="relative flex flex-row justify-between w-full">
                   <span className="font-bold">Buy Now</span>
                   <span className="font-bold">$20.00/10ml</span>
                 </div>
               </Link>
+              <p className="text-xs text-center text-red-500">For Mycology use only.</p>
             </div>
-
-            {/* <div className="flex flex-row w-full space-x-4">
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900 ">
-                  <div className="text-sm">
-                    <span>$20/10ml</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span>300 In Stock</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex-1">
-                <div className="p-4 border rounded-md shadow-lg border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
-                  <div className="text-sm">
-                    <span>300 In Stock</span>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
+
         <Comments />
       </div>
     </>

@@ -163,44 +163,35 @@
 }
 
 
-.wiggle-animation {
-  animation: wiggle 1.5s ease-in-out 5s infinite;
+.box {
+  --border-size: 1px;
+  --border-angle: 0turn;
+  background-image: conic-gradient(from var(--border-angle), #213, #112 50%, #213), conic-gradient(from var(--border-angle), transparent 20%, #08f, #f03);
+  background-size: calc(100% - (var(--border-size) * 2)) calc(100% - (var(--border-size) * 2)), cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  -webkit-animation: bg-spin 3s linear infinite;
+  animation: bg-spin 3s linear infinite;
+}
+@-webkit-keyframes bg-spin {
+  to {
+    --border-angle: 1turn;
+  }
+  
+}
+@keyframes bg-spin {
+  to {
+    --border-angle: 1turn;
+  }
+  
+}
+.box:hover {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
 }
 
-@keyframes wiggle {
-
-  0%,
-  7% {
-    transform: rotateZ(0);
-  }
-
-  15% {
-    transform: rotateZ(-3deg);
-    /* Reduced from -5deg to -3deg */
-  }
-
-  20% {
-    transform: rotateZ(1.5deg);
-    /* Reduced from 3deg to 1.5deg */
-  }
-
-  25% {
-    transform: rotateZ(-1.75deg);
-    /* Reduced from -3.5deg to -1.75deg */
-  }
-
-  30% {
-    transform: rotateZ(1deg);
-    /* Reduced from 2deg to 1deg */
-  }
-
-  35% {
-    transform: rotateZ(0.25deg);
-    /* Reduced from 0.5deg to 0.25deg */
-  }
-
-  40%,
-  100% {
-    transform: rotateZ(0);
-  }
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0turn;
 }
