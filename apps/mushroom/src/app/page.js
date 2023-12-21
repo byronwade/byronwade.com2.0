@@ -26,6 +26,10 @@ export default function Search() {
 
       if (Array.isArray(responseData.data)) {
         setResults(responseData.data);
+        track('Search', {
+          query: searchTerm,
+          payload: responseData.data
+        });
       } else {
         setResults([]);
       }
@@ -186,89 +190,121 @@ function SearchResult({ jsonData }) {
   } = jsonData;
 
   return (
-    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-neutral-200">
-      <h1>Common Name</h1>
-      <p>{common_name}</p>
+    <>
+      {/* <div className="w-full p-10 space-y-10">
+        {rows.map((row, rowIndex) => {
+          // Get random widths for each set of 3 items
+          const widths = getRandomWidthsForThree();
+          return (
+            <div className="flex flex-row w-full gap-10" key={rowIndex}>
+              {row.map((item, itemIndex) => (
+                <div
+                  className={`hover:cursor-pointer group relative w-${widths[itemIndex]}/12 h-64 p-4 border rounded-md border-neutral-800 bg-neutral-100 dark:bg-neutral-900 overflow-hidden`}
+                  key={itemIndex}
+                >
+                  <div className="absolute z-20 flex bottom-5 left-5">
+                    <h1 className="text-xl font-bold text-white">{item.title}</h1>
+                  </div>
+                  <div className="absolute z-20 text-white opacity-0 top-5 right-5 group-hover:opacity-100">
+                    <ExternalLink className="w-5 h-5" />
+                  </div>
+                  <Image
+                    alt="blog thumbnail"
+                    src={item.imagesrc}
+                    width={1200}
+                    height={600}
+                    className="absolute inset-0 z-10 object-cover w-full h-full transition-all duration-300 ease-in-out bg-black rounded-md opacity-50 hover:blur-sm"
+                  />
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div> */}
+      <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-neutral-200">
+        <h1>Common Name</h1>
+        <p>{common_name}</p>
 
-      <h2>Origin</h2>
-      <p>{origin}</p>
+        <h2>Origin</h2>
+        <p>{origin}</p>
 
-      <h2>Genetic Lineage</h2>
-      <p>{genetic_lineage}</p>
+        <h2>Genetic Lineage</h2>
+        <p>{genetic_lineage}</p>
 
-      <h2>Year Discovered</h2>
-      <p>{year_discovered}</p>
+        <h2>Year Discovered</h2>
+        <p>{year_discovered}</p>
 
-      <h2>Description</h2>
-      <p>{description}</p>
+        <h2>Description</h2>
+        <p>{description}</p>
 
-      <h2>Poisonous</h2>
-      {poisonous && renderNestedObject(poisonous)}
+        <h2>Poisonous</h2>
+        {poisonous && renderNestedObject(poisonous)}
 
-      <h2>Edible</h2>
-      <div>{edible ? 'True' : 'False'}</div>
+        <h2>Edible</h2>
+        <div>{edible ? 'True' : 'False'}</div>
 
-      <h2>Pricing</h2>
-      <div>{pricing && renderNestedObject(pricing)}</div>
+        <h2>Pricing</h2>
+        <div>{pricing && renderNestedObject(pricing)}</div>
 
-      <h2>Categories</h2>
-      <ul>
-        {categories && categories.map((category, index) => <li key={index}>{category.title}</li>)}
-      </ul>
+        <h2>Categories</h2>
+        <ul>
+          {categories && categories.map((category, index) => <li key={index}>{category.title}</li>)}
+        </ul>
 
-      <h2>Physical Characteristics</h2>
-      {physical_characteristics && renderNestedObject(physical_characteristics)}
+        <h2>Physical Characteristics</h2>
+        {physical_characteristics && renderNestedObject(physical_characteristics)}
 
-      <h2>Microscopic Features</h2>
-      {microscopic_features && renderNestedObject(microscopic_features)}
+        <h2>Microscopic Features</h2>
+        {microscopic_features && renderNestedObject(microscopic_features)}
 
-      <h2>Growth Info</h2>
-      {growth_info && renderNestedObject(growth_info)}
+        <h2>Growth Info</h2>
+        {growth_info && renderNestedObject(growth_info)}
 
-      <h2>Potency Info</h2>
-      {potency_info && renderNestedObject(potency_info)}
+        <h2>Potency Info</h2>
+        {potency_info && renderNestedObject(potency_info)}
 
-      <h2>Dosage Recommendations</h2>
-      {dosage_recommendations && renderNestedObject(dosage_recommendations)}
+        <h2>Dosage Recommendations</h2>
+        {dosage_recommendations && renderNestedObject(dosage_recommendations)}
 
-      <h2>Storage</h2>
-      {storage && renderNestedObject(storage)}
+        <h2>Storage</h2>
+        {storage && renderNestedObject(storage)}
 
-      <h2>Legal Status</h2>
-      {legal_status && renderNestedObject(legal_status)}
+        <h2>Legal Status</h2>
+        {legal_status && renderNestedObject(legal_status)}
 
-      <h2>Additional Info</h2>
-      {additional_info && renderNestedObject(additional_info)}
+        <h2>Additional Info</h2>
+        {additional_info && renderNestedObject(additional_info)}
 
-      <h2>Educational Summary</h2>
-      {educational_summary && renderNestedObject(educational_summary)}
+        <h2>Educational Summary</h2>
+        {educational_summary && renderNestedObject(educational_summary)}
 
-      <h2>Research Data</h2>
-      {research_data && renderNestedObject(research_data)}
+        <h2>Research Data</h2>
+        {research_data && renderNestedObject(research_data)}
 
-      <h2>Cite Sources</h2>
-      {cite_sources && renderNestedObject(cite_sources)}
+        <h2>Cite Sources</h2>
+        {cite_sources && renderNestedObject(cite_sources)}
 
-      <h2>Growth Conditions</h2>
-      {growth_conditions && renderNestedObject(growth_conditions)}
+        <h2>Growth Conditions</h2>
+        {growth_conditions && renderNestedObject(growth_conditions)}
 
-      <h2>Medicinal Properties</h2>
-      {medicinal_properties && renderNestedObject(medicinal_properties)}
+        <h2>Medicinal Properties</h2>
+        {medicinal_properties && renderNestedObject(medicinal_properties)}
 
-      <h2>Nutritional Value</h2>
-      {nutritional_value && renderNestedObject(nutritional_value)}
+        <h2>Nutritional Value</h2>
+        {nutritional_value && renderNestedObject(nutritional_value)}
 
-      <h2>User Experience</h2>
-      {user_experience && renderNestedObject(user_experience)}
+        <h2>User Experience</h2>
+        {user_experience && renderNestedObject(user_experience)}
 
-      <h2>Scientific Profile</h2>
-      {scientific_profile && renderNestedObject(scientific_profile)}
+        <h2>Scientific Profile</h2>
+        {scientific_profile && renderNestedObject(scientific_profile)}
 
-      <h2>Classification</h2>
-      {classification && renderNestedObject(classification)}
+        <h2>Classification</h2>
+        {classification && renderNestedObject(classification)}
 
-      <h2>Tags</h2>
-      <ul>{tags && tags.map((tag, index) => <li key={index}>{tag}</li>)}</ul>
-    </div>
+        <h2>Tags</h2>
+        <ul>{tags && tags.map((tag, index) => <li key={index}>{tag}</li>)}</ul>
+      </div>
+    </>
   );
 }
