@@ -494,7 +494,7 @@ const strains = [
 
 export default function Strains() {
   return (
-    <>
+    <div className="flex flex-col gap-4 px-4 py-10 mx-auto max-w-screen-2xl">
       {/* <h3 className="text-lg font-bold md:text-xl lg:text-2xl 2xl:text-3xl xl:leading-10 text-heading">We offer 16 strains of psilocybe cubensis spores for microscopy use, including:</h3> */}
       <div className="flex flex-col items-start px-4 mt-10 md:px-6">
         <h2 className="text-lg font-semibold leading-8 tracking-tight text-zugz-950">
@@ -549,6 +549,6 @@ export default function Strains() {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -1,3 +1,6 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -84,9 +87,67 @@ const contentData = [
   }
 ];
 
+function generateRandomWidths() {
+  let widths = [3, 4, 5]; // Starting point
+  let total = 12;
+  let min = 2; // Minimum width to ensure readability
+
+  // Randomly adjust the first two columns
+  for (let i = 0; i < 2; i++) {
+    let max = total - min * (3 - i - 1);
+    let randomWidth = Math.min(Math.max(Math.floor(Math.random() * max), min), max);
+    widths[i] = randomWidth;
+    total -= randomWidth;
+  }
+
+  // The last column takes the remaining width
+  widths[2] = total;
+
+  return widths.map((w) => `w-${w}/12`);
+}
+
 export default function Learn() {
+  const [randomWidths, setRandomWidths] = useState([]);
+
+  useEffect(() => {
+    setRandomWidths(generateRandomWidths());
+  }, []);
+
+  function chunkArray(array, chunkSize) {
+    const result = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      result.push(array.slice(i, i + chunkSize));
+    }
+    return result;
+  }
+
+  const chunkedItems = chunkArray(contentData, 3);
+
+  const fullRow = 12; // Total columns in Tailwind
+  const gapWidth = 1; // Assuming gap-4, which is 1rem, so we'll subtract 1 from each column unit for the gaps
+
+  function getRandomWidthSet(numberOfItems) {
+    let widths = [];
+    let remainingWidth = fullRow - (numberOfItems - 1) * gapWidth; // Subtract gaps upfront
+
+    for (let i = 0; i < numberOfItems - 1; i++) {
+      // Reserve at least 2 units for each remaining item
+      let maxPossibleWidth = remainingWidth - 2 * (numberOfItems - i - 1);
+      let randomWidth = Math.floor(Math.random() * (maxPossibleWidth - 2)) + 2;
+      widths.push(randomWidth);
+      remainingWidth -= randomWidth;
+    }
+
+    // The last item takes whatever width remains
+    widths.push(remainingWidth);
+
+    return widths.map((width) => `w-${width}/12`);
+  }
+
+  const numberOfItemsPerRow = 3;
+
   return (
-    <div className="m-6">
+    <div className="flex flex-col gap-4 px-4 py-10 mx-auto max-w-screen-2xl">
       <div className="py-12 overflow-hidden lg:py-20">
         <div className="container px-8 mx-auto sm:px-16 xl:px-20">
           <div className="mx-auto ">
@@ -242,57 +303,72 @@ export default function Learn() {
           </div>
         </div>
       </div> */}
-      <ol className="grid grid-cols-12 py-10 lg:py-16 lg:gap-16">
-        {contentData.map((content, index) => (
-          <div key={index} className="col-span-12 mb-16 md:col-span-12 lg:col-span-6 xl:col-span-4">
-            <div>
-              <Link className="inline-block min-w-full group" href="/">
-                <div className="flex flex-col space-y-6">
-                  <div className="flex flex-col">
-                    <div className="border-default border-b-0 relative w-full aspect-[2/1] lg:aspect-[3/2] overflow-hidden rounded-t-md border border-neutral-800 shadow-sm">
-                      <Image
-                        alt="blog thumbnail"
-                        src={content.imagesrc}
-                        className="object-cover"
-                        width={600}
-                        height={300}
-                        style={{
-                          position: 'absolute',
-                          inset: '0px',
-                          boxSizing: 'border-box',
-                          padding: '0px',
-                          border: 'none',
-                          margin: 'auto',
-                          display: 'block',
-                          width: '0px',
-                          height: '0px',
-                          minWidth: '100%',
-                          maxWidth: '100%',
-                          minHeight: '100%',
-                          maxHeight: '100%'
-                        }}
-                      />
-                    </div>
-                    <div className="p-4 pt-6 space-y-3 bg-black border border-t-0 rounded-b-md border-neutral-800">
-                      <h3 className="max-w-sm text-xl font-bold text-foreground">
-                        {content.title}
-                      </h3>
-                      <p className="max-w-sm text-base text-foreground-light">
-                        {content.description}
-                      </p>
-                      <div className="text-foreground-light flex items-center space-x-1.5 text-sm">
-                        <p>{content.date}</p>
-                        <p>•</p>
-                        <p>9 minute read</p>
-                      </div>
+      <div className="w-full p-10 space-y-4">
+        {chunkedItems.map((chunk, rowIndex) => {
+          // Get random widths for the number of items in the current chunk
+          const randomWidths = getRandomWidthSet(chunk.length);
+          return (
+            <div className="flex flex-row w-full gap-4 mb-4" key={rowIndex}>
+              {chunk.map((item, itemIndex) => (
+                <div
+                  className={`${randomWidths[itemIndex]} p-4 border rounded-md border-neutral-800 bg-neutral-100 dark:bg-neutral-900`}
+                  key={itemIndex}
+                >
+                  {item.title}
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex gap-4 py-10 lg:py-16">
+        {contentData.slice(0, 3).map((content, index) => (
+          <div key={index} className={`${randomWidths[index] || 'w-4/12'}`}>
+            <Link className="inline-block min-w-full group" href="/">
+              <div className="flex flex-col space-y-6">
+                <div className="flex flex-col">
+                  <div className="border-default border-b-0 relative w-full aspect-[2/1] lg:aspect-[3/2] overflow-hidden rounded-t-md border border-neutral-800 shadow-sm">
+                    <Image
+                      alt="blog thumbnail"
+                      src={content.imagesrc}
+                      className="object-cover"
+                      width={600}
+                      height={300}
+                      style={{
+                        position: 'absolute',
+                        inset: '0px',
+                        boxSizing: 'border-box',
+                        padding: '0px',
+                        border: 'none',
+                        margin: 'auto',
+                        display: 'block',
+                        width: '0px',
+                        height: '0px',
+                        minWidth: '100%',
+                        maxWidth: '100%',
+                        minHeight: '100%',
+                        maxHeight: '100%'
+                      }}
+                    />
+                  </div>
+                  <div className="p-4 pt-6 space-y-3 bg-black border border-t-0 rounded-b-md border-neutral-800">
+                    <h3 className="max-w-sm text-xl font-bold text-foreground">{content.title}</h3>
+                    <p className="max-w-sm text-base text-foreground-light">
+                      {content.description}
+                    </p>
+                    <div className="text-foreground-light flex items-center space-x-1.5 text-sm">
+                      <p>{content.date}</p>
+                      <p>•</p>
+                      <p>9 minute read</p>
                     </div>
                   </div>
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
         ))}
-      </ol>
+      </div>
     </div>
   );
 }
