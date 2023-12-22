@@ -82,11 +82,11 @@ export default function ProductPage() {
         </div>
 
         <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-          <div className={`relative space-y-4 w-12/12 md:w-6/12 mr-4 md:mr-0`}>
+          <div className={`relative space-y-4 w-12/12 md:w-6/12`}>
             <MushroomImages isTrue={HasImages} />
           </div>
 
-          <div className={`relative space-y-4 w-12/12 md:w-6/12 mr-4 md:mr-0`}>
+          <div className={`relative space-y-4 w-12/12 md:w-6/12`}>
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Name name={'Full Moon Party'} width={{ sm: 12, md: 12, lg: 12 }} />
             </div>
