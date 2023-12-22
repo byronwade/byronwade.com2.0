@@ -5,13 +5,13 @@ export default function Poisonous({ isTrue, width }) {
   if (isTrue) {
     return (
       <div className={`w-${width.sm}/12 md:w-${width.md}/12 lg:w-${width.lg}/12`}>
-        <div className="relative p-4 rounded-md shadow-lg bg-[#6A0DAD] flex flex-row justify-between h-full">
+        <div className="relative p-4 rounded-md shadow-lg bg-[#6A0DAD] flex flex-row justify-between h-full items-center">
           <Image
             src="/boxes/Poisonous.png"
             alt="alt"
             height={150}
             width={150}
-            className="aspect-square"
+            className="aspect-square max-h-[150px]"
           />
           <div className="flex flex-col justify-between pl-10">
             <div>
