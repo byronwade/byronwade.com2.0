@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -11,8 +12,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="w-full min-h-screen">
-      <body className={`bg-[#bbbcb0] dark:bg-black ${GeistSans.className}`}>{children}</body>
+    <html lang="en" className="w-full min-h-screen dark">
+      <body className={`bg-black ${GeistSans.className}`}>{children}</body>
       <SpeedInsights />
       <Analytics />
     </html>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-20 flex flex-col w-full gap-3 p-3 md:flex-row md:items-center md:h-16">
+    <header className="fixed top-0 right-0 z-20 flex flex-col w-full gap-3 p-2 text-black bg-white shadow-2xl md:flex-row md:items-center">
       <div className="flex items-center w-full gap-8">
         <div className="flex items-center gap-2">
           <a
@@ -18,16 +18,14 @@ export default function Header() {
               width={50}
               height={50}
             />
-            <span className="hidden text-2xl font-black dark:text-neutral-300 md:block">
-              Shroomageddon
-            </span>
+            <span className="hidden text-2xl font-black md:block">Shroomageddon</span>
           </a>
           <div className="hidden md:flex">
             <div className="flex items-center w-full gap-2" />
           </div>
         </div>
         <div className="flex items-center gap-2 ml-auto">
-          <Link href="/upload" className="mr-4 text-sm hover:underline dark:text-neutral-300">
+          <Link href="/upload" className="mr-4 text-sm hover:underline">
             Upload a Shroom
           </Link>
           <div className="flex items-center h-8 px-3 text-xs font-medium text-center bg-[#503014] text-white rounded-full">

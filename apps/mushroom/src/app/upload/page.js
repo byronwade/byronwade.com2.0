@@ -42,12 +42,12 @@ export default function Search() {
   return (
     <>
       <Header />
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 mt-16">
         <div className="flex py-[10vh] my-12 justify-center items-center">
           <div className="relative flex flex-col w-full px-6">
             <form
               onSubmit={handleSubmit}
-              className="max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto space-y-6 text-black dark:text-white"
+              className="max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto space-y-6 text-white"
             >
               <h1 className="text-2xl font-black">Submit a Mushroom</h1>
               <div className="relative flex flex-col w-full min-h-full space-y-2 transition-all duration-300 h-fit">

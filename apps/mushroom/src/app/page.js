@@ -111,7 +111,7 @@ export default function Search() {
   return (
     <>
       <Header />
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 mt-16">
         <div className="flex py-[10vh] my-12 justify-center items-center">
           <div className="relative flex flex-col items-center w-full px-6">
             <div className="mb-10">
@@ -202,7 +202,7 @@ export default function Search() {
                       <div className="flex flex-row w-full gap-10" key={rowIndex}>
                         {row.map((item, itemIndex) => (
                           <div
-                            className={`hover:cursor-pointer group relative w-${rowWidths[itemIndex]}/12 h-64 p-4 border rounded-md border-neutral-800 bg-neutral-100 dark:bg-neutral-900 overflow-hidden`}
+                            className={`hover:cursor-pointer group relative w-${rowWidths[itemIndex]}/12 h-64 p-4 border rounded-md border-neutral-800 bg-neutral-900 overflow-hidden`}
                             key={itemIndex}
                           >
                             <div className="absolute z-20 flex bottom-5 left-5">
