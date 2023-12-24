@@ -19,6 +19,17 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/error.js",
+    "src/app/manifest.js",
+    "src/app/robots.js",
+    "src/app/not-found.js",
+    "src/app/opngraph-image.js",
+    "src/app/sitemap.js"
+  ],
   "exclude": ["node_modules"]
 }

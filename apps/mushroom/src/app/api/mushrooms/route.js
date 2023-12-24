@@ -4,6 +4,8 @@ import { findExisting } from './functions/FindExisting';
 import { updateOrInsertMushroom } from './functions/updateOrInsertMushroom';
 import { calculateConfidenceScore } from './functions/calculateConfidenceScore';
 import { compareObjectsAndReturnBest } from './functions/compareObjectsAndReturnBest';
+import { analyzeSentences, searchGoogle, searchKnowledgeGraph } from './functions/GoogleAI';
+import { getWikipediaData } from './functions/WikiAPI';
 
 /**
  * GET endpoint for the mushroom classifier.
@@ -39,9 +41,36 @@ export async function GET(req) {
     // check if the mushroom already exists in the database
     const existingMushroomResponse = await findExisting(term);
 
+    // // Example sentences
+    // const sentence1 =
+    //   'The Eiffel Tower is located in Paris. And is the tallest building in the world.';
+    // const sentence2 =
+    //   "It's a sunny day. I'm happy. I'm going to the park. I'm going to play football.";
+
+    // analyzeSentences(sentence1, sentence2)
+    //   .then((betterSentence) => console.log(`Better Sentence: ${betterSentence}`))
+    //   .catch((err) => console.error('ERROR:', err));
+
+    // searchGoogle('example search term').then((results) => {
+    //   if (results) {
+    //     results.forEach((result, index) => {
+    //       console.log(`Result #${index + 1}:`);
+    //       console.log(`Title: ${result.title}`);
+    //       console.log(`Link: ${result.link}`);
+    //       console.log(`Snippet: ${result.snippet}`);
+    //       console.log('--------------------------------');
+    //     });
+    //   } else {
+    //     console.log('No results found.');
+    //   }
+    // });
+
+    const wikiData = await getWikipediaData(term);
+    console.log('wikiData', wikiData);
+
     // retrieve OpenAI content for the search term
-    const openAIContent = await fetchOpenAIContent(business, existingMushroomResponse, term);
-    console.log('openAIContent', openAIContent);
+    const openAIContent = await fetchOpenAIContent(wikiData, existingMushroomResponse, term);
+    console.log('openAIContent', openAIContent.openAIResponse);
     if (!openAIContent) {
       console.error('Failed to get OpenAI content');
       return Response.json({ error: 'Failed to get OpenAI content' });
@@ -52,20 +81,16 @@ export async function GET(req) {
     //console.log('calculateConfidenceScore', confidenceScore);
 
     // if the mushroom already exists, update the row
-    const mushroomId = await updateOrInsertMushroom(existingMushroomResponse, openAIContent);
-    console.log('mushroomId', mushroomId);
+    // const mushroomId = await updateOrInsertMushroom(existingMushroomResponse, openAIContent);
+    // console.log('mushroomId', mushroomId);
 
-    // compareObjectsAndReturnBest(existingMushroomResponse, openAIContent)
-    //   .then((result) => {
-    //     console.log('The better object based on the criteria:', result);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
+    // const best = await compareObjectsAndReturnBest(existingMushroomResponse, openAIContent);
+    // console.log('best', best);
 
-    // return the OpenAI content
     return Response.json({
-      openAIContent
+      openAIContent,
+      wikiData,
+      existingMushroomResponse
     });
   } catch (error) {
     console.error('API Error:', error.message);

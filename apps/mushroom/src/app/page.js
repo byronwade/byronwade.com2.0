@@ -201,7 +201,8 @@ export default function Search() {
                     return (
                       <div className="flex flex-row w-full gap-10" key={rowIndex}>
                         {row.map((item, itemIndex) => (
-                          <div
+                          <Link
+                            href={`/mushroom/${item.slug}`}
                             className={`hover:cursor-pointer group relative w-${rowWidths[itemIndex]}/12 h-64 p-4 border rounded-md border-neutral-800 bg-neutral-900 overflow-hidden`}
                             key={itemIndex}
                           >
@@ -211,7 +212,7 @@ export default function Search() {
                             <div className="absolute z-20 text-white opacity-0 top-5 right-5 group-hover:opacity-100">
                               <ExternalLink className="w-5 h-5" />
                             </div>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     );

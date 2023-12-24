@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google-cloud/language": "^6.1.1",
     "@react-spring/web": "^9.7.3",
     "@supabase/supabase-js": "^2.39.0",
     "@vercel/analytics": "^1.1.1",
@@ -17,10 +18,11 @@
     "cobe": "^0.6.3",
     "dompurify": "^3.0.6",
     "geist": "^1.2.0",
+    "googleapis": "^129.0.0",
     "html-to-text": "^9.0.5",
     "jsdom": "^23.0.1",
     "libphonenumber-js": "^1.10.51",
-    "next": "14.0.3",
+    "next": "^14.0.5-canary.25",
     "openai": "^4.20.1",
     "playwright": "^1.40.1",
     "react": "^18",
@@ -34,6 +36,8 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/react": "18.2.45",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
