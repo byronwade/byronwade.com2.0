@@ -32,10 +32,12 @@ export default function Search() {
 
       const reader = response.body.getReader();
       let receivedChunks = '';
+      let streamActive = true;
 
-      while (true) {
+      while (streamActive) {
         const { done, value } = await reader.read();
         if (done) {
+          streamActive = false;
           break;
         }
 
@@ -49,7 +51,7 @@ export default function Search() {
           try {
             const json = JSON.parse(jsonChunk);
             if (json.progress !== undefined) {
-              setLoadingProgress(json.progress);
+              // setLoadingProgress(json.progress); // Uncomment if you plan to use loadingProgress
             }
             if (json.data) {
               accumulatedData.push(...json.data);
@@ -63,8 +65,8 @@ export default function Search() {
       console.error('Error fetching search results:', error);
     } finally {
       setIsLoading(false);
-      return accumulatedData;
     }
+    return accumulatedData;
   };
 
   const handleSearch = async (e) => {
