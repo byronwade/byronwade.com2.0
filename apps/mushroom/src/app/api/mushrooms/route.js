@@ -7,6 +7,8 @@ import { compareObjectsAndReturnBest } from './functions/compareObjectsAndReturn
 import { analyzeSentences, searchGoogle, searchKnowledgeGraph } from './functions/GoogleAI';
 import { getWikipediaData } from './functions/WikiAPI';
 
+export const runtime = 'edge'; // 'nodejs' is the default
+
 /**
  * GET endpoint for the mushroom classifier.
  *

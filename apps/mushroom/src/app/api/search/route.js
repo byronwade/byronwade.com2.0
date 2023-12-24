@@ -6,6 +6,8 @@ const supabaseKey =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhteWlhbG54anZreXhtcGJ1dmlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI1MzYxNTMsImV4cCI6MjAxODExMjE1M30.hZ3-vMSXeVHIEoPAwEaaH6kUrNLNGwFnWPswbuvoLg4';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+export const runtime = 'edge'; // 'nodejs' is the default
+
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get('query');
