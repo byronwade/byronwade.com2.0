@@ -1,5 +1,10 @@
-const config = {
+import withMT from '@material-tailwind/react/utils/withMT';
+
+export default withMT({
   content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    'path-to-your-node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}',
+    'path-to-your-node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{ts,tsx,js,jsx}',
     './components/**/*.{ts,tsx,js,jsx}',
     './app/**/*.{ts,tsx,js,jsx}',
@@ -134,6 +139,4 @@ const config = {
     }
   },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
-};
-
-export default config;
+});

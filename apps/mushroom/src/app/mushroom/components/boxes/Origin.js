@@ -41,8 +41,8 @@ export default function Origin({ width }) {
 
   return (
     <div className={`w-${width.sm}/12 md:w-${width.md}/12 lg:w-${width.lg}/12`}>
-      <div className="relative h-full p-4 space-y-2 overflow-hidden border rounded-md shadow-lg border-neutral-800 bg-neutral-900">
-        <h2 className="mb-10 text-neutral-300">
+      <div className="relative h-full p-4 space-y-2 overflow-hidden border rounded-md shadow-lg border-gray-800 bg-gray-900">
+        <h2 className="mb-10 text-gray-300">
           Originated in <span className="font-bold text-green-600">North American</span>
         </h2>
         <canvas

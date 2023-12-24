@@ -12,7 +12,7 @@ export default function Header() {
           >
             <span className="sr-only">Home</span>
             <Image
-              className="p-1 mr-2 rounded-lg bg-neutral-300"
+              className="p-1 mr-2 rounded-lg bg-gray-300"
               src="/shroomageddon_black.png"
               alt="Shroomageddon"
               width={50}

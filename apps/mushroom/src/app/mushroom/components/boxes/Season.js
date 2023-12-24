@@ -16,7 +16,7 @@ export default function Season({ isTrue, width }) {
   } else {
     return (
       <div className={`w-${width.sm}/12 md:w-${width.md}/12 lg:w-${width.lg}/12`}>
-        <div className="flex flex-row items-center justify-between h-full p-4 text-black border rounded-md shadow-lg bg-neutral-300 border-neutral-800 dark:bg-neutral-300">
+        <div className="flex flex-row items-center justify-between h-full p-4 text-black border rounded-md shadow-lg bg-gray-300 border-gray-800 dark:bg-gray-300">
           <div>
             <p className="text-xl font-black">Out of Season</p>
             <p>Should be back in season around August</p>

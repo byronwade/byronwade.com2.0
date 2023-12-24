@@ -2,7 +2,7 @@ import Image from 'next/image';
 export default function Description({ width }) {
   return (
     <div className={`w-${width.sm}/12 md:w-${width.md}/12 lg:w-${width.lg}/12`}>
-      <div className="relative flex flex-col h-full p-4 mb-4 overflow-hidden rounded-md shadow-lg border-neutral-800 bg-sky-800">
+      <div className="relative flex flex-col h-full p-4 mb-4 overflow-hidden rounded-md shadow-lg border-gray-800 bg-sky-800">
         <div className="flex-grow">
           <Image
             src="/icon.png"

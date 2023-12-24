@@ -52,7 +52,7 @@ export default function Search() {
               <h1 className="text-2xl font-black">Submit a Mushroom</h1>
               <div className="relative flex flex-col w-full min-h-full space-y-2 transition-all duration-300 h-fit">
                 <input
-                  className="flex w-full px-3 py-1 text-sm transition-colors bg-gray-900 rounded-md shadow-lg dark:text-neutral-300 h-9 border-input file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-full px-3 py-1 text-sm transition-colors bg-gray-900 rounded-md shadow-lg dark:text-gray-300 h-9 border-input file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                   placeholder="Enter mushroom name"
                   id="mushroomName"
                   aria-describedby="mushroomName-description"
@@ -68,7 +68,7 @@ export default function Search() {
 
               <div className="relative flex flex-col w-full min-h-full space-y-2 transition-all duration-300 h-fit">
                 <input
-                  className="flex w-full px-3 py-1 text-sm transition-colors bg-gray-900 rounded-md shadow-lg dark:text-neutral-300 h-9 border-input file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex w-full px-3 py-1 text-sm transition-colors bg-gray-900 rounded-md shadow-lg dark:text-gray-300 h-9 border-input file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                   placeholder="Enter URL"
                   id="mushroomUrl"
                   aria-describedby="mushroomUrl-description"
@@ -83,7 +83,7 @@ export default function Search() {
               </div>
 
               <button
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors rounded-md shadow bg-neutral-300 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-9"
+                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors rounded-md shadow bg-gray-300 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-9"
                 type="submit"
                 disabled={isSubmitting}
               >
@@ -192,7 +192,7 @@ function SearchResult({ jsonData }) {
   // const renderNestedObject = (obj) => {/* Logic to render nested object */};
 
   return (
-    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-neutral-200">
+    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-gray-200">
       {/* Render identification details */}
       <h1>Identification</h1>
       <h2>Common Name</h2>

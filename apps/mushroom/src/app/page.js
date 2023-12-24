@@ -1,26 +1,86 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { track } from '@vercel/analytics';
 import { ExternalLink } from 'react-feather';
 import Header from '../components/header';
+import { Spinner } from '@material-tailwind/react';
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const widthsRef = useRef(null); // useRef to store the widths
 
-  async function fetchSearchResults() {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/search?query=${searchTerm}`
-    );
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+  console.log('results', results);
+
+  const fetchSearchResults = async () => {
+    setIsLoading(true);
+    let accumulatedData = [];
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/search?query=${searchTerm}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const reader = response.body.getReader();
+      let receivedChunks = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+
+        receivedChunks += new TextDecoder('utf-8').decode(value);
+
+        while (receivedChunks.includes('}\n')) {
+          const endIndex = receivedChunks.indexOf('}\n');
+          const jsonChunk = receivedChunks.slice(0, endIndex + 1);
+          receivedChunks = receivedChunks.slice(endIndex + 2);
+
+          try {
+            const json = JSON.parse(jsonChunk);
+            if (json.progress !== undefined) {
+              setLoadingProgress(json.progress);
+            }
+            if (json.data) {
+              accumulatedData.push(...json.data);
+            }
+          } catch (e) {
+            console.error('Error parsing chunk', e);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    } finally {
+      setIsLoading(false);
+      return accumulatedData;
     }
-    return response.json();
-  }
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    setSearchPerformed(true);
+    setResults([]); // Clear previous results
+    const newResults = await fetchSearchResults();
+    if (Array.isArray(newResults)) {
+      setResults(newResults);
+    }
+
+    // Generate new widths for each row of the new results
+    const numberOfRows = Math.ceil(newResults.length / 3);
+    const newWidths = Array.from({ length: numberOfRows }, () => getRandomWidthsForThree());
+    saveWidthsToLocalStorage(newWidths);
+  };
 
   function getRandomWidthsForThree() {
     let widths = [];
@@ -63,37 +123,6 @@ export default function Search() {
     return null; // Return a default value if on server-side
   }
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setSearchPerformed(true);
-    setIsLoading(true);
-
-    try {
-      const responseData = await fetchSearchResults();
-
-      if (Array.isArray(responseData.data)) {
-        setResults(responseData.data);
-        // Generate new widths for each row of the new results
-        const numberOfRows = Math.ceil(responseData.data.length / 3);
-        const newWidths = Array.from({ length: numberOfRows }, () => getRandomWidthsForThree());
-        saveWidthsToLocalStorage(newWidths);
-        track('Search', {
-          query: searchTerm,
-          payload: responseData.data
-        });
-      } else {
-        setResults([]);
-        saveWidthsToLocalStorage([]);
-      }
-    } catch (error) {
-      console.error('There was an error:', error);
-      setResults([]);
-      saveWidthsToLocalStorage([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     // Reset widthsRef when results change
     widthsRef.current = [];
@@ -117,8 +146,8 @@ export default function Search() {
         <div className="flex py-[10vh] my-12 justify-center items-center">
           <div className="relative flex flex-col items-center w-full px-6">
             <div className="mb-10">
-              <h1 className="text-lg font-bold dark:text-white">Quick Notice</h1>
-              <p className="max-w-md text-sm dark:text-white">
+              <h1 className="text-lg font-bold">Quick Notice</h1>
+              <p className="max-w-md text-sm">
                 Some data may not be accurate, we are in the process of improving the data while
                 Shroomageddon is still in beta, if anyone would like to contribute or suggest a
                 feature please email me at{' '}
@@ -126,6 +155,7 @@ export default function Search() {
                   bw@wadesinc.io
                 </a>
               </p>
+              {/* <Progress className="h-2" value={loadingProgress} /> */}
             </div>
             <div className="overflow-hidden max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px]">
               <div className="relative z-10 flex items-center flex-1 min-w-0 px-3 bg-gray-900 md:pl-4">
@@ -146,29 +176,34 @@ export default function Search() {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <button
-                      className="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px]"
-                      type="submit"
-                      disabled=""
-                      id="send-button"
-                      data-state="closed"
-                    >
-                      <span className="sr-only">Send</span>
-                      <svg
-                        width={16}
-                        height={16}
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+
+                    {isLoading ? (
+                      <Spinner />
+                    ) : (
+                      <button
+                        className="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px]"
+                        type="submit"
+                        disabled=""
+                        id="send-button"
+                        data-state="closed"
                       >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M13.5 3V2.25H15V3V10C15 10.5523 14.5522 11 14 11H3.56062L5.53029 12.9697L6.06062 13.5L4.99996 14.5607L4.46963 14.0303L1.39641 10.9571C1.00588 10.5666 1.00588 9.93342 1.39641 9.54289L4.46963 6.46967L4.99996 5.93934L6.06062 7L5.53029 7.53033L3.56062 9.5H13.5V3Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </button>
+                        <span className="sr-only">Send</span>
+                        <svg
+                          width={16}
+                          height={16}
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M13.5 3V2.25H15V3V10C15 10.5523 14.5522 11 14 11H3.56062L5.53029 12.9697L6.06062 13.5L4.99996 14.5607L4.46963 14.0303L1.39641 10.9571C1.00588 10.5666 1.00588 9.93342 1.39641 9.54289L4.46963 6.46967L4.99996 5.93934L6.06062 7L5.53029 7.53033L3.56062 9.5H13.5V3Z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </form>
               </div>
@@ -181,12 +216,8 @@ export default function Search() {
                 resultsLength: results.length
               })}
 
-              {isLoading ? (
-                <div className="w-full p-4 mx-auto mb-10 text-center">
-                  <div className="mx-auto spinner"></div>
-                </div>
-              ) : !isLoading && searchPerformed && results.length === 0 ? (
-                <div className="text-center dark:text-white">
+              {!isLoading && searchPerformed && results.length === 0 ? (
+                <div className="text-center">
                   <p className="w-full p-4 mx-auto">No data</p>
                   <Link
                     href="/upload"
@@ -205,9 +236,16 @@ export default function Search() {
                         {row.map((item, itemIndex) => (
                           <Link
                             href={`/mushroom/${item.slug}`}
-                            className={`hover:cursor-pointer group relative w-${rowWidths[itemIndex]}/12 h-64 p-4 border rounded-md border-neutral-800 bg-neutral-900 overflow-hidden`}
+                            className={`hover:cursor-pointer group relative w-${rowWidths[itemIndex]}/12 h-64 p-4 border rounded-md border-gray-800 bg-gray-900 overflow-hidden`}
                             key={itemIndex}
                           >
+                            <Image
+                              src={`/no-mushroom.png`}
+                              alt={item.common_name}
+                              height={60}
+                              width={60}
+                              className="items-center justify-center object-center text-center"
+                            />
                             <div className="absolute z-20 flex bottom-5 left-5">
                               <h1 className="text-xl font-bold text-white">{item.common_name}</h1>
                             </div>

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Coffee } from 'react-feather';
 
 import Header from '../../components/header';
 import Comments from '../../components/comments';
+import FloatingCoffee from '../../components/coffee';
 
 import Name from './components/boxes/Name';
 import HealthyBox from './components/boxes/Healthy';
@@ -134,7 +134,7 @@ export default function ProductPage() {
               />
             </div>
 
-            {/* <div className="flex items-center h-1 rounded-md shadow-lg bg-neutral-600"></div> */}
+            {/* <div className="flex items-center h-1 rounded-md shadow-lg bg-gray-600"></div> */}
           </div>
         </div>
 
@@ -192,17 +192,7 @@ export default function ProductPage() {
           <Comments />
         </div>
 
-        <div class="fixed bottom-6 right-6">
-          <a
-            href="https://www.buymeacoffee.com/vfyle26"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="bg-yellow-600 text-black font-medium rounded-md px-4 py-2 flex items-center justify-center hover:bg-yellow-600 transition duration-300 ease-in-out shadow-lg"
-          >
-            <Coffee className="mr-2" />
-            Buy me a coffee
-          </a>
-        </div>
+        <FloatingCoffee />
       </div>
     </>
   );

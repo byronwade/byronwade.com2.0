@@ -11,7 +11,7 @@ export default function MushroomImages({ isTrue }) {
             height={1600}
             width={600}
             alt="alt"
-            className="w-full !mt-0 rounded-md shadow-lg aspect-square bg-neutral-800/80"
+            className="w-full !mt-0 rounded-md shadow-lg aspect-square bg-gray-800/80"
           />
           <div className="sticky grid w-full grid-cols-4 gap-4 sm:grid-cols-4 top-24">
             {[...Array(6)].map((_, index) => (
@@ -21,7 +21,7 @@ export default function MushroomImages({ isTrue }) {
                   height={100}
                   width={100}
                   alt="alt"
-                  className="w-full rounded-md shadow-lg aspect-square bg-neutral-800/80"
+                  className="w-full rounded-md shadow-lg aspect-square bg-gray-800/80"
                 />
               </div>
             ))}
@@ -29,7 +29,7 @@ export default function MushroomImages({ isTrue }) {
         </>
       ) : (
         <>
-          <div className="flex items-center justify-center min-h-[80vh] rounded-md shadow-lg bg-neutral-800/80">
+          <div className="flex items-center justify-center min-h-[80vh] rounded-md shadow-lg bg-gray-800/80">
             <Image
               src="/no-mushroom.png"
               height={200}
@@ -53,7 +53,7 @@ export default function MushroomImages({ isTrue }) {
                   height={100}
                   width={100}
                   alt="alt"
-                  className="w-full p-10 rounded-md shadow-lg aspect-square bg-neutral-800/80"
+                  className="w-full p-10 rounded-md shadow-lg aspect-square bg-gray-800/80"
                 />
               </div>
             ))}

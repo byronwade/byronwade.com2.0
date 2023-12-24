@@ -9,44 +9,49 @@ export async function GET(req) {
   let responseStream = new ReadableStream({
     async start(controller) {
       try {
-        let totalRecords = 0;
-        let loadedRecords = 0;
-
-        // Dummy function to simulate chunked data loading
-        const loadChunk = async (offset, limit) => {
+        if (slug) {
+          // Fetch specific record by slug
           const { data, error } = await supabase
             .from('mushrooms')
-            .select('*', { count: 'exact', head: true })
-            .range(offset, offset + limit - 1);
-
+            .select('*')
+            .eq('slug', slug)
+            .single();
           if (error) throw error;
-          return data;
-        };
+          controller.enqueue(JSON.stringify({ data }) + '\n');
+        } else if (query) {
+          let totalRecords = 0;
+          let loadedRecords = 0;
 
-        // Get total number of records for progress calculation
-        if (query) {
           const { count } = await supabase
             .from('mushrooms')
             .select('*', { count: 'exact', head: true })
             .textSearch('search_text', query, { type: 'websearch' });
-
           totalRecords = count;
-        }
 
-        // Load data in chunks and send progress updates
-        while (loadedRecords < totalRecords) {
           const chunkSize = 20; // Define your chunk size
-          const dataChunk = await loadChunk(loadedRecords, chunkSize);
-          loadedRecords += dataChunk.length;
 
-          const progress = (loadedRecords / totalRecords) * 100;
-          controller.enqueue(JSON.stringify({ progress, data: dataChunk }));
+          // Load data in chunks and send progress updates
+          for (let offset = 0; offset < totalRecords; offset += chunkSize) {
+            const { data: dataChunk, error } = await supabase
+              .from('mushrooms')
+              .select('*')
+              .textSearch('search_text', query, { type: 'websearch' })
+              .range(offset, offset + chunkSize - 1);
+
+            if (error) throw error;
+            loadedRecords += dataChunk.length;
+            const progress = Math.min((loadedRecords / totalRecords) * 100, 100);
+            controller.enqueue(JSON.stringify({ progress, data: dataChunk }) + '\n');
+          }
+        } else {
+          // Handle case where neither slug nor query is provided
+          throw new Error('No search parameters provided.');
         }
       } catch (error) {
-        controller.enqueue(JSON.stringify({ error: error.message }));
+        controller.enqueue(JSON.stringify({ error: error.message }) + '\n');
+      } finally {
+        controller.close();
       }
-
-      controller.close();
     }
   });
 
