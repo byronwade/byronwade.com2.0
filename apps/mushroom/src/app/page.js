@@ -13,7 +13,9 @@ export default function Search() {
   const widthsRef = useRef(null); // useRef to store the widths
 
   async function fetchSearchResults() {
-    const response = await fetch(`/api/search?query=${searchTerm}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/search?query=${searchTerm}`
+    );
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }

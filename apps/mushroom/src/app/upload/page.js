@@ -14,7 +14,7 @@ export default function Search() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const apiUrl = `/api/mushrooms?term=${encodeURIComponent(
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/mushrooms?term=${encodeURIComponent(
         mushroomName
       )}&url=${encodeURIComponent(url)}`;
       const response = await fetch(apiUrl);

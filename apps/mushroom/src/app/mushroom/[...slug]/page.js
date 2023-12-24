@@ -1,5 +1,5 @@
 async function fetchMushroomResults(slug) {
-  const response = await fetch(`http://localhost:3004/api/search?slug=${slug}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/search?slug=${slug}`);
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
   }
