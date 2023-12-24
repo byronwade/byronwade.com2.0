@@ -33,7 +33,10 @@ function formatWord(word, index, array) {
 function formatClassification(classification) {
   let formattedClassification = {};
   for (const key in classification) {
-    if (classification.hasOwnProperty(key) && typeof classification[key] === 'string') {
+    if (
+      Object.prototype.hasOwnProperty.call(classification, key) &&
+      typeof classification[key] === 'string'
+    ) {
       formattedClassification[key] = formatNameWithRemoval(classification[key]);
     } else {
       formattedClassification[key] = classification[key];
@@ -45,7 +48,7 @@ function formatClassification(classification) {
 function formatScientificProfile(scientificProfile) {
   let formattedProfile = {};
   for (const key in scientificProfile) {
-    if (scientificProfile.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(scientificProfile, key)) {
       if (Array.isArray(scientificProfile[key])) {
         formattedProfile[key] = removeDuplicates(
           scientificProfile[key].map((item) => formatNameWithoutRemoval(item))
