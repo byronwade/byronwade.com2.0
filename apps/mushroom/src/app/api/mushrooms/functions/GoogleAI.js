@@ -1,4 +1,5 @@
-const language = require('@google-cloud/language');
+import language from '@google-cloud/language';
+import { google } from 'googleapis';
 
 async function analyzeSentences(sentence1, sentence2) {
   const client = new language.LanguageServiceClient();
@@ -24,8 +25,6 @@ async function analyzeSentences(sentence1, sentence2) {
   // Compare and return the better sentence
   return score1 > score2 ? sentence1 : sentence2;
 }
-
-const { google } = require('googleapis');
 
 async function searchGoogle(query) {
   const customsearch = google.customsearch('v1');
