@@ -17,16 +17,20 @@ export default function Year({ data, width }) {
           currentFontSize > 12
         ) {
           currentFontSize--;
-          textRef.current.style.fontSize = `${currentFontSize}px`;
+        }
+        if (currentFontSize !== fontSize) {
+          setFontSize(currentFontSize); // Update state only if it changes
         }
       }
     };
 
     adjustFontSize();
+    // Adding the event listener for resize
     window.addEventListener('resize', adjustFontSize);
 
+    // Cleanup function to remove the event listener
     return () => window.removeEventListener('resize', adjustFontSize);
-  }, [fontSize]);
+  }, [fontSize, data]); // Added 'data' to the dependency array
 
   return (
     <div className={`w-${width.sm}/12 md:w-${width.md}/12 lg:w-${width.lg}/12`} ref={containerRef}>

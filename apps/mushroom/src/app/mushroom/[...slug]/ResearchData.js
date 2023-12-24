@@ -17,33 +17,6 @@ const ResearchDataInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'genetic_information', title: 'Genetic Information', content: data.genetic_information },
-    {
-      key: 'morphological_details',
-      title: 'Morphological Details',
-      content: data.morphological_details
-    },
-    {
-      key: 'psychoactive_properties',
-      title: 'Psychoactive Properties',
-      content: data.psychoactive_properties
-    },
-    {
-      key: 'habitat_and_distribution',
-      title: 'Habitat and Distribution',
-      content: data.habitat_and_distribution
-    }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = Object.keys(data);
     return allKeys.reduce(
@@ -79,6 +52,33 @@ const ResearchDataInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'genetic_information', title: 'Genetic Information', content: data.genetic_information },
+    {
+      key: 'morphological_details',
+      title: 'Morphological Details',
+      content: data.morphological_details
+    },
+    {
+      key: 'psychoactive_properties',
+      title: 'Psychoactive Properties',
+      content: data.psychoactive_properties
+    },
+    {
+      key: 'habitat_and_distribution',
+      title: 'Habitat and Distribution',
+      content: data.habitat_and_distribution
+    }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

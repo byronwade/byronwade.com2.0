@@ -17,12 +17,8 @@ const PotencyInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null;
-  }
-
   const formatEffects = (effects) => {
-    if (!Array.isArray(effects) || effects.length === 0 || effects.includes('Not applicable')) {
+    if (!Array.isArray(effects) || effects.length === 0) {
       return 'Information not available';
     }
     return (
@@ -34,29 +30,20 @@ const PotencyInfo = ({ data }) => {
     );
   };
 
-  let validItems = [
-    { key: 'level', title: 'Potency Level', content: data.level },
-    { key: 'effects', title: 'Effects', content: data.effects },
-    {
-      key: 'individual_sensitivity',
-      title: 'Individual Sensitivity',
-      content: data.individual_sensitivity
-    },
-    {
-      key: 'psychoactive_compounds',
-      title: 'Psychoactive Compounds',
-      content: data.psychoactive_compounds
-    },
-    {
-      key: 'dosage_recommendations_specific_effects',
-      title: 'Dosage Recommendations',
-      content: data.dosage_recommendations_specific_effects
+  const formatDosageRecommendations = (recommendations) => {
+    if (typeof recommendations !== 'object' || isInvalidValue(recommendations)) {
+      return 'Information not available';
     }
-  ].filter((item) => !isInvalidValue(item.content) && item.content !== 'Not applicable');
-
-  if (validItems.length === 0) {
-    return null; // Don't render anything if all items are invalid or "Not applicable"
-  }
+    return (
+      <ul>
+        {Object.entries(recommendations).map(([key, value]) => (
+          <li key={key}>{`${
+            key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' ')
+          }: ${value}`}</li>
+        ))}
+      </ul>
+    );
+  };
 
   const getRandomWidths = () => {
     const allKeys = [
@@ -95,6 +82,34 @@ const PotencyInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null;
+  }
+
+  let validItems = [
+    { key: 'level', title: 'Potency Level', content: data.level },
+    { key: 'effects', title: 'Effects', content: formatEffects(data.effects) },
+    {
+      key: 'individual_sensitivity',
+      title: 'Individual Sensitivity',
+      content: data.individual_sensitivity
+    },
+    {
+      key: 'psychoactive_compounds',
+      title: 'Psychoactive Compounds',
+      content: data.psychoactive_compounds
+    },
+    {
+      key: 'dosage_recommendations_specific_effects',
+      title: 'Dosage Recommendations',
+      content: formatDosageRecommendations(data.dosage_recommendations_specific_effects)
+    }
+  ].filter((item) => !isInvalidValue(item.content) && item.content !== 'Not applicable');
+
+  if (validItems.length === 0) {
+    return null; // Don't render anything if all items are invalid or "Not applicable"
+  }
 
   return (
     <div className="my-10">

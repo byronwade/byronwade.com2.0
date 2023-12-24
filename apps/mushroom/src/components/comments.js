@@ -122,10 +122,7 @@ export default function Comments() {
                       />
                     </div>
                     <p className="text-sm font-medium text-foreground">{comment.twitterHandle}</p>
-                    <div
-                      className="absolute flex items-center justify-center w-5 h-5 rounded-full -left-1 -top-1"
-                      style={{ background: '#000' }}
-                    >
+                    <div className="absolute flex items-center justify-center w-5 h-5 bg-black rounded-full -left-1 -top-1">
                       <svg
                         className="h-[12px] w-[12px]"
                         fill="currentColor"

@@ -17,29 +17,6 @@ const LegalStatus = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'note', title: 'Note', content: data.note },
-    { key: 'general', title: 'General Status', content: data.general },
-    {
-      key: 'specific_regulations',
-      title: 'Specific Regulations',
-      content: data.specific_regulations
-    },
-    {
-      key: 'legal_resources_links',
-      title: 'Legal Resources Links',
-      content: data.legal_resources_links
-    }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = Object.keys(data);
     return allKeys.reduce(
@@ -75,6 +52,29 @@ const LegalStatus = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'note', title: 'Note', content: data.note },
+    { key: 'general', title: 'General Status', content: data.general },
+    {
+      key: 'specific_regulations',
+      title: 'Specific Regulations',
+      content: data.specific_regulations
+    },
+    {
+      key: 'legal_resources_links',
+      title: 'Legal Resources Links',
+      content: data.legal_resources_links
+    }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

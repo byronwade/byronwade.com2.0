@@ -23,22 +23,6 @@ const MicroscopicFeatures = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-
-  let validItems = [
-    { key: 'spores', title: 'Spores', content: data.spores },
-    { key: 'basidia', title: 'Basidia', content: data.basidia },
-    { key: 'pileipellis', title: 'Pileipellis', content: data.pileipellis },
-    { key: 'cheilocystidia', title: 'Cheilocystidia', content: data.cheilocystidia },
-    { key: 'clamp_connections', title: 'Clamp Connections', content: data.clamp_connections }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  if (validItems.length === 0) {
-    return null; // Do not render if all items are invalid
-  }
-
   const chunkArray = (array, size) => {
     const chunkedArr = [];
     for (let i = 0; i < array.length; i += size) {
@@ -66,6 +50,22 @@ const MicroscopicFeatures = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+
+  let validItems = [
+    { key: 'spores', title: 'Spores', content: data.spores },
+    { key: 'basidia', title: 'Basidia', content: data.basidia },
+    { key: 'pileipellis', title: 'Pileipellis', content: data.pileipellis },
+    { key: 'cheilocystidia', title: 'Cheilocystidia', content: data.cheilocystidia },
+    { key: 'clamp_connections', title: 'Clamp Connections', content: data.clamp_connections }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  if (validItems.length === 0) {
+    return null; // Do not render if all items are invalid
+  }
 
   return (
     <div className="my-10">

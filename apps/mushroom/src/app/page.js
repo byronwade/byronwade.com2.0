@@ -1,13 +1,12 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { track } from '@vercel/analytics';
-import { ExternalLink } from 'react-feather';
-import Header from '../components/header';
-import Footer from '../components/footer';
+
 import { Spinner } from '@material-tailwind/react';
 
+import Header from '../components/header';
+import Footer from '../components/footer';
 import SearchBox from '../components/boxes/SearchBox';
 
 export default function Search() {
@@ -15,10 +14,7 @@ export default function Search() {
   const [results, setResults] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState(0);
   const widthsRef = useRef(null); // useRef to store the widths
-
-  console.log('results', results);
 
   const fetchSearchResults = async () => {
     setIsLoading(true);
@@ -78,6 +74,10 @@ export default function Search() {
     setResults([]); // Clear previous results
     const newResults = await fetchSearchResults();
     if (Array.isArray(newResults)) {
+      track('Search', {
+        query: searchTerm,
+        results: newResults.length
+      });
       setResults(newResults);
     }
 
@@ -165,16 +165,12 @@ export default function Search() {
             <div className="overflow-hidden max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px]">
               <div className="relative z-10 flex items-center flex-1 min-w-0 px-3 bg-gray-900 md:pl-4">
                 <form className="w-full h-full" onSubmit={handleSearch}>
-                  <div
-                    className="relative flex items-center w-full min-h-full transition-all duration-300 h-fit"
-                    style={{ height: 47 }}
-                  >
+                  <div className="relative flex items-center w-full min-h-full transition-all duration-300 h-[47px]">
                     <label htmlFor="home-prompt" className="sr-only">
                       Search
                     </label>
                     <input
-                      className="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-teal-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&_textarea]:px-0"
-                      style={{ colorScheme: 'dark', height: '47px !important' }}
+                      className="h-[47px] flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-teal-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&_textarea]:px-0"
                       spellCheck="true"
                       placeholder="Search for a shroom..."
                       value={searchTerm}

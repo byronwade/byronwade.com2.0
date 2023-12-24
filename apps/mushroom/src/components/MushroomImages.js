@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function MushroomImages({ isTrue }) {
+export default function MushroomImages({ CanEdit, isTrue }) {
   const imageRows = [
     // [
     //   'https://images.unsplash.com/photo-1519305124423-5ccccff55da9?q=80&w=3538&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -66,12 +66,15 @@ export default function MushroomImages({ isTrue }) {
               className="rounded-md aspect-square"
             />
           </div>
-          <Link
-            href="/"
-            className="absolute inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md shadow top-5 right-5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9"
-          >
-            Upload an image
-          </Link>
+
+          {CanEdit ? (
+            <Link
+              href="/"
+              className="absolute inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md shadow top-5 right-5 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9"
+            >
+              Upload an image
+            </Link>
+          ) : null}
 
           <div className="sticky grid w-full grid-cols-2 gap-4 sm:grid-cols-2 top-24">
             {imageRows.map((row, rowIndex) => (

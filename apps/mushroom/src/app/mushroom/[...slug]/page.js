@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Heart, Facebook, Twitter, ArrowLeft, GitHub } from 'react-feather';
-import { Button, IconButton } from '../../../utils/wrapper';
+import { Heart, Facebook, Twitter, ArrowLeft, GitHub, Info } from 'react-feather';
+import { Button, IconButton, Alert } from '../../../utils/wrapper';
 
 import Header from '../../../components/header';
 import Footer from '../../../components/footer';
 import Comments from '../../../components/comments';
+import Toolbar from '../../../components/toolbar';
 
 import Name from '../../../components/boxes/Name';
 import HealthyBox from '../../../components/boxes/Healthy';
@@ -176,6 +177,7 @@ export default async function Mushroom({ params }) {
   const IsSafeToEat = edible;
   const IsPoisonous = poisonous.is_poisonous;
   const InSeason = false;
+  const CanEdit = false;
 
   let span = 6; //span for part of the container
 
@@ -189,50 +191,29 @@ export default async function Mushroom({ params }) {
     <>
       <Header />
       <div className="flex flex-col gap-4 p-2 px-4 py-10 mx-auto mt-16 text-black dark:text-white max-w-screen-2xl md:px-6">
-        <div className="p-4 mb-10 bg-red-800 rounded-md border-red-950">
-          <h1 className="text-lg font-bold text-black">Quick Notice</h1>
-          <p className="text-sm text-black">
-            Some data may not be accurate, we are in the process of improving the data while
-            Shroomageddon is still in beta, if anyone would like to contribute or suggest a feature
-            please email me at{' '}
-            <a href="mailto:bw@wadesinc.io" className="underline">
-              bw@wadesinc.io
-            </a>
-          </p>
-        </div>
-
-        <div className="flex flex-row items-center justify-between">
-          <Link href="/">
-            <IconButton className="flex items-center justify-center">
-              <ArrowLeft className="w-4 h-4 m-auto" />
-            </IconButton>
-          </Link>
-          <div className="flex gap-4">
-            <IconButton className="flex justify-center items-center rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
-              <Heart className="w-4 h-4 m-auto" />
-            </IconButton>
-            <IconButton className="flex justify-center items-center rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
-              <Twitter className="w-4 h-4 m-auto" />
-            </IconButton>
-            <IconButton className="flex justify-center items-center rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
-              <Facebook className="w-4 h-4 m-auto" />
-            </IconButton>
-            <IconButton className="flex justify-center items-center rounded bg-[#333333] hover:shadow-[#333333]/20 focus:shadow-[#333333]/20 active:shadow-[#333333]/10">
-              <GitHub className="w-4 h-4 m-auto" />
-            </IconButton>
-            <Link href="/">
-              <Button>Edit</Button>
-            </Link>
+        <Alert color="red" icon={<Info />} className="p-4 mb-10">
+          <div className="pl-4">
+            <h1 className="text-lg font-bold">Quick Notice</h1>
+            <p className="text-sm">
+              Some data may not be accurate, we are in the process of improving the data while
+              Shroomageddon is still in beta, if anyone would like to contribute or suggest a
+              feature please email me at{' '}
+              <a href="mailto:bw@wadesinc.io" className="underline">
+                bw@wadesinc.io
+              </a>
+            </p>
           </div>
-        </div>
+        </Alert>
+
+        <Toolbar CanEdit={CanEdit} description={description} name={names} slug={slug} />
 
         <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
           <div className={`relative space-y-4 w-12/12 md:w-6/12`}>
-            <MushroomImages isTrue={HasImages} />
+            <MushroomImages CanEdit={CanEdit} isTrue={HasImages} />
           </div>
 
           <div className={`relative space-y-4 w-12/12 md:w-6/12`}>
-            <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
+            <div className="flex flex-row items-stretch w-full gap-4 md:flex-row">
               <Name name={names} width={{ sm: 12, md: 12, lg: 12 }} />
             </div>
 
@@ -240,6 +221,11 @@ export default async function Mushroom({ params }) {
               <HealthyBox isTrue={IsHealthy} width={{ sm: 6, md: 6, lg: 6 }} />
               <Editable isTrue={IsSafeToEat} width={{ sm: 6, md: 6, lg: 6 }} />
             </div>
+            <Alert className="p-4 text-xs">
+              Please keep in mind that this data may be inaccurate. Do Not eat a mushroom without
+              knowing what it is and if it is safe to eat. If you are unsure please consult a
+              professional.
+            </Alert>
 
             <div className="flex items-stretch w-full gap-4">
               <Vertical data={id} width={{ sm: 1, md: 1, lg: 1 }} />

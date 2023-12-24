@@ -1,7 +1,9 @@
 'use client';
 import React, { useState } from 'react';
+
 import Header from '../../components/header';
 import Footer from '../../components/footer';
+import { Button } from '../../utils/wrapper';
 
 import { Loader } from 'react-feather'; // Import Loader icon from react-feather
 
@@ -48,7 +50,7 @@ export default function Search() {
           <div className="relative flex flex-col w-full px-6">
             <form
               onSubmit={handleSubmit}
-              className="max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto space-y-6 text-white"
+              className="max-w-[90%] z-10 flex flex-col w-full sm:max-w-md m-auto space-y-6 text-black dark:text-gray-300"
             >
               <h1 className="text-2xl font-black">Submit a Mushroom</h1>
               <div className="relative flex flex-col w-full min-h-full space-y-2 transition-all duration-300 h-fit">
@@ -83,11 +85,7 @@ export default function Search() {
                 </p>
               </div>
 
-              <button
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors bg-gray-300 rounded-md shadow whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-9"
-                type="submit"
-                disabled={isSubmitting}
-              >
+              <Button disabled={isSubmitting}>
                 {isSubmitting ? (
                   <>
                     <Loader className="mr-2 animate-spin" />{' '}
@@ -97,7 +95,7 @@ export default function Search() {
                 ) : (
                   'Submit'
                 )}
-              </button>
+              </Button>
             </form>
 
             <>

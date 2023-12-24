@@ -6,50 +6,7 @@ import { isInvalidValue } from '../../../utils/invalidValues';
 const UserExperience = ({ data }) => {
   const [widths, setWidths] = useState({});
 
-  useEffect(() => {
-    const storedWidths = localStorage.getItem('userExperienceWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('userExperienceWidths', JSON.stringify(newWidths));
-    }
-  }, []);
-
-  // Early return if data is not provided
-  if (!data) {
-    return null;
-  }
-
-  let validItems = [
-    { key: 'suitability', title: 'Suitability', content: data.suitability },
-    { key: 'risk_profile', title: 'Risk Profile', content: data.risk_profile },
-    { key: 'trip_reports', title: 'Trip Reports', content: data.trip_reports },
-    { key: 'safety_precautions', title: 'Safety Precautions', content: data.safety_precautions }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  if (validItems.length === 0) {
-    return null; // Don't render anything if all items are invalid or "Not applicable"
-  }
-  // Add common reports to valid items if valid
-  if (
-    Array.isArray(data.common_reports) &&
-    data.common_reports.some((report) => !isInvalidValue(report))
-  ) {
-    validItems.push({
-      key: 'common_reports',
-      title: 'Common Reports',
-      content: (
-        <ul className="pl-5 list-disc">
-          {data.common_reports.map((report, index) =>
-            !isInvalidValue(report) ? <li key={index}>{report}</li> : null
-          )}
-        </ul>
-      )
-    });
-  }
-
+  // Define getRandomWidths before using it in useEffect
   const getRandomWidths = () => {
     const randomWidth = () => Math.floor(Math.random() * (12 - 4 + 1)) + 4;
     return {
@@ -60,6 +17,43 @@ const UserExperience = ({ data }) => {
       commonReports: randomWidth()
     };
   };
+
+  // Initialize validItems array
+  let validItems = [
+    { key: 'suitability', title: 'Suitability', content: data.suitability },
+    { key: 'risk_profile', title: 'Risk Profile', content: data.risk_profile },
+    { key: 'trip_reports', title: 'Trip Reports', content: data.trip_reports },
+    { key: 'safety_precautions', title: 'Safety Precautions', content: data.safety_precautions }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  useEffect(() => {
+    const storedWidths = localStorage.getItem('userExperienceWidths');
+    if (storedWidths) {
+      setWidths(JSON.parse(storedWidths));
+    } else {
+      const newWidths = getRandomWidths();
+      setWidths(newWidths);
+      localStorage.setItem('userExperienceWidths', JSON.stringify(newWidths));
+    }
+
+    // Add common reports to valid items if valid
+    if (
+      Array.isArray(data.common_reports) &&
+      data.common_reports.some((report) => !isInvalidValue(report))
+    ) {
+      validItems.push({
+        key: 'common_reports',
+        title: 'Common Reports',
+        content: (
+          <ul className="pl-5 list-disc">
+            {data.common_reports.map((report, index) =>
+              !isInvalidValue(report) ? <li key={index}>{report}</li> : null
+            )}
+          </ul>
+        )
+      });
+    }
+  }, []);
 
   const chunkArray = (array, size) => {
     const chunkedArr = [];
@@ -88,6 +82,14 @@ const UserExperience = ({ data }) => {
       </div>
     ));
   };
+
+  // Early return if data is not provided
+  if (!data) {
+    return null;
+  }
+  if (validItems.length === 0) {
+    return null; // Don't render anything if all items are invalid or "Not applicable"
+  }
 
   return (
     <div className="my-10">

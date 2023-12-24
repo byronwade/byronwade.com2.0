@@ -17,20 +17,6 @@ const MedicinalPropertiesInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'clinical_trials', title: 'Clinical Trials', content: data.clinical_trials },
-    { key: 'active_compounds', title: 'Active Compounds', content: data.active_compounds },
-    { key: 'traditional_uses', title: 'Traditional Uses', content: data.traditional_uses }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = ['clinical_trials', 'active_compounds', 'traditional_uses'];
     return allKeys.reduce(
@@ -66,6 +52,20 @@ const MedicinalPropertiesInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'clinical_trials', title: 'Clinical Trials', content: data.clinical_trials },
+    { key: 'active_compounds', title: 'Active Compounds', content: data.active_compounds },
+    { key: 'traditional_uses', title: 'Traditional Uses', content: data.traditional_uses }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

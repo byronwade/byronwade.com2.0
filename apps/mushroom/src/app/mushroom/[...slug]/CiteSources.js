@@ -17,37 +17,6 @@ const CiteSourcesInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = Object.keys(data)
-    .map((key) => {
-      const source = data[key];
-      return {
-        key: key,
-        title:
-          source.title !== 'Information not available'
-            ? source.title
-            : key.replace('_', ' ').toUpperCase(),
-        content: (
-          <div>
-            <p>{source.data_gathered}</p>
-            {source.url !== 'Information not available' && (
-              <a href={source.url} target="_blank" rel="noopener noreferrer">
-                Source Link
-              </a>
-            )}
-          </div>
-        )
-      };
-    })
-    .filter((item) => !isInvalidValue(item.content.url) || !isInvalidValue(item.content.title));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = Object.keys(data);
     return allKeys.reduce(
@@ -83,6 +52,36 @@ const CiteSourcesInfo = ({ data }) => {
       </div>
     ));
   };
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = Object.keys(data)
+    .map((key) => {
+      const source = data[key];
+      return {
+        key: key,
+        title:
+          source.title !== 'Information not available'
+            ? source.title
+            : key.replace('_', ' ').toUpperCase(),
+        content: (
+          <div>
+            <p>{source.data_gathered}</p>
+            {source.url !== 'Information not available' && (
+              <a href={source.url} target="_blank" rel="noopener noreferrer">
+                Source Link
+              </a>
+            )}
+          </div>
+        )
+      };
+    })
+    .filter((item) => !isInvalidValue(item.content.url) || !isInvalidValue(item.content.title));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

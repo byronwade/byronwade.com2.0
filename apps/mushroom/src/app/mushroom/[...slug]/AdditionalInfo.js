@@ -17,35 +17,6 @@ const AdditionalInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'recipes', title: 'Recipes', content: data.recipes },
-    { key: 'category', title: 'Category', content: data.category },
-    { key: 'availability', title: 'Availability', content: data.availability },
-    { key: 'intended_use', title: 'Intended Use', content: data.intended_use },
-    { key: 'flavor_profile', title: 'Flavor Profile', content: data.flavor_profile },
-    { key: 'medical_effects', title: 'Medical Effects', content: data.medical_effects },
-    { key: 'conservation_status', title: 'Conservation Status', content: data.conservation_status },
-    { key: 'preparation_methods', title: 'Preparation Methods', content: data.preparation_methods },
-    {
-      key: 'cultural_significance',
-      title: 'Cultural Significance',
-      content: data.cultural_significance
-    },
-    {
-      key: 'historical_significance',
-      title: 'Historical Significance',
-      content: data.historical_significance
-    }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = Object.keys(data);
     return allKeys.reduce(
@@ -81,6 +52,35 @@ const AdditionalInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'recipes', title: 'Recipes', content: data.recipes },
+    { key: 'category', title: 'Category', content: data.category },
+    { key: 'availability', title: 'Availability', content: data.availability },
+    { key: 'intended_use', title: 'Intended Use', content: data.intended_use },
+    { key: 'flavor_profile', title: 'Flavor Profile', content: data.flavor_profile },
+    { key: 'medical_effects', title: 'Medical Effects', content: data.medical_effects },
+    { key: 'conservation_status', title: 'Conservation Status', content: data.conservation_status },
+    { key: 'preparation_methods', title: 'Preparation Methods', content: data.preparation_methods },
+    {
+      key: 'cultural_significance',
+      title: 'Cultural Significance',
+      content: data.cultural_significance
+    },
+    {
+      key: 'historical_significance',
+      title: 'Historical Significance',
+      content: data.historical_significance
+    }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

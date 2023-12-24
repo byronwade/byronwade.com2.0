@@ -17,20 +17,6 @@ const EducationalSummaryInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'description', title: 'Description', content: data.description },
-    { key: 'significance', title: 'Significance', content: data.significance },
-    { key: 'safety_information', title: 'Safety Information', content: data.safety_information }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = Object.keys(data);
     return allKeys.reduce(
@@ -66,6 +52,20 @@ const EducationalSummaryInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'description', title: 'Description', content: data.description },
+    { key: 'significance', title: 'Significance', content: data.significance },
+    { key: 'safety_information', title: 'Safety Information', content: data.safety_information }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

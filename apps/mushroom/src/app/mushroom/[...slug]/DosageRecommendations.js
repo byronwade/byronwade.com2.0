@@ -17,21 +17,6 @@ const DosageRecommendations = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  const validItems = [
-    { key: 'very_low', title: 'Very Low', content: data.very_low },
-    { key: 'low', title: 'Low', content: data.low },
-    { key: 'medium', title: 'Medium', content: data.medium },
-    { key: 'high', title: 'High', content: data.high },
-    { key: 'very_high', title: 'Very High', content: data.very_high }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  if (validItems.length === 0) {
-    return null; // Don't render anything if all items are invalid or "Not applicable"
-  }
-
   const getRandomWidths = () => {
     const allKeys = ['very_low', 'low', 'medium', 'high', 'very_high'];
     return allKeys.reduce(
@@ -71,6 +56,21 @@ const DosageRecommendations = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  const validItems = [
+    { key: 'very_low', title: 'Very Low', content: data.very_low },
+    { key: 'low', title: 'Low', content: data.low },
+    { key: 'medium', title: 'Medium', content: data.medium },
+    { key: 'high', title: 'High', content: data.high },
+    { key: 'very_high', title: 'Very High', content: data.very_high }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  if (validItems.length === 0) {
+    return null; // Don't render anything if all items are invalid or "Not applicable"
+  }
 
   return (
     <div className="my-10">

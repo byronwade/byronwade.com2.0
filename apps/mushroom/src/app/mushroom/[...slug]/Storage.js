@@ -17,9 +17,6 @@ const StorageInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
   // Format the storage content for display
   const formatStorageContent = (storage) => {
     if (isInvalidValue(storage)) {
@@ -29,28 +26,6 @@ const StorageInfo = ({ data }) => {
       .map(([key, value]) => `${key.replace(/_/g, ' ')}: ${value}`)
       .join(', ');
   };
-
-  let validItems = [
-    {
-      key: 'spore_storage',
-      title: 'Spore Storage',
-      content: `Shelf Life: ${data.spore_storage.shelf_life}, Environment: ${data.spore_storage.environment}, Temperature: ${data.spore_storage.temperature}`
-    },
-    {
-      key: 'harvested_mushroom_storage_dried',
-      title: 'Harvested Mushroom Storage (Dried)',
-      content: formatStorageContent(data.harvested_mushroom_storage.dried)
-    },
-    {
-      key: 'harvested_mushroom_storage_fresh',
-      title: 'Harvested Mushroom Storage (Fresh)',
-      content: formatStorageContent(data.harvested_mushroom_storage.fresh)
-    }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  if (validItems.length === 0) {
-    return null; // Don't render anything if all items are invalid or "Not applicable"
-  }
 
   const getRandomWidths = () => {
     const allKeys = [
@@ -95,6 +70,34 @@ const StorageInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data || !data.harvested_mushroom_storage) {
+    return null; // Check if data or harvested_mushroom_storage is not available
+  }
+
+  let validItems = [
+    {
+      key: 'spore_storage',
+      title: 'Spore Storage',
+      content: data.spore_storage
+        ? `Shelf Life: ${data.spore_storage.shelf_life}, Environment: ${data.spore_storage.environment}, Temperature: ${data.spore_storage.temperature}`
+        : 'Information not available'
+    },
+    {
+      key: 'harvested_mushroom_storage_dried',
+      title: 'Harvested Mushroom Storage (Dried)',
+      content: data.harvested_mushroom_storage.dried
+        ? formatStorageContent(data.harvested_mushroom_storage.dried)
+        : 'Information not available'
+    },
+    {
+      key: 'harvested_mushroom_storage_fresh',
+      title: 'Harvested Mushroom Storage (Fresh)',
+      content: data.harvested_mushroom_storage.fresh
+        ? formatStorageContent(data.harvested_mushroom_storage.fresh)
+        : 'Information not available'
+    }
+  ].filter((item) => !isInvalidValue(item.content));
 
   return (
     <div className="my-10">

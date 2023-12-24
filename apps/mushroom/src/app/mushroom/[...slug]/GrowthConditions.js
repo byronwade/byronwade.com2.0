@@ -17,21 +17,6 @@ const GrowthConditionsInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'soil_type', title: 'Soil Type', content: data.soil_type },
-    { key: 'pH_preference', title: 'pH Preference', content: data.pH_preference },
-    { key: 'altitude_range', title: 'Altitude Range', content: data.altitude_range },
-    { key: 'light_intensity', title: 'Light Intensity', content: data.light_intensity }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = ['soil_type', 'pH_preference', 'altitude_range', 'light_intensity'];
     return allKeys.reduce(
@@ -67,6 +52,21 @@ const GrowthConditionsInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'soil_type', title: 'Soil Type', content: data.soil_type },
+    { key: 'pH_preference', title: 'pH Preference', content: data.pH_preference },
+    { key: 'altitude_range', title: 'Altitude Range', content: data.altitude_range },
+    { key: 'light_intensity', title: 'Light Intensity', content: data.light_intensity }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

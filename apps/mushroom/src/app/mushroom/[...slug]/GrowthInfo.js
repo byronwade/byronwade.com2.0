@@ -33,34 +33,6 @@ const GrowthInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'yield', title: 'Yield', content: data.yield },
-    { key: 'season', title: 'Season', content: data.season },
-    { key: 'substrate', title: 'Substrate', content: data.substrate },
-    { key: 'difficulty', title: 'Difficulty', content: data.difficulty },
-    { key: 'spawn_type', title: 'Spawn Type', content: data.spawn_type },
-    { key: 'fruiting_time', title: 'Fruiting Time', content: data.fruiting_time },
-    { key: 'typical_yield', title: 'Typical Yield', content: data.typical_yield },
-    { key: 'cultivation_time', title: 'Cultivation Time', content: data.cultivation_time },
-    { key: 'incubation_period', title: 'Incubation Period', content: data.incubation_period },
-    { key: 'fruiting_frequency', title: 'Fruiting Frequency', content: data.fruiting_frequency },
-    { key: 'common_contaminants', title: 'Common Contaminants', content: data.common_contaminants },
-    {
-      key: 'fruiting_conditions',
-      title: 'Fruiting Conditions',
-      content: formatFruitingConditions(data.fruiting_conditions)
-    },
-    { key: 'mycelium_appearance', title: 'Mycelium Appearance', content: data.mycelium_appearance }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   // Function to generate random widths
   const getRandomWidths = () => {
     const allKeys = [
@@ -115,6 +87,34 @@ const GrowthInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'yield', title: 'Yield', content: data.yield },
+    { key: 'season', title: 'Season', content: data.season },
+    { key: 'substrate', title: 'Substrate', content: data.substrate },
+    { key: 'difficulty', title: 'Difficulty', content: data.difficulty },
+    { key: 'spawn_type', title: 'Spawn Type', content: data.spawn_type },
+    { key: 'fruiting_time', title: 'Fruiting Time', content: data.fruiting_time },
+    { key: 'typical_yield', title: 'Typical Yield', content: data.typical_yield },
+    { key: 'cultivation_time', title: 'Cultivation Time', content: data.cultivation_time },
+    { key: 'incubation_period', title: 'Incubation Period', content: data.incubation_period },
+    { key: 'fruiting_frequency', title: 'Fruiting Frequency', content: data.fruiting_frequency },
+    { key: 'common_contaminants', title: 'Common Contaminants', content: data.common_contaminants },
+    {
+      key: 'fruiting_conditions',
+      title: 'Fruiting Conditions',
+      content: formatFruitingConditions(data.fruiting_conditions)
+    },
+    { key: 'mycelium_appearance', title: 'Mycelium Appearance', content: data.mycelium_appearance }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

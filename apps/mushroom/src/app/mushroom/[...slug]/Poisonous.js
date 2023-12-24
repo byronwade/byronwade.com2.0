@@ -23,22 +23,6 @@ const PoisonousInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-
-  let validItems = Object.entries(data)
-    .map(([key, value]) => ({
-      key,
-      title: key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
-      content: value
-    }))
-    .filter((item) => !isInvalidValue(item.content) && item.content !== false);
-
-  if (validItems.length === 0) {
-    return null; // If all items are invalid, do not render
-  }
-
   const chunkArray = (array, size) => {
     const chunkedArr = [];
     for (let i = 0; i < array.length; i += size) {
@@ -66,6 +50,22 @@ const PoisonousInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+
+  let validItems = Object.entries(data)
+    .map(([key, value]) => ({
+      key,
+      title: key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
+      content: value
+    }))
+    .filter((item) => !isInvalidValue(item.content) && item.content !== false);
+
+  if (validItems.length === 0) {
+    return null; // If all items are invalid, do not render
+  }
 
   return (
     <div className="my-10">

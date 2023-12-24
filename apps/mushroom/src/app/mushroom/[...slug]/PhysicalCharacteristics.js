@@ -23,29 +23,6 @@ const PhysicalCharacteristics = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-
-  let validItems = Object.entries(data)
-    .flatMap(([key, value]) => {
-      if (typeof value === 'object') {
-        return Object.entries(value).map(([subKey, subValue]) => ({
-          key: `${key}_${subKey}`,
-          title: `${key.charAt(0).toUpperCase() + key.slice(1)} - ${
-            subKey.charAt(0).toUpperCase() + subKey.slice(1)
-          }`,
-          content: subValue
-        }));
-      }
-      return [{ key, title: key.charAt(0).toUpperCase() + key.slice(1), content: value }];
-    })
-    .filter((item) => !isInvalidValue(item.content));
-
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const chunkArray = (array, size) => {
     const chunkedArr = [];
     for (let i = 0; i < array.length; i += size) {
@@ -73,6 +50,29 @@ const PhysicalCharacteristics = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+
+  let validItems = Object.entries(data)
+    .flatMap(([key, value]) => {
+      if (typeof value === 'object') {
+        return Object.entries(value).map(([subKey, subValue]) => ({
+          key: `${key}_${subKey}`,
+          title: `${key.charAt(0).toUpperCase() + key.slice(1)} - ${
+            subKey.charAt(0).toUpperCase() + subKey.slice(1)
+          }`,
+          content: subValue
+        }));
+      }
+      return [{ key, title: key.charAt(0).toUpperCase() + key.slice(1), content: value }];
+    })
+    .filter((item) => !isInvalidValue(item.content));
+
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">

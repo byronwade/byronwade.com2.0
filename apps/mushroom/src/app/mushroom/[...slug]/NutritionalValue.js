@@ -17,25 +17,6 @@ const NutritionalValueInfo = ({ data }) => {
     }
   }, []);
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'mineral_content', title: 'Mineral Content', content: data.mineral_content },
-    { key: 'protein_content', title: 'Protein Content', content: data.protein_content },
-    { key: 'vitamin_content', title: 'Vitamin Content', content: data.vitamin_content },
-    {
-      key: 'carbohydrate_content',
-      title: 'Carbohydrate Content',
-      content: data.carbohydrate_content
-    }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
-    return null;
-  }
-
   const getRandomWidths = () => {
     const allKeys = [
       'mineral_content',
@@ -76,6 +57,25 @@ const NutritionalValueInfo = ({ data }) => {
       </div>
     ));
   };
+
+  if (!data) {
+    return null; // If data is not provided, do not render the component
+  }
+  let validItems = [
+    { key: 'mineral_content', title: 'Mineral Content', content: data.mineral_content },
+    { key: 'protein_content', title: 'Protein Content', content: data.protein_content },
+    { key: 'vitamin_content', title: 'Vitamin Content', content: data.vitamin_content },
+    {
+      key: 'carbohydrate_content',
+      title: 'Carbohydrate Content',
+      content: data.carbohydrate_content
+    }
+  ].filter((item) => !isInvalidValue(item.content));
+
+  // Return null if all items are invalid
+  if (validItems.length === 0) {
+    return null;
+  }
 
   return (
     <div className="my-10">
