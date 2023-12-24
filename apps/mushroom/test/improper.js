@@ -1,9 +1,5 @@
-const { createClient } = require('@supabase/supabase-js');
-
-const supabaseUrl = 'https://xmyialnxjvkyxmpbuvis.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhteWlhbG54anZreXhtcGJ1dmlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI1MzYxNTMsImV4cCI6MjAxODExMjE1M30.hZ3-vMSXeVHIEoPAwEaaH6kUrNLNGwFnWPswbuvoLg4';
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
 async function removeImproperRows() {
   // Expanded list of improper values
