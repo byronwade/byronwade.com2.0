@@ -105,8 +105,6 @@ import { fetchPageData } from './functions/webScrape/fetchPageData';
 import { findExisting } from './functions/FindExisting';
 import { getWikipediaData } from './functions/WikiAPI';
 
-export const runtime = 'edge';
-
 export async function GET(req) {
   const searchParams = new URL(req.url).searchParams;
   const url = searchParams.get('url');

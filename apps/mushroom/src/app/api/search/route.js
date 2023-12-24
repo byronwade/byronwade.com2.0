@@ -1,8 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
-export const runtime = 'edge';
-
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get('query');
