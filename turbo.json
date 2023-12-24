@@ -18,7 +18,9 @@
     "GOOGLE_PLACES_API_KEY",
     "GOOGLE_CSE_ID",
     "GOOGLE_API_KEY",
-    "NEXT_PUBLIC_API_URL"
+    "NEXT_PUBLIC_API_URL",
+    "SUPABASE_URL",
+    "SUPABASE_API_KEY"
   ],
   "globalDependencies": [
     "OPENAI_API_KEY",
@@ -26,6 +28,8 @@
     "GOOGLE_PLACES_API_KEY",
     "GOOGLE_CSE_ID",
     "GOOGLE_API_KEY",
-    "NEXT_PUBLIC_API_URL"
+    "NEXT_PUBLIC_API_URL",
+    "SUPABASE_URL",
+    "SUPABASE_API_KEY"
   ]
 }
