@@ -121,33 +121,31 @@ export async function GET(req) {
           return;
         }
 
-        let business = null;
         if (url) {
-          business = await fetchPageData(url);
+          const business = await fetchPageData(url);
           if (!business) {
-            controller.enqueue(JSON.stringify({ error: 'Failed to get basic company data' }));
-            controller.close();
-            return;
+            controller.enqueue(JSON.stringify({ error: 'Failed to get business data' }));
+          } else {
+            controller.enqueue(JSON.stringify({ business }));
           }
         }
 
         const existingMushroomResponse = await findExisting(term);
-        const wikiData = await getWikipediaData(term);
-        const openAIContent = await fetchOpenAIContent(wikiData, existingMushroomResponse, term);
-
-        if (!openAIContent) {
-          controller.enqueue(JSON.stringify({ error: 'Failed to get OpenAI content' }));
-          controller.close();
-          return;
+        if (existingMushroomResponse) {
+          controller.enqueue(JSON.stringify({ existingMushroomResponse }));
         }
 
-        controller.enqueue(
-          JSON.stringify({
-            openAIContent,
-            wikiData,
-            existingMushroomResponse
-          })
-        );
+        const wikiData = await getWikipediaData(term);
+        if (wikiData) {
+          controller.enqueue(JSON.stringify({ wikiData }));
+        }
+
+        const openAIContent = await fetchOpenAIContent(wikiData, existingMushroomResponse, term);
+        if (!openAIContent) {
+          controller.enqueue(JSON.stringify({ error: 'Failed to get OpenAI content' }));
+        } else {
+          controller.enqueue(JSON.stringify({ openAIContent }));
+        }
       } catch (error) {
         console.error('API Error:', error.message);
         controller.enqueue(JSON.stringify({ error: 'Internal Server Error' }));
