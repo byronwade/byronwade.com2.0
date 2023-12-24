@@ -95,58 +95,57 @@ export default function Comments() {
   ];
 
   return (
-    <>
-      <div>
-        <div className="relative gap-4 overflow-hidden transition-all columns-1 sm:columns-2 lg:columns-3">
-          {comments.map((comment, index) => (
-            <div key={index} className="z-0 mb-4 text-gray-300 break-inside-avoid-column">
-              <a target="_blank" href="https://twitter.com/IxoyeDesign/status/1497473731777728512">
-                <div className="p-6 text-black bg-gray-300 border border-gray-400 rounded-md shadow-lg dark:text-gray-300 dark:border-gray-800 dark:bg-gray-900">
-                  <div className="relative">
-                    <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 overflow-hidden border rounded-full border-control">
-                        <img
-                          alt={comment.imageAlt}
-                          loading="lazy"
-                          width={64}
-                          height={64}
-                          decoding="async"
-                          data-nimg={1}
-                          style={{
-                            color: 'transparent',
-                            width: '100%',
-                            height: 'auto'
-                          }}
-                          sizes="100vw"
-                          src={comment.imageSrc}
-                        />
-                      </div>
-                      <p className="text-sm font-medium text-foreground">{comment.twitterHandle}</p>
-                      <div
-                        className="absolute flex items-center justify-center w-5 h-5 rounded-full -left-1 -top-1"
-                        style={{ background: '#000' }}
+    <div className="my-10">
+      <h1 className="my-4 text-5xl font-bold">Users Thoughts</h1>
+      <div className="relative gap-4 overflow-hidden transition-all columns-1 sm:columns-2 lg:columns-3">
+        {comments.map((comment, index) => (
+          <div key={index} className="z-0 mb-4 text-gray-300 break-inside-avoid-column">
+            <a target="_blank" href="https://twitter.com/IxoyeDesign/status/1497473731777728512">
+              <div className="p-6 text-black bg-gray-300 border border-gray-400 rounded-md shadow-lg dark:text-gray-300 dark:border-gray-800 dark:bg-gray-900">
+                <div className="relative">
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 overflow-hidden border rounded-full border-control">
+                      <img
+                        alt={comment.imageAlt}
+                        loading="lazy"
+                        width={64}
+                        height={64}
+                        decoding="async"
+                        data-nimg={1}
+                        style={{
+                          color: 'transparent',
+                          width: '100%',
+                          height: 'auto'
+                        }}
+                        sizes="100vw"
+                        src={comment.imageSrc}
+                      />
+                    </div>
+                    <p className="text-sm font-medium text-foreground">{comment.twitterHandle}</p>
+                    <div
+                      className="absolute flex items-center justify-center w-5 h-5 rounded-full -left-1 -top-1"
+                      style={{ background: '#000' }}
+                    >
+                      <svg
+                        className="h-[12px] w-[12px]"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
                       >
-                        <svg
-                          className="h-[12px] w-[12px]"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                          aria-hidden="true"
-                        >
-                          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                      </div>
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      </svg>
                     </div>
                   </div>
-                  <p className="mt-3 text-base text-foreground-muted">{comment.description}</p>
                 </div>
-              </a>
-            </div>
-          ))}
-        </div>
-        <div className="justify-center w-full py-10 text-center black">
-          <Button>Show More</Button>
-        </div>
+                <p className="mt-3 text-base text-foreground-muted">{comment.description}</p>
+              </div>
+            </a>
+          </div>
+        ))}
       </div>
-    </>
+      <div className="justify-center w-full py-10 text-center black">
+        <Button>Show More</Button>
+      </div>
+    </div>
   );
 }

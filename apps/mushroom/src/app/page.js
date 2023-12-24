@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { track } from '@vercel/analytics';
 import { ExternalLink } from 'react-feather';
 import Header from '../components/header';
+import Footer from '../components/footer';
 import { Spinner } from '@material-tailwind/react';
 
 import SearchBox from '../components/boxes/SearchBox';
@@ -259,6 +260,7 @@ export default function Search() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

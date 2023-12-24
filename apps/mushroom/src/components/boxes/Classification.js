@@ -85,7 +85,7 @@ export default function Classification({ data, width }) {
             </g>
           </svg>
 
-          <h2 className="mb-2 font-bold">Classification</h2>
+          <h2 className="mb-2 text-xl font-bold">Classification</h2>
           <p>
             <strong>Class:</strong> {data.class}
           </p>

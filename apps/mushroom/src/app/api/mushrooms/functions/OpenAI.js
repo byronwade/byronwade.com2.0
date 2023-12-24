@@ -103,6 +103,10 @@ export async function fetchOpenAIContent(wikiData, existingMushroomResponse, ter
     }
   },
   habitat_and_ecology: {
+    season: {
+      start: '',
+      end: ''
+    }
     habitat: '',
     ecology: '',
     physical_characteristics: {

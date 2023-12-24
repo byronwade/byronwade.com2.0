@@ -33,9 +33,7 @@ export default function Header() {
             Beta
           </div>
 
-          <IconButton>
-            <ThemeSwitch />
-          </IconButton>
+          <ThemeSwitch />
 
           {/* <button
             className="inline-flex items-center justify-center w-8 h-8 text-sm font-medium text-gray-500 transition-colors border rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-100 hover:text-gray-900 shrink-0"

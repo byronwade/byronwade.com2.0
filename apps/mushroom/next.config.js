@@ -28,7 +28,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'docs.material-tailwind.com',
+        hostname: 'fakeimg.pl',
         port: '',
         pathname: '**'
       },

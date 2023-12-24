@@ -3,15 +3,25 @@ import Link from 'next/link';
 
 export default function MushroomImages({ isTrue }) {
   const imageRows = [
+    // [
+    //   'https://images.unsplash.com/photo-1519305124423-5ccccff55da9?q=80&w=3538&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    //   'https://images.unsplash.com/photo-1630921121767-81e86d066a5d?q=80&w=3376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    //   'https://images.unsplash.com/photo-1586686804243-d763a9afb755?q=80&w=2592&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    // ],
+    // [
+    //   'https://images.unsplash.com/photo-1629457442277-918387fec70c?q=80&w=3388&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    //   'https://images.unsplash.com/photo-1570161387493-1ad88c522eba?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    //   'https://images.unsplash.com/photo-1555726698-8248142dc630?q=80&w=3358&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    // ]
     [
-      'https://images.unsplash.com/photo-1432462770865-65b70566d673?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
-      'https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80',
-      'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80'
+      'https://fakeimg.pl/600x300?text=Mushroom+Image',
+      'https://fakeimg.pl/600x800?text=Mushroom+Image',
+      'https://fakeimg.pl/500x500?text=Mushroom+Image'
     ],
     [
-      'https://images.unsplash.com/photo-1552960562-daf630e9278b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
-      'https://images.unsplash.com/photo-1540553016722-983e48a2cd10?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-      'https://docs.material-tailwind.com/img/team-3.jpg'
+      'https://fakeimg.pl/600x200?text=Mushroom+Image',
+      'https://fakeimg.pl/600x1200?text=Mushroom+Image',
+      'https://fakeimg.pl/800x300?text=Mushroom+Image'
     ]
     // ... other rows
   ];

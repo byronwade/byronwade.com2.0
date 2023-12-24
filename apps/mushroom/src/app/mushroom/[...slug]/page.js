@@ -4,6 +4,7 @@ import { Heart, Facebook, Twitter, ArrowLeft, GitHub } from 'react-feather';
 import { Button, IconButton } from '../../../utils/wrapper';
 
 import Header from '../../../components/header';
+import Footer from '../../../components/footer';
 import Comments from '../../../components/comments';
 
 import Name from '../../../components/boxes/Name';
@@ -23,6 +24,23 @@ import LegalStatus from '../../../components/boxes/LegalStatus';
 import FlavorProfile from '../../../components/boxes/FlavorProfile';
 import MedicalEffects from '../../../components/boxes/MedicalEffects';
 import Zugz from '../../../components/boxes/Zugzology';
+
+import GrowthInfo from './GrowthInfo';
+import UserExperience from './UserExperiances';
+import NutritionalValueInfo from './NutritionalValue';
+import MedicinalPropertiesInfo from './MedicinalProperties';
+import GrowthConditionsInfo from './GrowthConditions';
+import CiteSourcesInfo from './CiteSources';
+import ResearchDataInfo from './ResearchData';
+import EducationalSummaryInfo from './EducationalSummary';
+import AdditionalInfo from './AdditionalInfo';
+import LegalStatusInfo from './LegalStatus';
+import StorageInfo from './Storage';
+import DosageRecommendations from './DosageRecommendations';
+import PotencyInfo from './PotencyInfo';
+import MicroscopicFeatures from './MicroscopicFeatures';
+import PhysicalCharacteristics from './PhysicalCharacteristics';
+import PoisonousInfo from './Poisonous';
 
 const mushroom = {
   class: 'Agaricomycetes',
@@ -119,10 +137,44 @@ export default async function Mushroom({ params }) {
   const responseData = await fetchMushroomResults(slug);
   console.log('API Response:', responseData.data);
 
+  const {
+    common_name,
+    scientific_profile,
+    year_discovered,
+    tags,
+    origin,
+    description,
+    id,
+    poisonous,
+    growth_info,
+    user_experience,
+    nutritional_value,
+    medicinal_properties,
+    growth_conditions,
+    cite_sources,
+    research_data,
+    educational_summary,
+    additional_info,
+    legal_status,
+    storage,
+    dosage_recommendations,
+    potency_info,
+    microscopic_features,
+    physical_characteristics,
+    edible
+  } = responseData.data;
+
+  const names = {
+    common_name: common_name,
+    ...scientific_profile
+  };
+
+  console.log(edible);
+
   const HasImages = false;
-  const IsHealthy = true;
-  const IsSafeToEat = true;
-  const IsPoisonous = true;
+  const IsHealthy = edible;
+  const IsSafeToEat = edible;
+  const IsPoisonous = poisonous.is_poisonous;
   const InSeason = false;
 
   let span = 6; //span for part of the container
@@ -151,22 +203,22 @@ export default async function Mushroom({ params }) {
 
         <div className="flex flex-row items-center justify-between">
           <Link href="/">
-            <IconButton>
-              <ArrowLeft />
+            <IconButton className="flex items-center justify-center">
+              <ArrowLeft className="w-4 h-4 m-auto" />
             </IconButton>
           </Link>
           <div className="flex gap-4">
-            <IconButton className="rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
-              <Heart />
+            <IconButton className="flex justify-center items-center rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
+              <Heart className="w-4 h-4 m-auto" />
             </IconButton>
-            <IconButton className="rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
-              <Twitter />
+            <IconButton className="flex justify-center items-center rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
+              <Twitter className="w-4 h-4 m-auto" />
             </IconButton>
-            <IconButton className="rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
-              <Facebook />
+            <IconButton className="flex justify-center items-center rounded bg-[#1DA1F2] hover:shadow-[#1DA1F2]/20 focus:shadow-[#1DA1F2]/20 active:shadow-[#1DA1F2]/10">
+              <Facebook className="w-4 h-4 m-auto" />
             </IconButton>
-            <IconButton className="rounded bg-[#333333] hover:shadow-[#333333]/20 focus:shadow-[#333333]/20 active:shadow-[#333333]/10">
-              <GitHub />
+            <IconButton className="flex justify-center items-center rounded bg-[#333333] hover:shadow-[#333333]/20 focus:shadow-[#333333]/20 active:shadow-[#333333]/10">
+              <GitHub className="w-4 h-4 m-auto" />
             </IconButton>
             <Link href="/">
               <Button>Edit</Button>
@@ -181,7 +233,7 @@ export default async function Mushroom({ params }) {
 
           <div className={`relative space-y-4 w-12/12 md:w-6/12`}>
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-              <Name name={'Full Moon Party'} width={{ sm: 12, md: 12, lg: 12 }} />
+              <Name name={names} width={{ sm: 12, md: 12, lg: 12 }} />
             </div>
 
             <div className="flex items-stretch w-full gap-4">
@@ -190,8 +242,8 @@ export default async function Mushroom({ params }) {
             </div>
 
             <div className="flex items-stretch w-full gap-4">
-              <Vertical width={{ sm: 1, md: 1, lg: 1 }} />
-              <Description width={{ sm: 11, md: 11, lg: 11 }} />
+              <Vertical data={id} width={{ sm: 1, md: 1, lg: 1 }} />
+              <Description data={description} width={{ sm: 11, md: 11, lg: 11 }} />
             </div>
 
             {IsPoisonous ? (
@@ -201,21 +253,21 @@ export default async function Mushroom({ params }) {
             ) : null}
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-              <Tags width={{ sm: 12, md: 6, lg: 5 }} />
-              <Origin width={{ sm: 12, md: 6, lg: 7 }} />
+              <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} />
+              <Origin data={origin} width={{ sm: 12, md: 6, lg: 7 }} />
             </div>
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-              <Year width={{ sm: 12, md: 6, lg: 4 }} />
+              <Year data={year_discovered} width={{ sm: 12, md: 6, lg: 4 }} />
               <Seasion isTrue={InSeason} width={{ sm: 12, md: 6, lg: 8 }} />
             </div>
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Classification data={mushroom} width={{ sm: 12, md: 6, lg: 6 }} />
-              <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} />
+              {/* <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} /> */}
             </div>
 
-            <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
+            {/* <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Zugz width={{ sm: 12, md: 2, lg: 3 }} />
               <FlavorProfile
                 data={'Mild, with a slightly earthy taste'}
@@ -225,66 +277,31 @@ export default async function Mushroom({ params }) {
                 data={'Reported potential for mood and anxiety relief'}
                 width={{ sm: 12, md: 2, lg: 3 }}
               />
-            </div>
+            </div> */}
 
             {/* <div className="flex items-center h-1 bg-gray-600 rounded-md shadow-lg"></div> */}
           </div>
         </div>
 
-        <div className="my-10">
-          <h1 className="my-4 text-5xl font-bold">Information about</h1>
-          <div className="flex flex-col items-stretch w-full gap-4">
-            <div className="flex items-stretch w-full gap-4">
-              <Generic width={{ sm: 5, md: 5, lg: 5 }} />
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-              <Generic width={{ sm: 3, md: 3, lg: 3 }} />
-            </div>
-            <div className="flex items-stretch w-full gap-4">
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-            </div>
-            <div className="flex items-stretch w-full gap-4">
-              <Generic width={{ sm: 3, md: 3, lg: 3 }} />
-              <Generic width={{ sm: 6, md: 6, lg: 6 }} />
-              <Generic width={{ sm: 3, md: 3, lg: 3 }} />
-            </div>
-          </div>
-        </div>
-
-        <div className="relative my-10 overflow-hidden">
-          <Image
-            src="/boxes/Growing.png"
-            height={100}
-            width={100}
-            alt="alt"
-            className="absolute top-0 right-0 -z-10"
-          />
-          <h1 className="my-4 text-5xl font-bold">Growth Information</h1>
-          <div className="flex flex-col items-stretch w-full gap-4">
-            <div className="flex items-stretch w-full gap-4">
-              <Generic width={{ sm: 5, md: 5, lg: 5 }} />
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-              <Generic width={{ sm: 3, md: 3, lg: 3 }} />
-            </div>
-            <div className="flex items-stretch w-full gap-4">
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-              <Generic width={{ sm: 4, md: 4, lg: 4 }} />
-            </div>
-            <div className="flex items-stretch w-full gap-4">
-              <Generic width={{ sm: 3, md: 3, lg: 3 }} />
-              <Generic width={{ sm: 6, md: 6, lg: 6 }} />
-              <Generic width={{ sm: 3, md: 3, lg: 3 }} />
-            </div>
-          </div>
-        </div>
-
-        <div className="my-10">
-          <h1 className="my-4 text-5xl font-bold">Users Thoughts</h1>
-          <Comments />
-        </div>
+        <GrowthInfo data={growth_info} />
+        <UserExperience data={user_experience} />
+        <NutritionalValueInfo data={nutritional_value} />
+        <MedicinalPropertiesInfo data={medicinal_properties} />
+        <GrowthConditionsInfo data={growth_conditions} />
+        <CiteSourcesInfo data={cite_sources} />
+        <ResearchDataInfo data={research_data} />
+        <EducationalSummaryInfo data={educational_summary} />
+        <AdditionalInfo data={additional_info} />
+        <LegalStatusInfo data={legal_status} />
+        <StorageInfo data={storage} />
+        <DosageRecommendations data={dosage_recommendations} />
+        <PotencyInfo data={potency_info} />
+        <MicroscopicFeatures data={microscopic_features} />
+        <PhysicalCharacteristics data={physical_characteristics} />
+        <PoisonousInfo data={poisonous} />
+        {/* <Comments /> */}
       </div>
+      <Footer />
     </>
   );
 }

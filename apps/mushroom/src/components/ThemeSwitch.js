@@ -5,6 +5,7 @@ import { FiSun, FiMoon } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import { IconButton } from '../utils/wrapper';
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false);
@@ -26,10 +27,18 @@ export default function ThemeSwitch() {
     );
 
   if (resolvedTheme === 'dark') {
-    return <FiSun className="w-full h-full" onClick={() => setTheme('light')} />;
+    return (
+      <IconButton className="flex items-center justify-center" onClick={() => setTheme('light')}>
+        <FiSun className="w-4 h-4" />
+      </IconButton>
+    );
   }
 
   if (resolvedTheme === 'light') {
-    return <FiMoon className="w-full h-full" onClick={() => setTheme('dark')} />;
+    return (
+      <IconButton className="flex items-center justify-center" onClick={() => setTheme('dark')}>
+        <FiMoon className="w-4 h-4" />
+      </IconButton>
+    );
   }
 }

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 import { Loader } from 'react-feather'; // Import Loader icon from react-feather
 
@@ -83,7 +84,7 @@ export default function Search() {
               </div>
 
               <button
-                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors rounded-md shadow bg-gray-300 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-9"
+                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors bg-gray-300 rounded-md shadow whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-9"
                 type="submit"
                 disabled={isSubmitting}
               >
@@ -128,6 +129,7 @@ export default function Search() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
@@ -192,7 +194,7 @@ function SearchResult({ jsonData }) {
   // const renderNestedObject = (obj) => {/* Logic to render nested object */};
 
   return (
-    <div className="w-full p-4 mx-auto mb-10 prose rounded-md shadow-md lg:prose-sm bg-gray-200">
+    <div className="w-full p-4 mx-auto mb-10 prose bg-gray-200 rounded-md shadow-md lg:prose-sm">
       {/* Render identification details */}
       <h1>Identification</h1>
       <h2>Common Name</h2>
