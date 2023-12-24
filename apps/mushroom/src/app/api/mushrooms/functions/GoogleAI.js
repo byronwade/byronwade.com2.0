@@ -43,7 +43,4 @@ async function searchGoogle(query) {
   }
 }
 
-module.exports = {
-  analyzeSentences,
-  searchGoogle
-};
+export { analyzeSentences, searchGoogle };
