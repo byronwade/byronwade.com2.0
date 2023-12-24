@@ -7,6 +7,8 @@ import { ExternalLink } from 'react-feather';
 import Header from '../components/header';
 import { Spinner } from '@material-tailwind/react';
 
+import SearchBox from '../components/boxes/SearchBox';
+
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
@@ -173,7 +175,6 @@ export default function Search() {
                       className="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-teal-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&_textarea]:px-0"
                       style={{ colorScheme: 'dark', height: '47px !important' }}
                       spellCheck="true"
-                      rows={1}
                       placeholder="Search for a shroom..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
@@ -229,32 +230,25 @@ export default function Search() {
                   </Link>
                 </div>
               ) : (
-                <div className="w-full p-10 space-y-10">
+                <div className={`relative space-y-4 w-full`}>
                   {rows.map((row, rowIndex) => {
                     const rowWidths = widths && widths[rowIndex] ? widths[rowIndex] : [4, 4, 4];
 
                     return (
-                      <div className="flex flex-row w-full gap-10" key={rowIndex}>
+                      <div
+                        className="flex flex-col items-stretch w-full gap-4 md:flex-row"
+                        key={rowIndex}
+                      >
                         {row.map((item, itemIndex) => (
-                          <Link
-                            href={`/mushroom/${item.slug}`}
-                            className={`hover:cursor-pointer group relative w-${rowWidths[itemIndex]}/12 h-64 p-4 border rounded-md border-gray-800 bg-gray-900 overflow-hidden`}
+                          <SearchBox
+                            width={{
+                              sm: 12,
+                              md: rowWidths[itemIndex],
+                              lg: rowWidths[itemIndex]
+                            }}
+                            item={item}
                             key={itemIndex}
-                          >
-                            <Image
-                              src={`/no-mushroom.png`}
-                              alt={item.common_name}
-                              height={60}
-                              width={60}
-                              className="items-center justify-center object-center text-center"
-                            />
-                            <div className="absolute z-20 flex bottom-5 left-5">
-                              <h1 className="text-xl font-bold text-white">{item.common_name}</h1>
-                            </div>
-                            <div className="absolute z-20 text-white opacity-0 top-5 right-5 group-hover:opacity-100">
-                              <ExternalLink className="w-5 h-5" />
-                            </div>
-                          </Link>
+                          />
                         ))}
                       </div>
                     );

@@ -25,6 +25,7 @@
     "jsdom": "^23.0.1",
     "libphonenumber-js": "^1.10.51",
     "next": "^14.0.5-canary.25",
+    "next-themes": "^0.2.1",
     "openai": "^4.20.1",
     "playwright": "^1.40.1",
     "react": "^18",

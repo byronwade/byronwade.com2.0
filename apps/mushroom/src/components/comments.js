@@ -1,3 +1,5 @@
+import { Button } from '../utils/wrapper';
+
 export default function Comments() {
   const comments = [
     {
@@ -97,9 +99,9 @@ export default function Comments() {
       <div>
         <div className="relative gap-4 overflow-hidden transition-all columns-1 sm:columns-2 lg:columns-3">
           {comments.map((comment, index) => (
-            <div key={index} className="z-0 mb-4 break-inside-avoid-column">
+            <div key={index} className="z-0 mb-4 text-gray-300 break-inside-avoid-column">
               <a target="_blank" href="https://twitter.com/IxoyeDesign/status/1497473731777728512">
-                <div className="p-6 border rounded-md shadow-lg border-gray-800 bg-gray-100 dark:bg-gray-900">
+                <div className="p-6 text-black bg-gray-300 border border-gray-400 rounded-md shadow-lg dark:text-gray-300 dark:border-gray-800 dark:bg-gray-900">
                   <div className="relative">
                     <div className="flex items-center gap-2">
                       <div className="w-10 h-10 overflow-hidden border rounded-full border-control">
@@ -141,13 +143,8 @@ export default function Comments() {
             </div>
           ))}
         </div>
-        <div className="justify-center w-full m-10 text-center black">
-          <button
-            type="button"
-            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md shadow whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9"
-          >
-            <span className="truncate">Show More</span>
-          </button>
+        <div className="justify-center w-full py-10 text-center black">
+          <Button>Show More</Button>
         </div>
       </div>
     </>
