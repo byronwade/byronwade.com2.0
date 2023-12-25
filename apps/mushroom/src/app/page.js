@@ -9,7 +9,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import SearchBox from '../components/boxes/SearchBox';
 
-import algoliasearch from 'algoliasearch/lite';
+import algoliasearch from 'algoliasearch';
 
 // Algolia configuration
 const algoliaAppId = process.env.NEXT_PUBLIC_AGOLIA_APP_ID;
@@ -32,7 +32,24 @@ export default function Search() {
 
     try {
       // Perform a search using Algolia
-      const { hits: searchHits } = await algoliaIndex.search(searchTerm);
+
+      await algoliaIndex.setSettings({
+        typoTolerance: true,
+        enablePersonalization: true,
+        removeWordsIfNoResults: 'lastWords',
+        searchableAttributes: [
+          'common_name',
+          'scientific_profile.scientific_name',
+          'scientific_profile.strain_name',
+          'scientific_profile.nicknames, scientific_profile.synonyms',
+          'tags',
+          'categories.alias,categories.title'
+        ]
+      });
+      const { hits: searchHits } = await algoliaIndex.search(searchTerm, {
+        attributesToRetrieve: ['common_name', 'slug'],
+        hitsPerPage: 50
+      });
       console.log('Algolia hits:', searchHits);
 
       if (!searchHits || searchHits.length === 0) {

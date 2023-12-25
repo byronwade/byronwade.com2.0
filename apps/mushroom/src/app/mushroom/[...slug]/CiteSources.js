@@ -23,10 +23,6 @@ const CiteSourcesInfo = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    if (!data) {
-      return <p>No additional information available.</p>;
-    }
-
     const filteredItems = Object.entries(data || {})
       .filter(([key, source]) => isValidContent(source))
       .map(([key, source]) => ({
@@ -79,7 +75,7 @@ const CiteSourcesInfo = ({ data }) => {
 
   return (
     <div className="my-10">
-      <h1 className="my-4 text-2xl md:text-5xl font-bold">Cited Sources</h1>
+      <h1 className="my-4 text-2xl font-bold md:text-5xl">Cited Sources</h1>
       <div className="flex flex-col items-stretch w-full gap-4">{renderBoxes()}</div>
     </div>
   );
