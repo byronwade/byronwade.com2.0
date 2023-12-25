@@ -186,7 +186,7 @@ export default async function Mushroom({ params }) {
           </div>
         </div>
 
-        <GrowthInfo data={growth_info} />
+        {/* <GrowthInfo data={growth_info} />
         <UserExperience data={user_experience} />
         <NutritionalValueInfo data={nutritional_value} />
         <MedicinalPropertiesInfo data={medicinal_properties} />
@@ -201,7 +201,7 @@ export default async function Mushroom({ params }) {
         <PotencyInfo data={potency_info} />
         <MicroscopicFeatures data={microscopic_features} />
         <PhysicalCharacteristics data={physical_characteristics} />
-        <PoisonousInfo data={poisonous} />
+        <PoisonousInfo data={poisonous} /> */}
         {/* <Comments /> */}
       </div>
       <Footer />
