@@ -12,8 +12,9 @@ import SearchBox from '../components/boxes/SearchBox';
 import algoliasearch from 'algoliasearch/lite';
 
 // Algolia configuration
-const algoliaAppId = process.env.AGOLIA_APP_ID;
-const algoliaApiKey = process.env.AGOLIA_AKI_KEY;
+const algoliaAppId = process.env.NEXT_PUBLIC_AGOLIA_APP_ID;
+const algoliaApiKey = process.env.NEXT_PUBLIC_AGOLIA_API_KEY;
+
 const algoliaIndexName = 'mushrooms';
 const algoliaClient = algoliasearch(algoliaAppId, algoliaApiKey);
 const algoliaIndex = algoliaClient.initIndex(algoliaIndexName);
@@ -31,7 +32,7 @@ export default function Search() {
 
     try {
       // Perform a search using Algolia
-      const { hits: searchHits } = await algoliaIndex.search(searchTerm); //why is it now working
+      const { hits: searchHits } = await algoliaIndex.search(searchTerm);
       console.log('Algolia hits:', searchHits);
 
       if (!searchHits || searchHits.length === 0) {
