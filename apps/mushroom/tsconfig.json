@@ -29,7 +29,8 @@
     "src/app/robots.js",
     "src/app/not-found.js",
     "src/app/opngraph-image.js",
-    "src/app/sitemap.js"
+    "src/app/sitemap.js",
+    "src/app/icon.js"
   ],
   "exclude": ["node_modules"]
 }
