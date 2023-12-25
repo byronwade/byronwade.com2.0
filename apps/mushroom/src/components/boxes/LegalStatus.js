@@ -14,16 +14,16 @@ export default function LegalStatus({ data, width }) {
         <div className="z-10">
           <h2 className="mb-2 font-bold">Legal Status</h2>
           <p>
-            <strong>Note:</strong> {data.note}
+            <strong>Note:</strong> {data?.note}
           </p>
           <p>
-            <strong>General:</strong> {data.general}
+            <strong>General:</strong> {data?.general}
           </p>
           <p>
-            <strong>Specific Regulations:</strong> {data.specific_regulations}
+            <strong>Specific Regulations:</strong> {data?.specific_regulations}
           </p>
           <p>
-            <strong>Legal Resources Links:</strong> {data.legal_resources_links}
+            <strong>Legal Resources Links:</strong> {data?.legal_resources_links}
           </p>
         </div>
       </div>

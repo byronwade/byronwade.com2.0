@@ -51,25 +51,13 @@ async function fetchMushroomResults(slug) {
 
 export async function generateMetadata({ params }) {
   const slug = params.slug.toString();
-  let responseData;
+  const responseData = await fetchMushroomResults(slug);
 
-  try {
-    responseData = await fetchMushroomResults(slug);
-  } catch (error) {
-    console.error('Fetch Mushroom Error:', error);
-    return <NoMushroomFound />;
-  }
-
-  const mushroomData = responseData.data;
-  if (!mushroomData || Object.keys(mushroomData).length === 0) {
-    return <NoMushroomFound />;
-  }
-
-  // Constructing metadata using mushroomData
-  const title = `Explore ${mushroomData.common_name} at Shroomageddon - Your Ultimate Mushroom Database`;
-  const description = `${mushroomData.common_name}: ${mushroomData.description}`;
-  const keywords = mushroomData.tags.join(', ');
-  //const imageUrl = mushroomData.visual_identifiers.images[0] || 'default-image-url.jpg'; // Replace with your default image URL
+  // Constructing metadata using responseData
+  const title = `Explore ${responseData?.common_name} at Shroomageddon - Your Ultimate Mushroom Database`;
+  const description = `${responseData?.common_name}: ${responseData?.description}`;
+  const keywords = responseData?.tags?.join(', ');
+  //const imageUrl = responseData?.visual_identifiers.images[0] || 'default-image-url.jpg'; // Replace with your default image URL
 
   // Metadata object
   return {
@@ -93,7 +81,7 @@ export async function generateMetadata({ params }) {
       telephone: false
     },
     category: 'Mycology',
-    bookmarks: [`${process.env.NEXT_PUBLIC_API_URL}/${mushroomData.slug}`],
+    bookmarks: [`${process.env.NEXT_PUBLIC_API_URL}/${responseData?.slug}`],
     twitter: {
       card: 'summary_large_image',
       title: title,
@@ -101,20 +89,20 @@ export async function generateMetadata({ params }) {
       creator: '@Shroomageddon', // Replace with actual Twitter handle
       images: {
         //url: imageUrl,
-        alt: mushroomData.common_name
+        alt: responseData?.common_name
       }
     },
     openGraph: {
       title: title,
       description: description,
-      url: `${process.env.NEXT_PUBLIC_API_URL}/${mushroomData.slug}`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/${responseData?.slug}`,
       siteName: 'Shroomageddon - Mushroom Database',
       images: [
         {
           //url: imageUrl,
           width: 800, // Adjust as per your image dimensions
           height: 600, // Adjust as per your image dimensions
-          alt: mushroomData.common_name
+          alt: responseData?.common_name
         }
         // ...additional images if available
       ],
@@ -126,20 +114,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Mushroom({ params }) {
   const slug = params.slug.toString();
-  let responseData;
-
-  try {
-    responseData = await fetchMushroomResults(slug);
-  } catch (error) {
-    console.error('Fetch Mushroom Error:', error);
-    return <NoMushroomFound />;
-  }
-
-  const mushroomData = responseData.data;
-  if (!mushroomData || Object.keys(mushroomData).length === 0) {
-    return <NoMushroomFound />;
-  }
-
+  const responseData = await fetchMushroomResults(slug);
   console.log('API Response:', responseData?.data);
 
   const {
@@ -168,7 +143,7 @@ export default async function Mushroom({ params }) {
     microscopic_features,
     physical_characteristics,
     edible
-  } = responseData.data;
+  } = responseData?.data;
 
   const names = {
     common_name: common_name,
@@ -180,7 +155,7 @@ export default async function Mushroom({ params }) {
   const HasImages = false;
   const IsHealthy = edible;
   const IsSafeToEat = edible;
-  const IsPoisonous = poisonous.is_poisonous;
+  const IsPoisonous = poisonous?.is_poisonous;
   const InSeason = false;
   const CanEdit = false;
 

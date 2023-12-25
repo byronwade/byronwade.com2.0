@@ -87,25 +87,25 @@ export default function Classification({ data, width }) {
 
           <h2 className="mb-2 text-xl font-bold">Classification</h2>
           <p>
-            <strong>Class:</strong> {data.class}
+            <strong>Class:</strong> {data?.class}
           </p>
           <p>
-            <strong>Genus:</strong> {data.genus}
+            <strong>Genus:</strong> {data?.genus}
           </p>
           <p>
-            <strong>Order:</strong> {data.order}
+            <strong>Order:</strong> {data?.order}
           </p>
           <p>
-            <strong>Family:</strong> {data.family}
+            <strong>Family:</strong> {data?.family}
           </p>
           <p>
-            <strong>Kingdom:</strong> {data.kingdom}
+            <strong>Kingdom:</strong> {data?.kingdom}
           </p>
           <p>
-            <strong>Species:</strong> {data.species}
+            <strong>Species:</strong> {data?.species}
           </p>
           <p>
-            <strong>Division:</strong> {data.division}
+            <strong>Division:</strong> {data?.division}
           </p>
         </div>
       </div>

@@ -11,14 +11,14 @@ export default function Name({ name, width }) {
   const getAvailableNames = () => {
     let names = [];
 
-    if (name.common_name && name.common_name !== 'NULL') {
-      names.push({ label: 'Common Name', value: name.common_name });
+    if (name?.common_name && name?.common_name !== 'NULL') {
+      names.push({ label: 'Common Name', value: name?.common_name });
     }
-    if (name.strain_name && name.strain_name !== 'NULL') {
-      names.push({ label: 'Strain Name', value: name.strain_name });
+    if (name?.strain_name && name?.strain_name !== 'NULL') {
+      names.push({ label: 'Strain Name', value: name?.strain_name });
     }
-    if (name.scientific_name && name.scientific_name !== 'NULL') {
-      names.push({ label: 'Scientific Name', value: name.scientific_name });
+    if (name?.scientific_name && name?.scientific_name !== 'NULL') {
+      names.push({ label: 'Scientific Name', value: name?.scientific_name });
     }
 
     return names.length > 0 ? names : [{ label: 'Name', value: 'Not Available' }];
@@ -32,12 +32,12 @@ export default function Name({ name, width }) {
         {availableNames.map((item, index) => (
           <div className="space-y-1" key={index}>
             <h2 className="text-xs font-medium me-2 px-2.5 py-0.5 rounded-md bg-gray-700 text-gray-300 inline-block">
-              {item.label}
+              {item?.label}
             </h2>
             {index === 0 ? (
-              <p className="text-4xl font-bold text-white">{item.value}</p>
+              <p className="text-4xl font-bold text-white">{item?.value}</p>
             ) : (
-              <span className="text-xs text-white">{item.value}</span>
+              <span className="text-xs text-white">{item?.value}</span>
             )}
           </div>
         ))}
