@@ -42,6 +42,7 @@ import PhysicalCharacteristics from './PhysicalCharacteristics';
 import PoisonousInfo from './Poisonous';
 
 async function fetchMushroomResults(slug) {
+  console.log(slug);
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/search?slug=${slug}`);
   if (!response.ok) {
     throw new Error(`Error: ${response.status}`);
@@ -158,7 +159,7 @@ export default async function Mushroom({ params }) {
             {/* <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} />
               <Origin data={origin} width={{ sm: 12, md: 6, lg: 7 }} />
-            </div>
+            </div> */}
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Year data={year_discovered} width={{ sm: 12, md: 6, lg: 4 }} />
@@ -167,8 +168,8 @@ export default async function Mushroom({ params }) {
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Classification data={classification} width={{ sm: 12, md: 6, lg: 6 }} />
-              {/* <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} />
-            </div> */}
+              {/* <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} /> */}
+            </div>
 
             {/* <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Zugz width={{ sm: 12, md: 2, lg: 3 }} />
