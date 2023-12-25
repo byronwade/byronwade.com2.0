@@ -54,9 +54,14 @@ export async function generateMetadata({ params }) {
   const responseData = await fetchMushroomResults(slug);
 
   // Constructing metadata using responseData
-  const title = `Explore ${responseData?.common_name} at Shroomageddon - Your Ultimate Mushroom Database`;
-  const description = `${responseData?.common_name}: ${responseData?.description}`;
-  const keywords = responseData?.tags?.join(', ');
+  const title = responseData?.common_name
+    ? `Explore ${responseData.common_name} at Shroomageddon - Your Ultimate Mushroom Database`
+    : 'Fallback Title';
+  const description =
+    responseData?.common_name && responseData.description
+      ? `${responseData?.common_name}: ${responseData?.description}`
+      : 'Fallback Description';
+  const keywords = responseData?.tags ? responseData?.tags?.join(', ') : 'Fallback Keywords';
   //const imageUrl = responseData?.visual_identifiers.images[0] || 'default-image-url.jpg'; // Replace with your default image URL
 
   // Metadata object
@@ -143,7 +148,7 @@ export default async function Mushroom({ params }) {
     microscopic_features,
     physical_characteristics,
     edible
-  } = responseData?.data;
+  } = responseData.data;
 
   const names = {
     common_name: common_name,
