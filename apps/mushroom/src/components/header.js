@@ -7,7 +7,7 @@ import ThemeSwitch from './ThemeSwitch';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-20 w-full flex flex-col md:flex-row md:items-center gap-3 p-3 lg:px-4 md:h-16 supports-[backdrop-filter]:bg-white/60 bg-white/95 backdrop-blur dark:supports-[backdrop-filter]:bg-black/60 dark:bg-black/95">
+    <header className="sticky top-0 z-50 w-full flex flex-col md:flex-row md:items-center gap-3 p-3 lg:px-4 md:h-16 supports-[backdrop-filter]:bg-white/60 bg-white/95 backdrop-blur dark:supports-[backdrop-filter]:bg-black/60 dark:bg-black/95">
       <div className="flex items-center w-full gap-8">
         <div className="flex items-center gap-2">
           <a

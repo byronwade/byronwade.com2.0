@@ -49,74 +49,6 @@ async function fetchMushroomResults(slug) {
   return response.json();
 }
 
-export async function generateMetadata({ params }) {
-  const slug = params.slug.toString();
-  const responseData = await fetchMushroomResults(slug);
-
-  // Constructing metadata using responseData
-  const title = responseData?.common_name
-    ? `Explore ${responseData.common_name} at Shroomageddon - Your Ultimate Mushroom Database`
-    : 'Fallback Title';
-  const description =
-    responseData?.common_name && responseData.description
-      ? `${responseData?.common_name}: ${responseData?.description}`
-      : 'Fallback Description';
-  const keywords = responseData?.tags ? responseData?.tags?.join(', ') : 'Fallback Keywords';
-  //const imageUrl = responseData?.visual_identifiers.images[0] || 'default-image-url.jpg'; // Replace with your default image URL
-
-  // Metadata object
-  return {
-    title: title,
-    description: description,
-    generator: 'Next.js',
-    applicationName: 'Shroomageddon - Mushroom Database',
-    keywords: keywords,
-    authors: [
-      {
-        name: 'Byron Wade',
-        url: `${process.env.NEXT_PUBLIC_API_URL}/`
-      }
-    ],
-    creator: 'Byron Wade',
-    publisher: 'Byron Wade',
-    alternates: {},
-    formatDetection: {
-      email: false,
-      address: false,
-      telephone: false
-    },
-    category: 'Mycology',
-    bookmarks: [`${process.env.NEXT_PUBLIC_API_URL}/${responseData?.slug}`],
-    twitter: {
-      card: 'summary_large_image',
-      title: title,
-      description: description,
-      creator: '@Shroomageddon', // Replace with actual Twitter handle
-      images: {
-        //url: imageUrl,
-        alt: responseData?.common_name
-      }
-    },
-    openGraph: {
-      title: title,
-      description: description,
-      url: `${process.env.NEXT_PUBLIC_API_URL}/${responseData?.slug}`,
-      siteName: 'Shroomageddon - Mushroom Database',
-      images: [
-        {
-          //url: imageUrl,
-          width: 800, // Adjust as per your image dimensions
-          height: 600, // Adjust as per your image dimensions
-          alt: responseData?.common_name
-        }
-        // ...additional images if available
-      ],
-      locale: 'en-US',
-      type: 'website'
-    }
-  };
-}
-
 export default async function Mushroom({ params }) {
   const slug = params.slug.toString();
   const responseData = await fetchMushroomResults(slug);
@@ -271,26 +203,6 @@ export default async function Mushroom({ params }) {
         <PhysicalCharacteristics data={physical_characteristics} />
         <PoisonousInfo data={poisonous} />
         {/* <Comments /> */}
-      </div>
-      <Footer />
-    </>
-  );
-}
-
-function NoMushroomFound() {
-  return (
-    <>
-      <Header />
-      <div className="flex flex-col items-center justify-center h-screen">
-        <Alert color="red" icon={<Info />} className="max-w-md p-4 mb-10">
-          <div className="ml-2">
-            <h2 className="text-lg font-bold">Mushroom Not Found</h2>
-            <p>Mushroom data could not be found. Please go back and try again.</p>
-          </div>
-        </Alert>
-        <Link href="/">
-          <Button>Go Back</Button>
-        </Link>
       </div>
       <Footer />
     </>
