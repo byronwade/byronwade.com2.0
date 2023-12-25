@@ -13,7 +13,7 @@ export { Button, IconButton, Alert };
 
 export function CombinedThemeProvider({ children, ...props }) {
   return (
-    <NextThemesProvider {...props} suppressHydrationWarning={true}>
+    <NextThemesProvider {...props}>
       <MaterialTailwindThemeProvider>{children}</MaterialTailwindThemeProvider>
     </NextThemesProvider>
   );

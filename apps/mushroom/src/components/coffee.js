@@ -2,7 +2,7 @@ import { Coffee } from 'react-feather';
 
 export default function FloatingCoffee() {
   return (
-    <div className="fixed bottom-6 right-6">
+    <div className="fixed z-30 bottom-6 right-6">
       <a
         href="https://www.buymeacoffee.com/vfyle26"
         target="_blank"

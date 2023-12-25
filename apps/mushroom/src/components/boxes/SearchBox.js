@@ -12,7 +12,7 @@ export default function SearchBox({ item, width }) {
       onClick={() =>
         track('Click', {
           event: 'mushroom_search',
-          mushroom: `https://www.shroomageddon.com/mushroom/${item.slug}`
+          mushroom: `${process.env.NEXT_PUBLIC_API_URL}/mushroom/${item.slug}`
         })
       }
       className={`hover:cursor-pointer group relative w-${width.sm}/12 md:w-${width.md}/12 lg:w-${width.lg}/12 h-64 p-4 border rounded-md text-black bg-gray-300 border-gray-400 dark:border-gray-800 dark:bg-gray-900 overflow-hidden`}

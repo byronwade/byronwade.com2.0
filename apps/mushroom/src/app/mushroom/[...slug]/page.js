@@ -1,17 +1,15 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { Heart, Facebook, Twitter, ArrowLeft, GitHub, Info } from 'react-feather';
-import { Button, IconButton, Alert } from '../../../utils/wrapper';
+import { Info } from 'react-feather';
+import { Alert, Button } from '../../../utils/wrapper';
 
 import Header from '../../../components/header';
 import Footer from '../../../components/footer';
-import Comments from '../../../components/comments';
+//import Comments from '../../../components/comments';
 import Toolbar from '../../../components/toolbar';
 
 import Name from '../../../components/boxes/Name';
 import HealthyBox from '../../../components/boxes/Healthy';
 import Editable from '../../../components/boxes/Editable';
-import Generic from '../../../components/boxes/Generic';
 import MushroomImages from '../../../components/MushroomImages';
 import Vertical from '../../../components/boxes/Vertical';
 import Description from '../../../components/boxes/Description';
@@ -21,10 +19,10 @@ import Origin from '../../../components/boxes/Origin';
 import Year from '../../../components/boxes/Year';
 import Seasion from '../../../components/boxes/Season';
 import Classification from '../../../components/boxes/Classification';
-import LegalStatus from '../../../components/boxes/LegalStatus';
-import FlavorProfile from '../../../components/boxes/FlavorProfile';
-import MedicalEffects from '../../../components/boxes/MedicalEffects';
-import Zugz from '../../../components/boxes/Zugzology';
+// import LegalStatus from '../../../components/boxes/LegalStatus';
+// import FlavorProfile from '../../../components/boxes/FlavorProfile';
+// import MedicalEffects from '../../../components/boxes/MedicalEffects';
+// import Zugz from '../../../components/boxes/Zugzology';
 
 import GrowthInfo from './GrowthInfo';
 import UserExperience from './UserExperiances';
@@ -43,23 +41,6 @@ import MicroscopicFeatures from './MicroscopicFeatures';
 import PhysicalCharacteristics from './PhysicalCharacteristics';
 import PoisonousInfo from './Poisonous';
 
-const mushroom = {
-  class: 'Agaricomycetes',
-  genus: 'Psilocybe',
-  order: 'Agaricales',
-  family: 'Hymenogastraceae',
-  kingdom: 'Fungi',
-  species: 'Cubensis',
-  division: 'Basidiomycota'
-};
-
-const legalStatus = {
-  note: 'Possession, sale, and use of psychedelic mushrooms are illegal in many countries. Users are advised to consult local regulations.',
-  general: 'Varies by country and region',
-  specific_regulations: 'Information not available',
-  legal_resources_links: 'Information not available'
-};
-
 async function fetchMushroomResults(slug) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/search?slug=${slug}`);
   if (!response.ok) {
@@ -69,9 +50,20 @@ async function fetchMushroomResults(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const slug = params.slug;
-  const responseData = await fetchMushroomResults(slug);
+  const slug = params.slug.toString();
+  let responseData;
+
+  try {
+    responseData = await fetchMushroomResults(slug);
+  } catch (error) {
+    console.error('Fetch Mushroom Error:', error);
+    return <NoMushroomFound />;
+  }
+
   const mushroomData = responseData.data;
+  if (!mushroomData || Object.keys(mushroomData).length === 0) {
+    return <NoMushroomFound />;
+  }
 
   // Constructing metadata using mushroomData
   const title = `Explore ${mushroomData.common_name} at Shroomageddon - Your Ultimate Mushroom Database`;
@@ -89,7 +81,7 @@ export async function generateMetadata({ params }) {
     authors: [
       {
         name: 'Byron Wade',
-        url: 'https://www.shroomageddon.com/'
+        url: `${process.env.NEXT_PUBLIC_API_URL}/`
       }
     ],
     creator: 'Byron Wade',
@@ -101,7 +93,7 @@ export async function generateMetadata({ params }) {
       telephone: false
     },
     category: 'Mycology',
-    bookmarks: [`https://www.shroomageddon.com/${mushroomData.slug}`],
+    bookmarks: [`${process.env.NEXT_PUBLIC_API_URL}/${mushroomData.slug}`],
     twitter: {
       card: 'summary_large_image',
       title: title,
@@ -115,7 +107,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: title,
       description: description,
-      url: `https://www.shroomageddon.com/${mushroomData.slug}`,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/${mushroomData.slug}`,
       siteName: 'Shroomageddon - Mushroom Database',
       images: [
         {
@@ -134,9 +126,21 @@ export async function generateMetadata({ params }) {
 
 export default async function Mushroom({ params }) {
   const slug = params.slug.toString();
-  console.log(slug);
-  const responseData = await fetchMushroomResults(slug);
-  console.log('API Response:', responseData.data);
+  let responseData;
+
+  try {
+    responseData = await fetchMushroomResults(slug);
+  } catch (error) {
+    console.error('Fetch Mushroom Error:', error);
+    return <NoMushroomFound />;
+  }
+
+  const mushroomData = responseData.data;
+  if (!mushroomData || Object.keys(mushroomData).length === 0) {
+    return <NoMushroomFound />;
+  }
+
+  console.log('API Response:', responseData?.data);
 
   const {
     common_name,
@@ -146,6 +150,7 @@ export default async function Mushroom({ params }) {
     origin,
     description,
     id,
+    classification,
     poisonous,
     growth_info,
     user_experience,
@@ -198,8 +203,8 @@ export default async function Mushroom({ params }) {
               Some data may not be accurate, we are in the process of improving the data while
               Shroomageddon is still in beta, if anyone would like to contribute or suggest a
               feature please email me at{' '}
-              <a href="mailto:bw@wadesinc.io" className="underline">
-                bw@wadesinc.io
+              <a href="shroomdatabase@gmail.com" className="underline">
+                shroomdatabase@gmail.com
               </a>
             </p>
           </div>
@@ -249,7 +254,7 @@ export default async function Mushroom({ params }) {
             </div>
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-              <Classification data={mushroom} width={{ sm: 12, md: 6, lg: 6 }} />
+              <Classification data={classification} width={{ sm: 12, md: 6, lg: 6 }} />
               {/* <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} /> */}
             </div>
 
@@ -286,6 +291,26 @@ export default async function Mushroom({ params }) {
         <PhysicalCharacteristics data={physical_characteristics} />
         <PoisonousInfo data={poisonous} />
         {/* <Comments /> */}
+      </div>
+      <Footer />
+    </>
+  );
+}
+
+function NoMushroomFound() {
+  return (
+    <>
+      <Header />
+      <div className="flex flex-col items-center justify-center h-screen">
+        <Alert color="red" icon={<Info />} className="max-w-md p-4 mb-10">
+          <div className="ml-2">
+            <h2 className="text-lg font-bold">Mushroom Not Found</h2>
+            <p>Mushroom data could not be found. Please go back and try again.</p>
+          </div>
+        </Alert>
+        <Link href="/">
+          <Button>Go Back</Button>
+        </Link>
       </div>
       <Footer />
     </>

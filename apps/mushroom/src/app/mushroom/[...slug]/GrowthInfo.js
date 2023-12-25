@@ -7,8 +7,6 @@ const formatFruitingConditions = (conditions) => {
   if (isInvalidValue(conditions)) {
     return 'Information not available';
   }
-
-  // Convert the object to an array of key-value pairs and map them to JSX elements
   return (
     <ul>
       {Object.entries(conditions).map(([key, value]) => (
@@ -21,19 +19,23 @@ const formatFruitingConditions = (conditions) => {
 const GrowthInfo = ({ data }) => {
   const [widths, setWidths] = useState({});
 
-  // Load widths from local storage or generate new ones only once
   useEffect(() => {
-    const storedWidths = localStorage.getItem('growthInfoWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('growthInfoWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('growthInfoWidths');
+      if (storedWidths) {
+        const parsedWidths = JSON.parse(storedWidths);
+        setWidths(parsedWidths);
+      } else {
+        const newWidths = getRandomWidths();
+        setWidths(newWidths);
+        localStorage.setItem('growthInfoWidths', JSON.stringify(newWidths));
+      }
+    } catch (error) {
+      console.error('Error parsing widths from localStorage:', error);
+      setWidths(getRandomWidths()); // Fallback to default widths on error
     }
   }, []);
 
-  // Function to generate random widths
   const getRandomWidths = () => {
     const allKeys = [
       'yield',
@@ -65,10 +67,6 @@ const GrowthInfo = ({ data }) => {
   };
 
   const renderBoxes = () => {
-    if (validItems.length === 0) {
-      return null;
-    }
-
     const chunkedItems = chunkArray(validItems, 3);
     return chunkedItems.map((chunk, chunkIndex) => (
       <div className="flex flex-col items-stretch w-full gap-4 sm:flex-row" key={chunkIndex}>
@@ -80,7 +78,7 @@ const GrowthInfo = ({ data }) => {
             width={{
               sm: 12,
               md: 6,
-              lg: widths[item.key]
+              lg: widths[item.key] || 6 // Fallback width
             }}
           />
         ))}
@@ -88,9 +86,11 @@ const GrowthInfo = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    console.warn('Growth information data is invalid or not provided');
+    return null;
   }
+
   let validItems = [
     { key: 'yield', title: 'Yield', content: data.yield },
     { key: 'season', title: 'Season', content: data.season },
@@ -111,8 +111,8 @@ const GrowthInfo = ({ data }) => {
     { key: 'mycelium_appearance', title: 'Mycelium Appearance', content: data.mycelium_appearance }
   ].filter((item) => !isInvalidValue(item.content));
 
-  // Return null if all items are invalid
   if (validItems.length === 0) {
+    console.warn('No valid growth information available');
     return null;
   }
 

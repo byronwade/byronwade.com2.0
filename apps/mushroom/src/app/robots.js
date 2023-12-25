@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: '/admin'
     },
-    sitemap: 'https://www.shroomageddon.com/sitemap.xml'
+    sitemap: `${process.env.NEXT_PUBLIC_API_URL}/sitemap.xml`
   };
 }

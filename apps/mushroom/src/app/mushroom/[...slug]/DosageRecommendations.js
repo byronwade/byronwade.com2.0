@@ -1,25 +1,28 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Generic from '../../../components/boxes/Generic';
-import { isInvalidValue } from '../../../utils/invalidValues';
 
 const DosageRecommendations = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('dosageRecommendationsWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('dosageRecommendationsWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('dosageRecommendationsWidths');
+      if (storedWidths) {
+        setWidths(JSON.parse(storedWidths));
+      } else {
+        const newWidths = generateRandomWidths();
+        setWidths(newWidths);
+        localStorage.setItem('dosageRecommendationsWidths', JSON.stringify(newWidths));
+      }
+    } catch (error) {
+      console.error('Error retrieving or storing widths:', error);
     }
   }, []);
 
-  const getRandomWidths = () => {
-    const allKeys = ['very_low', 'low', 'medium', 'high', 'very_high'];
-    return allKeys.reduce(
+  const generateRandomWidths = () => {
+    const keys = ['very_low', 'low', 'medium', 'high', 'very_high'];
+    return keys.reduce(
       (acc, key) => ({ ...acc, [key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4 }),
       {}
     );
@@ -34,8 +37,16 @@ const DosageRecommendations = ({ data }) => {
   };
 
   const renderBoxes = () => {
+    const validItems = Object.keys(data || {})
+      .filter((key) => data[key] !== 'Information not available' && data[key] !== null)
+      .map((key) => ({
+        key: key,
+        title: key.replace(/_/g, ' '),
+        content: data[key]
+      }));
+
     if (validItems.length === 0) {
-      return null;
+      return <p>No dosage recommendations available.</p>;
     }
 
     const chunkedItems = chunkArray(validItems, 3);
@@ -46,30 +57,16 @@ const DosageRecommendations = ({ data }) => {
             key={index}
             title={item.title}
             content={item.content}
-            width={{
-              sm: 12,
-              md: 6,
-              lg: widths[item.key]
-            }}
+            width={{ sm: 12, md: 6, lg: widths[item.key] || 6 }} // Fallback width if not found
           />
         ))}
       </div>
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  const validItems = [
-    { key: 'very_low', title: 'Very Low', content: data.very_low },
-    { key: 'low', title: 'Low', content: data.low },
-    { key: 'medium', title: 'Medium', content: data.medium },
-    { key: 'high', title: 'High', content: data.high },
-    { key: 'very_high', title: 'Very High', content: data.very_high }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  if (validItems.length === 0) {
-    return null; // Don't render anything if all items are invalid or "Not applicable"
+  if (!data || Object.keys(data).length === 0) {
+    console.warn('No data provided to DosageRecommendations component');
+    return null;
   }
 
   return (

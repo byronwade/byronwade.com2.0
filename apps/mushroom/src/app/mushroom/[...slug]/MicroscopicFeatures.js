@@ -7,19 +7,33 @@ const MicroscopicFeatures = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('microscopicFeaturesWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = validItems.reduce(
-        (acc, item) => ({
-          ...acc,
-          [item.key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4
-        }),
-        {}
+    try {
+      const storedWidths = localStorage.getItem('microscopicFeaturesWidths');
+      let widthsToUse = {};
+
+      if (storedWidths) {
+        widthsToUse = JSON.parse(storedWidths);
+      } else {
+        widthsToUse = validItems.reduce(
+          (acc, item) => ({
+            ...acc,
+            [item.key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4
+          }),
+          {}
+        );
+        localStorage.setItem('microscopicFeaturesWidths', JSON.stringify(widthsToUse));
+      }
+
+      setWidths(widthsToUse);
+    } catch (error) {
+      console.error('Error loading or parsing widths:', error);
+      // Fallback to default widths if error occurs
+      setWidths(
+        validItems.reduce(
+          (acc, item) => ({ ...acc, [item.key]: 6 }), // Default width of 6 for all items
+          {}
+        )
       );
-      setWidths(newWidths);
-      localStorage.setItem('microscopicFeaturesWidths', JSON.stringify(newWidths));
     }
   }, []);
 
@@ -43,7 +57,7 @@ const MicroscopicFeatures = ({ data }) => {
             width={{
               sm: 12,
               md: chunk.length === 1 ? 12 : 6,
-              lg: widths[item.key] || 4
+              lg: widths[item.key] || 4 // Fallback width if not set
             }}
           />
         ))}
@@ -51,8 +65,9 @@ const MicroscopicFeatures = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    console.warn('Microscopic features data is invalid or not provided');
+    return null;
   }
 
   let validItems = [
@@ -64,7 +79,8 @@ const MicroscopicFeatures = ({ data }) => {
   ].filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {
-    return null; // Do not render if all items are invalid
+    console.warn('No valid microscopic features information available');
+    return null;
   }
 
   return (

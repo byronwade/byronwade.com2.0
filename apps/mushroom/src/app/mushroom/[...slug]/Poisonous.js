@@ -11,17 +11,19 @@ const PoisonousInfo = ({ data }) => {
     if (storedWidths) {
       setWidths(JSON.parse(storedWidths));
     } else {
-      const newWidths = validItems.reduce(
-        (acc, item) => ({
-          ...acc,
-          [item.key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4
-        }),
-        {}
-      );
+      const newWidths = getRandomWidths();
       setWidths(newWidths);
       localStorage.setItem('poisonousInfoWidths', JSON.stringify(newWidths));
     }
   }, []);
+
+  const getRandomWidths = () => {
+    const allKeys = Object.keys(data || {});
+    return allKeys.reduce(
+      (acc, key) => ({ ...acc, [key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4 }),
+      {}
+    );
+  };
 
   const chunkArray = (array, size) => {
     const chunkedArr = [];
@@ -51,8 +53,8 @@ const PoisonousInfo = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    return null;
   }
 
   let validItems = Object.entries(data)
@@ -64,7 +66,7 @@ const PoisonousInfo = ({ data }) => {
     .filter((item) => !isInvalidValue(item.content) && item.content !== false);
 
   if (validItems.length === 0) {
-    return null; // If all items are invalid, do not render
+    return null;
   }
 
   return (

@@ -36,11 +36,11 @@ export default function Toolbar({ CanEdit, description, name, slug }) {
           <Heart className="w-4 h-4 m-auto" />
         </IconButton> */}
         <SocialShareButtons
-          url={`https://www.shroomageddon.com/mushroom/${slug}`}
-          message={`@Shroomageddon: ${availableNames[0].value} - ${description}`}
+          url={`${process.env.NEXT_PUBLIC_API_URL}/mushroom/${slug}`}
+          message={`@Shroomdatabase: ${availableNames[0].value} - ${description}`}
         />
         <QRCodeWithLogo
-          url={`https://www.shroomageddon.com/${slug}`}
+          url={`${process.env.NEXT_PUBLIC_API_URL}/${slug}`}
           logo="/shroomageddon_black.png"
         />
         {CanEdit ? (

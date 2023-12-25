@@ -7,22 +7,46 @@ const PhysicalCharacteristics = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('physicalCharacteristicsWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = validItems.reduce(
-        (acc, item) => ({
-          ...acc,
-          [item.key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4
-        }),
-        {}
+    try {
+      const storedWidths = localStorage.getItem('physicalCharacteristicsWidths');
+      let widthsToUse = {};
+
+      if (storedWidths) {
+        widthsToUse = JSON.parse(storedWidths);
+      } else {
+        widthsToUse = validItems.reduce(
+          (acc, item) => ({
+            ...acc,
+            [item.key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4
+          }),
+          {}
+        );
+        localStorage.setItem('physicalCharacteristicsWidths', JSON.stringify(widthsToUse));
+      }
+
+      setWidths(widthsToUse);
+    } catch (error) {
+      console.error('Error loading or parsing widths:', error);
+      setWidths(
+        validItems.reduce(
+          (acc, item) => ({ ...acc, [item.key]: 6 }), // Default width of 6 for all items
+          {}
+        )
       );
-      setWidths(newWidths);
-      localStorage.setItem('physicalCharacteristicsWidths', JSON.stringify(newWidths));
     }
   }, []);
 
+  const formatTitle = (key) => {
+    if (key === 'odor_and_taste') {
+      return 'Odor & Taste';
+    }
+    return key
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
+  // Function to chunk the array of items into smaller arrays
   const chunkArray = (array, size) => {
     const chunkedArr = [];
     for (let i = 0; i < array.length; i += size) {
@@ -38,7 +62,7 @@ const PhysicalCharacteristics = ({ data }) => {
         {chunk.map((item, index) => (
           <Generic
             key={index}
-            title={item.title}
+            title={formatTitle(item.key)}
             content={item.content}
             width={{
               sm: 12,
@@ -51,8 +75,9 @@ const PhysicalCharacteristics = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    console.warn('Physical characteristics data is invalid or not provided');
+    return null;
   }
 
   let validItems = Object.entries(data)
@@ -60,17 +85,16 @@ const PhysicalCharacteristics = ({ data }) => {
       if (typeof value === 'object') {
         return Object.entries(value).map(([subKey, subValue]) => ({
           key: `${key}_${subKey}`,
-          title: `${key.charAt(0).toUpperCase() + key.slice(1)} - ${
-            subKey.charAt(0).toUpperCase() + subKey.slice(1)
-          }`,
+          title: `${formatTitle(key)}: ${formatTitle(subKey)}`,
           content: subValue
         }));
       }
-      return [{ key, title: key.charAt(0).toUpperCase() + key.slice(1), content: value }];
+      return [{ key, title: formatTitle(key), content: value }];
     })
     .filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {
+    console.warn('No valid physical characteristics information available');
     return null;
   }
 

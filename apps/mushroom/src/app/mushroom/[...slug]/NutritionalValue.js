@@ -7,28 +7,35 @@ const NutritionalValueInfo = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('nutritionalValueWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('nutritionalValueWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('nutritionalValueWidths');
+      let widthsToUse = {};
+
+      if (storedWidths) {
+        widthsToUse = JSON.parse(storedWidths);
+      } else {
+        widthsToUse = validItems.reduce(
+          (acc, item) => ({
+            ...acc,
+            [item.key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4
+          }),
+          {}
+        );
+        localStorage.setItem('nutritionalValueWidths', JSON.stringify(widthsToUse));
+      }
+
+      setWidths(widthsToUse);
+    } catch (error) {
+      console.error('Error loading or parsing widths:', error);
+      // Fallback to default widths if error occurs
+      setWidths(
+        validItems.reduce(
+          (acc, item) => ({ ...acc, [item.key]: 6 }), // Default width of 6 for all items
+          {}
+        )
+      );
     }
   }, []);
-
-  const getRandomWidths = () => {
-    const allKeys = [
-      'mineral_content',
-      'protein_content',
-      'vitamin_content',
-      'carbohydrate_content'
-    ];
-    return allKeys.reduce(
-      (acc, key) => ({ ...acc, [key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4 }),
-      {}
-    );
-  };
 
   const chunkArray = (array, size) => {
     const chunkedArr = [];
@@ -50,7 +57,7 @@ const NutritionalValueInfo = ({ data }) => {
             width={{
               sm: 12,
               md: 6,
-              lg: widths[item.key]
+              lg: widths[item.key] || 4 // Fallback width if not set
             }}
           />
         ))}
@@ -58,9 +65,11 @@ const NutritionalValueInfo = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    console.warn('Nutritional value data is invalid or not provided');
+    return null;
   }
+
   let validItems = [
     { key: 'mineral_content', title: 'Mineral Content', content: data.mineral_content },
     { key: 'protein_content', title: 'Protein Content', content: data.protein_content },
@@ -72,8 +81,8 @@ const NutritionalValueInfo = ({ data }) => {
     }
   ].filter((item) => !isInvalidValue(item.content));
 
-  // Return null if all items are invalid
   if (validItems.length === 0) {
+    console.warn('No valid nutritional value information available');
     return null;
   }
 

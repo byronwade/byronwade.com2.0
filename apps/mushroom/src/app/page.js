@@ -156,8 +156,8 @@ export default function Search() {
                 Some data may not be accurate, we are in the process of improving the data while
                 Shroomageddon is still in beta, if anyone would like to contribute or suggest a
                 feature please email me at{' '}
-                <a href="mailto:bw@wadesinc.io" className="underline">
-                  bw@wadesinc.io
+                <a href="mailto:shroomdatabase@gmail.com" className="underline">
+                  shroomdatabase@gmail.com
                 </a>
               </p>
               {/* <Progress className="h-2" value={loadingProgress} /> */}

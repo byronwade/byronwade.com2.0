@@ -7,13 +7,19 @@ const GrowthConditionsInfo = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('growthConditionsWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('growthConditionsWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('growthConditionsWidths');
+      if (storedWidths) {
+        const parsedWidths = JSON.parse(storedWidths);
+        setWidths(parsedWidths);
+      } else {
+        const newWidths = getRandomWidths();
+        setWidths(newWidths);
+        localStorage.setItem('growthConditionsWidths', JSON.stringify(newWidths));
+      }
+    } catch (error) {
+      console.error('Error parsing widths from localStorage:', error);
+      setWidths(getRandomWidths()); // Set default widths in case of an error
     }
   }, []);
 
@@ -45,7 +51,7 @@ const GrowthConditionsInfo = ({ data }) => {
             width={{
               sm: 12,
               md: 6,
-              lg: widths[item.key]
+              lg: widths[item.key] || 6 // Fallback width in case of missing key
             }}
           />
         ))}
@@ -53,9 +59,11 @@ const GrowthConditionsInfo = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    console.warn('Growth conditions data is invalid or not provided');
+    return null;
   }
+
   let validItems = [
     { key: 'soil_type', title: 'Soil Type', content: data.soil_type },
     { key: 'pH_preference', title: 'pH Preference', content: data.pH_preference },
@@ -63,8 +71,8 @@ const GrowthConditionsInfo = ({ data }) => {
     { key: 'light_intensity', title: 'Light Intensity', content: data.light_intensity }
   ].filter((item) => !isInvalidValue(item.content));
 
-  // Return null if all items are invalid
   if (validItems.length === 0) {
+    console.warn('No valid growth conditions available');
     return null;
   }
 

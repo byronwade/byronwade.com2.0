@@ -7,17 +7,22 @@ const StorageInfo = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('storageInfoWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('storageInfoWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('storageInfoWidths');
+      if (storedWidths) {
+        const parsedWidths = JSON.parse(storedWidths);
+        setWidths(parsedWidths);
+      } else {
+        const newWidths = getRandomWidths();
+        setWidths(newWidths);
+        localStorage.setItem('storageInfoWidths', JSON.stringify(newWidths));
+      }
+    } catch (error) {
+      console.error('Error parsing widths from localStorage:', error);
+      setWidths(getRandomWidths()); // Fallback to default widths on error
     }
   }, []);
 
-  // Format the storage content for display
   const formatStorageContent = (storage) => {
     if (isInvalidValue(storage)) {
       return 'Information not available';
@@ -48,10 +53,6 @@ const StorageInfo = ({ data }) => {
   };
 
   const renderBoxes = () => {
-    if (validItems.length === 0) {
-      return null;
-    }
-
     const chunkedItems = chunkArray(validItems, 3);
     return chunkedItems.map((chunk, chunkIndex) => (
       <div className="flex flex-col items-stretch w-full gap-4 sm:flex-row" key={chunkIndex}>
@@ -63,7 +64,7 @@ const StorageInfo = ({ data }) => {
             width={{
               sm: 12,
               md: 6,
-              lg: widths[item.key]
+              lg: widths[item.key] || 6 // Fallback width
             }}
           />
         ))}
@@ -71,8 +72,9 @@ const StorageInfo = ({ data }) => {
     ));
   };
 
-  if (!data || !data.harvested_mushroom_storage) {
-    return null; // Check if data or harvested_mushroom_storage is not available
+  if (!data || typeof data !== 'object' || !data.harvested_mushroom_storage) {
+    console.warn('Storage data is invalid or not provided');
+    return null;
   }
 
   let validItems = [
@@ -98,6 +100,11 @@ const StorageInfo = ({ data }) => {
         : 'Information not available'
     }
   ].filter((item) => !isInvalidValue(item.content));
+
+  if (validItems.length === 0) {
+    console.warn('No valid storage information available');
+    return null;
+  }
 
   return (
     <div className="my-10">

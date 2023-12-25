@@ -1,25 +1,28 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Generic from '../../../components/boxes/Generic';
-import { isInvalidValue } from '../../../utils/invalidValues';
 
 const EducationalSummaryInfo = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('educationalSummaryWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('educationalSummaryWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('educationalSummaryWidths');
+      if (storedWidths) {
+        setWidths(JSON.parse(storedWidths));
+      } else {
+        const newWidths = generateRandomWidths();
+        setWidths(newWidths);
+        localStorage.setItem('educationalSummaryWidths', JSON.stringify(newWidths));
+      }
+    } catch (error) {
+      console.error('Error retrieving or storing widths:', error);
     }
   }, []);
 
-  const getRandomWidths = () => {
-    const allKeys = Object.keys(data);
-    return allKeys.reduce(
+  const generateRandomWidths = () => {
+    const keys = ['description', 'significance', 'safety_information'];
+    return keys.reduce(
       (acc, key) => ({ ...acc, [key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4 }),
       {}
     );
@@ -34,6 +37,18 @@ const EducationalSummaryInfo = ({ data }) => {
   };
 
   const renderBoxes = () => {
+    const validItems = Object.keys(data || {})
+      .filter((key) => data[key] !== 'Information not available' && data[key] !== null)
+      .map((key) => ({
+        key: key,
+        title: key.replace(/_/g, ' '),
+        content: data[key]
+      }));
+
+    if (validItems.length === 0) {
+      return <p>No educational summary available.</p>;
+    }
+
     const chunkedItems = chunkArray(validItems, 3);
     return chunkedItems.map((chunk, chunkIndex) => (
       <div className="flex flex-col items-stretch w-full gap-4 sm:flex-row" key={chunkIndex}>
@@ -42,28 +57,15 @@ const EducationalSummaryInfo = ({ data }) => {
             key={index}
             title={item.title}
             content={item.content}
-            width={{
-              sm: 12,
-              md: 6,
-              lg: widths[item.key]
-            }}
+            width={{ sm: 12, md: 6, lg: widths[item.key] || 6 }} // Fallback width if not found
           />
         ))}
       </div>
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
-  }
-  let validItems = [
-    { key: 'description', title: 'Description', content: data.description },
-    { key: 'significance', title: 'Significance', content: data.significance },
-    { key: 'safety_information', title: 'Safety Information', content: data.safety_information }
-  ].filter((item) => !isInvalidValue(item.content));
-
-  // Return null if all items are invalid
-  if (validItems.length === 0) {
+  if (!data || Object.keys(data).length === 0) {
+    console.warn('No data provided to EducationalSummaryInfo component');
     return null;
   }
 

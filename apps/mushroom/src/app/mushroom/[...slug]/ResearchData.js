@@ -7,17 +7,26 @@ const ResearchDataInfo = ({ data }) => {
   const [widths, setWidths] = useState({});
 
   useEffect(() => {
-    const storedWidths = localStorage.getItem('researchDataWidths');
-    if (storedWidths) {
-      setWidths(JSON.parse(storedWidths));
-    } else {
-      const newWidths = getRandomWidths();
-      setWidths(newWidths);
-      localStorage.setItem('researchDataWidths', JSON.stringify(newWidths));
+    try {
+      const storedWidths = localStorage.getItem('researchDataWidths');
+      if (storedWidths) {
+        const parsedWidths = JSON.parse(storedWidths);
+        setWidths(parsedWidths);
+      } else {
+        const newWidths = getRandomWidths();
+        setWidths(newWidths);
+        localStorage.setItem('researchDataWidths', JSON.stringify(newWidths));
+      }
+    } catch (error) {
+      console.error('Error parsing widths from localStorage:', error);
+      setWidths(getRandomWidths()); // Fallback to default widths on error
     }
   }, []);
 
   const getRandomWidths = () => {
+    if (!data || typeof data !== 'object') {
+      return {};
+    }
     const allKeys = Object.keys(data);
     return allKeys.reduce(
       (acc, key) => ({ ...acc, [key]: Math.floor(Math.random() * (12 - 4 + 1)) + 4 }),
@@ -45,7 +54,7 @@ const ResearchDataInfo = ({ data }) => {
             width={{
               sm: 12,
               md: 6,
-              lg: widths[item.key]
+              lg: widths[item.key] || 6 // Fallback width
             }}
           />
         ))}
@@ -53,9 +62,11 @@ const ResearchDataInfo = ({ data }) => {
     ));
   };
 
-  if (!data) {
-    return null; // If data is not provided, do not render the component
+  if (!data || typeof data !== 'object') {
+    console.warn('Research data is invalid or not provided');
+    return null;
   }
+
   let validItems = [
     { key: 'genetic_information', title: 'Genetic Information', content: data.genetic_information },
     {
@@ -75,8 +86,8 @@ const ResearchDataInfo = ({ data }) => {
     }
   ].filter((item) => !isInvalidValue(item.content));
 
-  // Return null if all items are invalid
   if (validItems.length === 0) {
+    console.warn('No valid research data information available');
     return null;
   }
 

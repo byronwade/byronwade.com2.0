@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="w-full min-h-screen dark">
+    <html lang="en" className="w-full min-h-screen dark" suppressHydrationWarning={true}>
       <body
         className={`min-h-screen flex flex-col justify-center bg-white dark:bg-black ${GeistSans.className}`}
       >
