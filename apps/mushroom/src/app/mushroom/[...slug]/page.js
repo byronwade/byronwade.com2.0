@@ -157,7 +157,7 @@ export default async function Mushroom({ params }) {
             ) : null}
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-              {/* <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} /> */}
+              <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} />
               <Origin data={origin} width={{ sm: 12, md: 6, lg: 7 }} />
             </div>
 
