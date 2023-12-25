@@ -9,6 +9,15 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import SearchBox from '../components/boxes/SearchBox';
 
+import algoliasearch from 'algoliasearch/lite';
+
+// Algolia configuration
+const algoliaAppId = '7H75IDUFAG';
+const algoliaApiKey = 'c25ad597c4940a14b3aefdef3bd4ec3d';
+const algoliaIndexName = 'mushrooms';
+const algoliaClient = algoliasearch(algoliaAppId, algoliaApiKey);
+const algoliaIndex = algoliaClient.initIndex(algoliaIndexName);
+
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
@@ -18,54 +27,24 @@ export default function Search() {
 
   const fetchSearchResults = async () => {
     setIsLoading(true);
-    let accumulatedData = [];
+    let hits = []; // Define hits outside of the try block
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/search?query=${searchTerm}`
-      );
+      // Perform a search using Algolia
+      const { hits: searchHits } = await algoliaIndex.search(searchTerm);
+      console.log('Algolia hits:', searchHits);
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+      if (!searchHits || searchHits.length === 0) {
+        throw new Error(`Error: ${searchHits.status}`);
       }
 
-      const reader = response.body.getReader();
-      let receivedChunks = '';
-      let streamActive = true;
-
-      while (streamActive) {
-        const { done, value } = await reader.read();
-        if (done) {
-          streamActive = false;
-          break;
-        }
-
-        receivedChunks += new TextDecoder('utf-8').decode(value);
-
-        while (receivedChunks.includes('}\n')) {
-          const endIndex = receivedChunks.indexOf('}\n');
-          const jsonChunk = receivedChunks.slice(0, endIndex + 1);
-          receivedChunks = receivedChunks.slice(endIndex + 2);
-
-          try {
-            const json = JSON.parse(jsonChunk);
-            if (json.progress !== undefined) {
-              // setLoadingProgress(json.progress); // Uncomment if you plan to use loadingProgress
-            }
-            if (json.data) {
-              accumulatedData.push(...json.data);
-            }
-          } catch (e) {
-            console.error('Error parsing chunk', e);
-          }
-        }
-      }
+      hits = searchHits; // Assign the hits inside the try block
     } catch (error) {
       console.error('Error fetching search results:', error);
     } finally {
       setIsLoading(false);
     }
-    return accumulatedData;
+    return hits;
   };
 
   const handleSearch = async (e) => {

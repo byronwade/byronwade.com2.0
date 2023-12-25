@@ -1,9 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-import { Button } from '../../utils/wrapper';
 
 import { Loader } from 'react-feather'; // Import Loader icon from react-feather
 
@@ -85,7 +83,11 @@ export default function Search() {
                 </p>
               </div>
 
-              <Button disabled={isSubmitting}>
+              <button
+                className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-black transition-colors bg-gray-300 rounded-md shadow whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-primary/90 h-9"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? (
                   <>
                     <Loader className="mr-2 animate-spin" />{' '}
@@ -95,7 +97,7 @@ export default function Search() {
                 ) : (
                   'Submit'
                 )}
-              </Button>
+              </button>
             </form>
 
             <>
