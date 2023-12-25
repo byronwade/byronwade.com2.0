@@ -31,7 +31,7 @@ export default function Search() {
 
     try {
       // Perform a search using Algolia
-      const { hits: searchHits } = await algoliaIndex.search(searchTerm);
+      const { hits: searchHits } = await algoliaIndex.search(searchTerm); //why is it now working
       console.log('Algolia hits:', searchHits);
 
       if (!searchHits || searchHits.length === 0) {
