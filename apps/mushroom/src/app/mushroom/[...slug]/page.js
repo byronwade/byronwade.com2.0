@@ -108,7 +108,7 @@ export default async function Mushroom({ params }) {
   return (
     <>
       <Header />
-      <div className="flex flex-col gap-4 p-2 px-4 py-10 mx-auto mt-16 text-black dark:text-white max-w-screen-2xl md:px-6">
+      <div className="flex flex-col gap-4 p-2 px-4 py-10 mx-auto text-black dark:text-white max-w-screen-2xl md:px-6">
         <Alert color="red" icon={<Info />} className="p-4 mb-10">
           <div className="pl-4">
             <h1 className="text-lg font-bold">Quick Notice</h1>

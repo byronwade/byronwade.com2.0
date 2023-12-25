@@ -8,7 +8,6 @@ export default function SearchBox({ item, width }) {
   return (
     <Link
       href={`/mushroom/${item?.slug}`}
-      target="_blank"
       onClick={() =>
         track('Click', {
           event: 'mushroom_search',

@@ -78,7 +78,7 @@ const PotencyInfo = ({ data }) => {
   if (validItems.length > 0) {
     return (
       <div className="my-10">
-        <h1 className="my-4 text-5xl font-bold">Potency Information</h1>
+        <h1 className="my-4 text-2xl md:text-5xl font-bold">Potency Information</h1>
         <div className="flex flex-col items-stretch w-full gap-4">{renderBoxes()}</div>
       </div>
     );

@@ -35,7 +35,7 @@ const QRCodeWithLogo = ({ url, logo }) => {
   return (
     <Button onClick={downloadQRCode} className="flex items-center gap-3">
       <Download className="w-4 h-4" />
-      Download QR Code
+      <span className="hidden sm:inline-block">Download QR Code</span>
     </Button>
   );
 };

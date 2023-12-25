@@ -65,6 +65,12 @@ export default function Search() {
     const numberOfRows = Math.ceil(newResults.length / 3);
     const newWidths = Array.from({ length: numberOfRows }, () => getRandomWidthsForThree());
     saveWidthsToLocalStorage(newWidths);
+
+    // Programmatically blur the input field to hide the soft keyboard
+    const inputField = document.getElementById('home-prompt'); // Replace 'home-prompt' with the actual ID of your input field
+    if (inputField) {
+      inputField.blur();
+    }
   };
 
   function getRandomWidthsForThree() {
@@ -127,7 +133,7 @@ export default function Search() {
   return (
     <>
       <Header />
-      <main className="flex-1 mt-16">
+      <main className="flex-1">
         <div className="flex py-[10vh] my-12 justify-center items-center">
           <div className="relative flex flex-col items-center w-full px-6">
             <div className="mb-10">
@@ -150,6 +156,7 @@ export default function Search() {
                       Search
                     </label>
                     <input
+                      id="home-prompt"
                       className="h-[47px] flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-teal-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&_textarea]:px-0"
                       spellCheck="true"
                       placeholder="Search for a shroom..."

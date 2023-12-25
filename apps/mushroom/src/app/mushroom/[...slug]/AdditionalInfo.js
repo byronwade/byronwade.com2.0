@@ -86,7 +86,7 @@ const AdditionalInfo = ({ data }) => {
 
   return (
     <div className="my-10">
-      <h1 className="my-4 text-5xl font-bold">Additional Information</h1>
+      <h1 className="my-4 text-2xl font-bold md:text-5xl">Additional Information</h1>
       <div className="flex flex-col items-stretch w-full gap-4">{renderBoxes()}</div>
     </div>
   );

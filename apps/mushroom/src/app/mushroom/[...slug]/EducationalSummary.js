@@ -74,7 +74,7 @@ const EducationalSummaryInfo = ({ data }) => {
 
   return (
     <div className="my-10">
-      <h1 className="my-4 text-5xl font-bold">Educational Summary</h1>
+      <h1 className="my-4 text-2xl md:text-5xl font-bold">Educational Summary</h1>
       <div className="flex flex-col items-stretch w-full gap-4">{renderBoxes()}</div>
     </div>
   );

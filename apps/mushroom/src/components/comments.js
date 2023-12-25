@@ -96,7 +96,7 @@ export default function Comments() {
 
   return (
     <div className="my-10">
-      <h1 className="my-4 text-5xl font-bold">Users Thoughts</h1>
+      <h1 className="my-4 text-2xl md:text-5xl font-bold">Users Thoughts</h1>
       <div className="relative gap-4 overflow-hidden transition-all columns-1 sm:columns-2 lg:columns-3">
         {comments.map((comment, index) => (
           <div key={index} className="z-0 mb-4 text-gray-300 break-inside-avoid-column">
