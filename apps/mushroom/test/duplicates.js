@@ -1,65 +1,65 @@
-const { createClient } = require('@supabase/supabase-js');
-
-const supabaseUrl = 'https://xmyialnxjvkyxmpbuvis.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhteWlhbG54anZreXhtcGJ1dmlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI1MzYxNTMsImV4cCI6MjAxODExMjE1M30.hZ3-vMSXeVHIEoPAwEaaH6kUrNLNGwFnWPswbuvoLg4';
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { createClient } from '@supabase/supabase-js';
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
 function normalizeString(str) {
+  if (!str) return '';
   return str
     .toLowerCase()
+    .trim()
+    .replace(/[\s\-_]+/g, '')
     .replace(/[^a-z0-9]/gi, '')
-    .replace(/mushroom/g, '')
-    .replace(/\s+/g, '');
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 }
 
-async function removeDuplicates(mushrooms) {
-  const uniqueNormalizedNames = new Map();
-  const duplicateIds = new Set();
+async function removeDuplicates() {
+  const limit = 100;
+  let totalDuplicatesRemoved = 0;
+  let index = 0;
 
-  mushrooms.forEach((mushroom) => {
-    if (mushroom.common_name) {
-      const normalized = normalizeString(mushroom.common_name);
-      const existingEntry = uniqueNormalizedNames.get(normalized);
+  // Fetch the total count of rows in the database
+  const { count: totalRows } = await supabase.from('mushrooms').select('id', { count: 'exact' });
 
-      if (existingEntry) {
-        duplicateIds.add(mushroom.id);
-      } else {
-        uniqueNormalizedNames.set(normalized, mushroom);
-      }
-    }
-  });
-
-  console.log(`Found ${duplicateIds.size} duplicates to remove`);
-  console.log('Duplicates removed successfully');
-}
-
-async function normalizeAndRemoveDuplicates() {
-  let startIndex = 0;
-  const batchSize = 1000; // Number of rows per batch
-  let hasMore = true;
-
-  while (hasMore) {
-    let { data: mushrooms, error } = await supabase
+  while (index < totalRows) {
+    const { data: mushrooms, error } = await supabase
       .from('mushrooms')
-      .select('id, common_name', { count: 'exact' })
-      .range(startIndex, startIndex + batchSize - 1);
+      .select('id, common_name')
+      .range(index, index + limit - 1);
 
     if (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching mushrooms:', error);
       break;
     }
 
-    console.log(`Fetched ${mushrooms.length} mushrooms`);
+    const groupedByName = mushrooms.reduce((acc, mushroom) => {
+      const normalized = normalizeString(mushroom.common_name);
+      if (!acc[normalized]) {
+        acc[normalized] = [];
+      }
+      acc[normalized].push(mushroom.id);
+      return acc;
+    }, {});
 
-    await removeDuplicates(mushrooms);
+    const duplicates = Object.values(groupedByName).flatMap((ids) => ids.slice(1));
 
-    if (mushrooms.length < batchSize) {
-      hasMore = false;
-    } else {
-      startIndex += batchSize;
+    if (duplicates.length > 0) {
+      const { error: deleteError } = await supabase.from('mushrooms').delete().in('id', duplicates);
+      if (deleteError) {
+        console.error('Error removing duplicates:', deleteError);
+      } else {
+        console.log(`Removed ${duplicates.length} duplicates.`);
+        totalDuplicatesRemoved += duplicates.length;
+      }
     }
+
+    index += limit;
   }
+
+  console.log(`Total duplicates removed: ${totalDuplicatesRemoved}`);
 }
 
-normalizeAndRemoveDuplicates();
+async function main() {
+  await removeDuplicates();
+}
+
+main();
