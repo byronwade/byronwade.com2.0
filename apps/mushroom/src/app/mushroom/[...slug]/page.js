@@ -134,7 +134,7 @@ export default async function Mushroom({ params }) {
               <Name name={names} width={{ sm: 12, md: 12, lg: 12 }} />
             </div>
 
-            <div className="flex items-stretch w-full gap-4">
+            {/* <div className="flex items-stretch w-full gap-4">
               <HealthyBox isTrue={IsHealthy} width={{ sm: 6, md: 6, lg: 6 }} />
               <Editable isTrue={IsSafeToEat} width={{ sm: 6, md: 6, lg: 6 }} />
             </div>
@@ -167,8 +167,8 @@ export default async function Mushroom({ params }) {
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Classification data={classification} width={{ sm: 12, md: 6, lg: 6 }} />
-              {/* <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} /> */}
-            </div>
+              {/* <LegalStatus data={legalStatus} width={{ sm: 12, md: 6, lg: 6 }} />
+            </div> */}
 
             {/* <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Zugz width={{ sm: 12, md: 2, lg: 3 }} />
