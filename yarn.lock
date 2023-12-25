@@ -2258,6 +2258,11 @@ domutils@^3.0.1:
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
 
+dotenv@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.3.1.tgz"
+  integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
+
 dotenv@16.0.3:
   version "16.0.3"
   resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
@@ -4450,6 +4455,7 @@ ms@2.0.0:
     "@supabase/supabase-js" "^2.39.0"
     "@vercel/analytics" "^1.1.1"
     "@vercel/speed-insights" "^1.0.2"
+    algoliasearch "^4.22.0"
     api "^6.1.1"
     cheerio "^1.0.0-rc.12"
     cobe "^0.6.3"
