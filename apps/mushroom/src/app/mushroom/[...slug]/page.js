@@ -156,10 +156,10 @@ export default async function Mushroom({ params }) {
               </div>
             ) : null}
 
-            {/* <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
-              <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} />
+            <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
+              {/* <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} /> */}
               <Origin data={origin} width={{ sm: 12, md: 6, lg: 7 }} />
-            </div> */}
+            </div>
 
             <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Year data={year_discovered} width={{ sm: 12, md: 6, lg: 4 }} />
