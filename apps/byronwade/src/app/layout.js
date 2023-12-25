@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { CombinedThemeProvider } from '../utils/wrapper';
@@ -22,7 +21,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="w-full min-h-screen dark" suppressHydrationWarning={true}>
-      <body className={`bg-white dark:bg-black ${GeistSans.className}`}>
+      <body
+        className={`bg-white2 text-black2 dark:text-white2 dark:bg-black2 ${GeistSans.className}`}
+      >
         <CombinedThemeProvider
           attribute="class"
           defaultTheme="system"
