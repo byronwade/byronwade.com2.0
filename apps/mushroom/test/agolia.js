@@ -1,5 +1,16 @@
 const algoliasearch = require('algoliasearch'); // Use require for CommonJS
 const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(
+  'https://xmyialnxjvkyxmpbuvis.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhteWlhbG54anZreXhtcGJ1dmlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDI1MzYxNTMsImV4cCI6MjAxODExMjE1M30.hZ3-vMSXeVHIEoPAwEaaH6kUrNLNGwFnWPswbuvoLg4'
+);
+
+// Algolia configuration
+const algoliaAppId = '7H75IDUFAG';
+const algoliaApiKey = 'c25ad597c4940a14b3aefdef3bd4ec3d';
+const algoliaIndexName = 'mushrooms';
+const algoliaClient = algoliasearch(algoliaAppId, algoliaApiKey);
+const algoliaIndex = algoliaClient.initIndex(algoliaIndexName);
 
 async function fetchAndUploadDataToAlgolia() {
   try {
