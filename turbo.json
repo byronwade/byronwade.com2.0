@@ -20,7 +20,9 @@
     "GOOGLE_API_KEY",
     "NEXT_PUBLIC_API_URL",
     "SUPABASE_URL",
-    "SUPABASE_API_KEY"
+    "SUPABASE_API_KEY",
+    "AGOLIA_APP_ID",
+    "AGOLIA_AKI_KEY"
   ],
   "globalDependencies": [
     "OPENAI_API_KEY",
@@ -30,6 +32,8 @@
     "GOOGLE_API_KEY",
     "NEXT_PUBLIC_API_URL",
     "SUPABASE_URL",
-    "SUPABASE_API_KEY"
+    "SUPABASE_API_KEY",
+    "AGOLIA_APP_ID",
+    "AGOLIA_AKI_KEY"
   ]
 }
