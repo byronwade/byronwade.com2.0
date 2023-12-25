@@ -134,7 +134,7 @@ export default async function Mushroom({ params }) {
               <Name name={names} width={{ sm: 12, md: 12, lg: 12 }} />
             </div>
 
-            {/* <div className="flex items-stretch w-full gap-4">
+            <div className="flex items-stretch w-full gap-4">
               <HealthyBox isTrue={IsHealthy} width={{ sm: 6, md: 6, lg: 6 }} />
               <Editable isTrue={IsSafeToEat} width={{ sm: 6, md: 6, lg: 6 }} />
             </div>
@@ -155,7 +155,7 @@ export default async function Mushroom({ params }) {
               </div>
             ) : null}
 
-            <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
+            {/* <div className="flex flex-col items-stretch w-full gap-4 md:flex-row">
               <Tags data={tags} width={{ sm: 12, md: 6, lg: 5 }} />
               <Origin data={origin} width={{ sm: 12, md: 6, lg: 7 }} />
             </div>
@@ -186,7 +186,7 @@ export default async function Mushroom({ params }) {
           </div>
         </div>
 
-        {/* <GrowthInfo data={growth_info} />
+        <GrowthInfo data={growth_info} />
         <UserExperience data={user_experience} />
         <NutritionalValueInfo data={nutritional_value} />
         <MedicinalPropertiesInfo data={medicinal_properties} />
@@ -201,7 +201,7 @@ export default async function Mushroom({ params }) {
         <PotencyInfo data={potency_info} />
         <MicroscopicFeatures data={microscopic_features} />
         <PhysicalCharacteristics data={physical_characteristics} />
-        <PoisonousInfo data={poisonous} /> */}
+        <PoisonousInfo data={poisonous} />
         {/* <Comments /> */}
       </div>
       <Footer />
