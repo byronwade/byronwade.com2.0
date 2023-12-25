@@ -12,8 +12,8 @@ import SearchBox from '../components/boxes/SearchBox';
 import algoliasearch from 'algoliasearch/lite';
 
 // Algolia configuration
-const algoliaAppId = '7H75IDUFAG';
-const algoliaApiKey = 'c25ad597c4940a14b3aefdef3bd4ec3d';
+const algoliaAppId = process.env.AGOLIA_APP_ID;
+const algoliaApiKey = process.env.AGOLIA_AKI_KEY;
 const algoliaIndexName = 'mushrooms';
 const algoliaClient = algoliasearch(algoliaAppId, algoliaApiKey);
 const algoliaIndex = algoliaClient.initIndex(algoliaIndexName);
