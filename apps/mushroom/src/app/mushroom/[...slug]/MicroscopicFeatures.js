@@ -71,11 +71,15 @@ const MicroscopicFeatures = ({ data }) => {
   }
 
   let validItems = [
-    { key: 'spores', title: 'Spores', content: data.spores },
-    { key: 'basidia', title: 'Basidia', content: data.basidia },
-    { key: 'pileipellis', title: 'Pileipellis', content: data.pileipellis },
-    { key: 'cheilocystidia', title: 'Cheilocystidia', content: data.cheilocystidia },
-    { key: 'clamp_connections', title: 'Clamp Connections', content: data.clamp_connections }
+    { key: 'spores', title: 'Spores', content: data && data.spores },
+    { key: 'basidia', title: 'Basidia', content: data && data.basidia },
+    { key: 'pileipellis', title: 'Pileipellis', content: data && data.pileipellis },
+    { key: 'cheilocystidia', title: 'Cheilocystidia', content: data && data.cheilocystidia },
+    {
+      key: 'clamp_connections',
+      title: 'Clamp Connections',
+      content: data && data.clamp_connections
+    }
   ].filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {

@@ -65,10 +65,10 @@ const GrowthConditionsInfo = ({ data }) => {
   }
 
   let validItems = [
-    { key: 'soil_type', title: 'Soil Type', content: data.soil_type },
-    { key: 'pH_preference', title: 'pH Preference', content: data.pH_preference },
-    { key: 'altitude_range', title: 'Altitude Range', content: data.altitude_range },
-    { key: 'light_intensity', title: 'Light Intensity', content: data.light_intensity }
+    { key: 'soil_type', title: 'Soil Type', content: data && data.soil_type },
+    { key: 'pH_preference', title: 'pH Preference', content: data && data.pH_preference },
+    { key: 'altitude_range', title: 'Altitude Range', content: data && data.altitude_range },
+    { key: 'light_intensity', title: 'Light Intensity', content: data && data.light_intensity }
   ].filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {

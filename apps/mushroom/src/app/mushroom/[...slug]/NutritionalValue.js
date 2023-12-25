@@ -71,9 +71,9 @@ const NutritionalValueInfo = ({ data }) => {
   }
 
   let validItems = [
-    { key: 'mineral_content', title: 'Mineral Content', content: data.mineral_content },
-    { key: 'protein_content', title: 'Protein Content', content: data.protein_content },
-    { key: 'vitamin_content', title: 'Vitamin Content', content: data.vitamin_content },
+    { key: 'mineral_content', title: 'Mineral Content', content: data && data.mineral_content },
+    { key: 'protein_content', title: 'Protein Content', content: data && data.protein_content },
+    { key: 'vitamin_content', title: 'Vitamin Content', content: data && data.vitamin_content },
     {
       key: 'carbohydrate_content',
       title: 'Carbohydrate Content',

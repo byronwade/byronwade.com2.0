@@ -37,6 +37,9 @@ const EducationalSummaryInfo = ({ data }) => {
   };
 
   const renderBoxes = () => {
+    if (!data) {
+      return <p>No additional information available.</p>;
+    }
     const validItems = Object.keys(data || {})
       .filter((key) => data[key] !== 'Information not available' && data[key] !== null)
       .map((key) => ({

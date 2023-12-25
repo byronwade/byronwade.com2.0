@@ -23,6 +23,10 @@ const CiteSourcesInfo = ({ data }) => {
   }, []);
 
   useEffect(() => {
+    if (!data) {
+      return <p>No additional information available.</p>;
+    }
+
     const filteredItems = Object.entries(data || {})
       .filter(([key, source]) => isValidContent(source))
       .map(([key, source]) => ({

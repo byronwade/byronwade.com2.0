@@ -68,8 +68,18 @@ const LegalStatus = ({ data }) => {
   }
 
   let validItems = [
-    // Mapping data fields to items for rendering
-    // ... same as your existing code for constructing validItems
+    { key: 'note', title: 'Note', content: data && data.note },
+    { key: 'general', title: 'General Status', content: data && data.general },
+    {
+      key: 'specific_regulations',
+      title: 'Specific Regulations',
+      content: data && data.specific_regulations
+    },
+    {
+      key: 'legal_resources_links',
+      title: 'Legal Resources Links',
+      content: data && data.legal_resources_links
+    }
   ].filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {

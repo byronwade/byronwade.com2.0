@@ -88,18 +88,20 @@ const StorageInfo = ({ data }) => {
     {
       key: 'harvested_mushroom_storage_dried',
       title: 'Harvested Mushroom Storage (Dried)',
-      content: data.harvested_mushroom_storage.dried
-        ? formatStorageContent(data.harvested_mushroom_storage.dried)
-        : 'Information not available'
+      content:
+        data.harvested_mushroom_storage && data.harvested_mushroom_storage.dried
+          ? formatStorageContent(data.harvested_mushroom_storage.dried)
+          : 'Information not available'
     },
     {
       key: 'harvested_mushroom_storage_fresh',
       title: 'Harvested Mushroom Storage (Fresh)',
-      content: data.harvested_mushroom_storage.fresh
-        ? formatStorageContent(data.harvested_mushroom_storage.fresh)
-        : 'Information not available'
+      content:
+        data.harvested_mushroom_storage && data.harvested_mushroom_storage.fresh
+          ? formatStorageContent(data.harvested_mushroom_storage.fresh)
+          : 'Information not available'
     }
-  ].filter((item) => !isInvalidValue(item.content));
+  ].filter((item) => item.content !== 'Information not available');
 
   if (validItems.length === 0) {
     console.warn('No valid storage information available');

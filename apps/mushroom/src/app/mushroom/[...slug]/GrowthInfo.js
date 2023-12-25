@@ -92,23 +92,39 @@ const GrowthInfo = ({ data }) => {
   }
 
   let validItems = [
-    { key: 'yield', title: 'Yield', content: data.yield },
-    { key: 'season', title: 'Season', content: data.season },
-    { key: 'substrate', title: 'Substrate', content: data.substrate },
-    { key: 'difficulty', title: 'Difficulty', content: data.difficulty },
-    { key: 'spawn_type', title: 'Spawn Type', content: data.spawn_type },
-    { key: 'fruiting_time', title: 'Fruiting Time', content: data.fruiting_time },
-    { key: 'typical_yield', title: 'Typical Yield', content: data.typical_yield },
-    { key: 'cultivation_time', title: 'Cultivation Time', content: data.cultivation_time },
-    { key: 'incubation_period', title: 'Incubation Period', content: data.incubation_period },
-    { key: 'fruiting_frequency', title: 'Fruiting Frequency', content: data.fruiting_frequency },
-    { key: 'common_contaminants', title: 'Common Contaminants', content: data.common_contaminants },
+    { key: 'yield', title: 'Yield', content: data && data.yield },
+    { key: 'season', title: 'Season', content: data && data.season },
+    { key: 'substrate', title: 'Substrate', content: data && data.substrate },
+    { key: 'difficulty', title: 'Difficulty', content: data && data.difficulty },
+    { key: 'spawn_type', title: 'Spawn Type', content: data && data.spawn_type },
+    { key: 'fruiting_time', title: 'Fruiting Time', content: data && data.fruiting_time },
+    { key: 'typical_yield', title: 'Typical Yield', content: data && data.typical_yield },
+    { key: 'cultivation_time', title: 'Cultivation Time', content: data && data.cultivation_time },
+    {
+      key: 'incubation_period',
+      title: 'Incubation Period',
+      content: data && data.incubation_period
+    },
+    {
+      key: 'fruiting_frequency',
+      title: 'Fruiting Frequency',
+      content: data && data.fruiting_frequency
+    },
+    {
+      key: 'common_contaminants',
+      title: 'Common Contaminants',
+      content: data && data.common_contaminants
+    },
     {
       key: 'fruiting_conditions',
       title: 'Fruiting Conditions',
-      content: formatFruitingConditions(data.fruiting_conditions)
+      content: data && formatFruitingConditions(data.fruiting_conditions)
     },
-    { key: 'mycelium_appearance', title: 'Mycelium Appearance', content: data.mycelium_appearance }
+    {
+      key: 'mycelium_appearance',
+      title: 'Mycelium Appearance',
+      content: data && data.mycelium_appearance
+    }
   ].filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {

@@ -57,7 +57,7 @@ const PotencyInfo = ({ data }) => {
       title: 'Dosage Recommendations',
       content: formatDosageRecommendations(data.dosage_recommendations_specific_effects)
     }
-  ].filter((item) => !isInvalidValue(item.content) && item.content !== 'Not applicable');
+  ].filter((item) => item.content !== undefined && item.content !== 'Not applicable');
 
   const renderBoxes = () => {
     const chunkedItems = chunkArray(validItems, 3);

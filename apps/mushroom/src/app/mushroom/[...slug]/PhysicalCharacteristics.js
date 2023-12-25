@@ -86,12 +86,18 @@ const PhysicalCharacteristics = ({ data }) => {
         return Object.entries(value).map(([subKey, subValue]) => ({
           key: `${key}_${subKey}`,
           title: `${formatTitle(key)}: ${formatTitle(subKey)}`,
-          content: subValue
+          content: subValue && !isInvalidValue(subValue) ? subValue : undefined
         }));
       }
-      return [{ key, title: formatTitle(key), content: value }];
+      return [
+        {
+          key,
+          title: formatTitle(key),
+          content: value && !isInvalidValue(value) ? value : undefined
+        }
+      ];
     })
-    .filter((item) => !isInvalidValue(item.content));
+    .filter((item) => item && item.content !== undefined);
 
   if (validItems.length === 0) {
     console.warn('No valid physical characteristics information available');

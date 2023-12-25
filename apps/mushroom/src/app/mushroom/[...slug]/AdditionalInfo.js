@@ -48,15 +48,17 @@ const AdditionalInfo = ({ data }) => {
   };
 
   const renderBoxes = () => {
-    const validItems = data
-      ? Object.entries(data)
-          .filter(([key, value]) => isValidContent(value))
-          .map(([key, value]) => ({
-            key: key,
-            title: formatTitle(key),
-            content: value
-          }))
-      : [];
+    if (!data) {
+      return <p>No additional information available.</p>;
+    }
+
+    const validItems = Object.entries(data)
+      .filter(([key, value]) => isValidContent(value))
+      .map(([key, value]) => ({
+        key: key,
+        title: formatTitle(key),
+        content: value
+      }));
 
     if (validItems.length === 0) {
       return <p>No additional information available.</p>;

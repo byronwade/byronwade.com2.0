@@ -84,7 +84,7 @@ const ResearchDataInfo = ({ data }) => {
       title: 'Habitat and Distribution',
       content: data.habitat_and_distribution
     }
-  ].filter((item) => !isInvalidValue(item.content));
+  ].filter((item) => item.content !== undefined);
 
   if (validItems.length === 0) {
     console.warn('No valid research data information available');

@@ -61,9 +61,9 @@ const PoisonousInfo = ({ data }) => {
     .map(([key, value]) => ({
       key,
       title: key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
-      content: value
+      content: value !== undefined && value !== false && !isInvalidValue(value) ? value : undefined
     }))
-    .filter((item) => !isInvalidValue(item.content) && item.content !== false);
+    .filter((item) => item && item.content !== undefined);
 
   if (validItems.length === 0) {
     return null;

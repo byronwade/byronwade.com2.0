@@ -68,9 +68,9 @@ const MedicinalPropertiesInfo = ({ data }) => {
   }
 
   let validItems = [
-    { key: 'clinical_trials', title: 'Clinical Trials', content: data.clinical_trials },
-    { key: 'active_compounds', title: 'Active Compounds', content: data.active_compounds },
-    { key: 'traditional_uses', title: 'Traditional Uses', content: data.traditional_uses }
+    { key: 'clinical_trials', title: 'Clinical Trials', content: data && data.clinical_trials },
+    { key: 'active_compounds', title: 'Active Compounds', content: data && data.active_compounds },
+    { key: 'traditional_uses', title: 'Traditional Uses', content: data && data.traditional_uses }
   ].filter((item) => !isInvalidValue(item.content));
 
   if (validItems.length === 0) {
