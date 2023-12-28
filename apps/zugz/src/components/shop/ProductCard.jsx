@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function ProductCard({ product }) {
   const { id, imageAlt, imageSrc, name, color, price, href } = product;
@@ -502,17 +503,19 @@ export function ProductStrain6({ strain }) {
     medicalEffects
   } = strain;
   return (
-    <Link href="/strains/strain" className="flex flex-col">
-      <section className="relative flex flex-col justify-end w-full h-64 px-4 mx-auto rounded-md isolate">
-        <img
+    <Link href="/strains/strain" className="flex flex-col h-full">
+      <div className="relative flex flex-col justify-end w-full h-64 px-4 mx-auto border rounded-t-md isolate border-neutral-800">
+        <Image
+          width={400}
+          height={400}
           src={imageSrc}
           alt={imageAlt}
           className="absolute top-0 bottom-0 left-0 object-cover w-full h-full rounded-md"
         />
         <div className="absolute inset-0 left-0 rounded-md bg-gradient-to-t from-black via-black/40 -bottom-1"></div>
         <h3 className="z-10 mt-3 text-3xl font-bold leading-none text-white">{name}</h3>
-      </section>
-      <div className="flex flex-col flex-1 h-auto p-4 bg-black rounded-md">
+      </div>
+      <div className="flex flex-col flex-1 h-full p-4 bg-black rounded-b-md">
         <div className="z-10 mb-4 text-sm text-gray-300 leading-2">
           This is a <span className="font-black text-zugz-950">{potency}</span> potancy strain that
           is for <span className="font-black text-zugz-950">{growthDifficulty}</span> growers and

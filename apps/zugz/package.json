@@ -14,12 +14,13 @@
     "@vercel/speed-insights": "^1.0.2",
     "clsx": "^2.0.0",
     "lucide-react": "^0.298.0",
-    "next": "14.0.3",
+    "next": "^14.0.5-canary.28",
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
     "react-feather": "^2.0.10",
     "react-icons": "^4.12.0",
+    "react-masonry": "^1.0.7",
     "tailwind-merge": "^2.1.0"
   },
   "devDependencies": {

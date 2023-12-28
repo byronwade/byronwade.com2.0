@@ -1,12 +1,6 @@
-import Image from 'next/image';
-import {
-  ProductStrain,
-  ProductStrain2,
-  ProductStrain3,
-  ProductStrain4,
-  ProductStrain5,
-  ProductStrain6
-} from '../../components/shop/ProductCard';
+'use client';
+import { ProductStrain6 } from '../../components/shop/ProductCard';
+import { Masonry } from 'react-masonry';
 
 const strains = [
   {
@@ -542,13 +536,13 @@ export default function Strains() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-5 px-4 pt-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 md:px-6">
+      <Masonry>
         {strains.map((strain) => (
-          <div key={strain.id} className="border rounded-md border-neutral-800">
+          <div key={strain.id} className="w-full p-2 sm:w-1/2 md:w-1/3 xl:w-1/4">
             <ProductStrain6 strain={strain} />
           </div>
         ))}
-      </div>
+      </Masonry>
     </div>
   );
 }

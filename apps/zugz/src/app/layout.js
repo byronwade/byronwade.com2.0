@@ -9,13 +9,12 @@ import { Providers } from './providers';
 
 export default function RootLayout({ children }) {
   return (
-    <html className="h-full bg-zugz-950 dark max-h-min" lang="en" suppressHydrationWarning>
+    <html className="h-full bg-zugz-950 dark max-h-min" lang="en" suppressHydrationWarning={true}>
       <body
         className={`relative checkered-bg ${GeistSans.className} dark:selection:bg-zugz-500 min-h-screen bg-neutral-50 text-black antialiased selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:text-white`}
       >
         <Providers>
           <Navbar />
-          {/* <WebsiteAlert /> */}
           {children}
           <Footer />
         </Providers>
