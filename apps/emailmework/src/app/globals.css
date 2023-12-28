@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 240 10% 3.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 240 10% 3.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 240 10% 3.9%;
+      --primary: 240 5.9% 10%;
+      --primary-foreground: 0 0% 98%;
+      --secondary: 240 4.8% 95.9%;
+      --secondary-foreground: 240 5.9% 10%;
+      --muted: 240 4.8% 95.9%;
+      --muted-foreground: 240 3.8% 46.1%;
+      --accent: 240 4.8% 95.9%;
+      --accent-foreground: 240 5.9% 10%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 240 5.9% 90%;
+      --input: 240 5.9% 90%;
+      --ring: 240 5.9% 10%;
+      --radius: 0rem;
+      --dark: #fafafa;
+      --white: #111;
+    }
+   
+    .dark {
+      --background: 240 10% 3.9%;
+      --foreground: 0 0% 98%;
+      --card: 240 10% 3.9%;
+      --card-foreground: 0 0% 98%;
+      --popover: 240 10% 3.9%;
+      --popover-foreground: 0 0% 98%;
+      --primary: 0 0% 98%;
+      --primary-foreground: 240 5.9% 10%;
+      --secondary: 240 3.7% 15.9%;
+      --secondary-foreground: 0 0% 98%;
+      --muted: 240 3.7% 15.9%;
+      --muted-foreground: 240 5% 64.9%;
+      --accent: 240 3.7% 15.9%;
+      --accent-foreground: 0 0% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 240 3.7% 15.9%;
+      --input: 240 3.7% 15.9%;
+      --ring: 240 4.9% 83.9%;
+      --white: #fafafa;
+      --dark: #111;
+    }
+  }
+   
+  
+  .fill-bg-primary {
+      fill: var(--bg-primary);
+  }
+  
+  
+  body {
+    letter-spacing: .000001px;
+    font-size: 14px;
+  }
+  
+  .text-primary {
+    color: var(--white)
+  }
+  
+  .bg-warning-gradient {
+      background-image: repeating-linear-gradient(-45deg,transparent,transparent 20px, var(--white) 20px, var(--white) 40px);
+  }
+  
+  table {
+      min-width: 100%;
+      border-collapse: separate!important;
+      border-spacing: 0
+  }
+  
+  th {
+      font-weight: 500
+  }
+  
+  font-monoth,th .font-mono {
+      font-family: ui-monospace,SFMono-Medium,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+      font-weight: 600
+  }
+  
+  th {
+      color: var(--white);
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0;
+      padding: 8px 16px;
+      border-top-width: 1px;
+      border-bottom-width: 1px;
+      background-color: var(--dark);
+      line-height: 1rem;
+      border-color: rgb(255 255 255 / 0.2)
+  }
+  
+  th:first-child {
+      border-left-width: 1px;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px
+  }
+  
+  th:last-child {
+      border-right-width: 1px;
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px
+  }
+  
+  td {
+      text-align: left;
+      padding: 16px;
+      border-bottom-width: 1px;
+      border-color: rgb(255 255 255 / 0.2)
+  }
+  
+  td.right-align,th.right-align {
+      text-align: right
+  }
+  
+  tr.no-border td {
+      border-bottom-width: 0
+  }
+  
+  dl {
+      display: grid;
+      grid-template-columns: repeat(3,minmax(0,1fr))
+  }
+  
+  dt {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      font-weight: 500
+  }
+  
+  dt .font-mono,font-monodt {
+      font-family: ui-monospace,SFMono-Medium,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+      font-weight: 600
+  }
+  
+  dt {
+    color: var(--white);
+      grid-column: span 1/span 1
+  }
+  
+  dd,dt {
+      border-bottom-width: 1px
+  }
+  
+  dd {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      grid-column: span 2/span 2
+  }
+  
+  .table-toolbar {
+      align-items: center;
+      justify-content: space-between
+  }
+  
+  @media (min-width: 640px) {
+      .table-toolbar {
+          display:flex
+      }
+  }
+  
+  .table-toolbar {
+      padding: 8px 16px;
+      border-width: 1px;
+      margin-bottom: -1px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      font-size: 12px;
+      letter-spacing: 0
+  }
+  
+  .table-toolbar~table th:first-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 6px
+  }
+  
+  .table-toolbar~table th:last-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 6px
+  }
+  
+  th.sorted {
+      --tw-bg-opacity: 1;
+      background-color: rgb(235 235 235/var(--tw-bg-opacity))
+  }
+  
+  td.sorted {
+      background-color: var(--bg-white)
+  }
+  
+  .dark th.sorted {
+      --tw-bg-opacity: 1;
+      background-color: rgb(43 43 43/var(--tw-bg-opacity))
+  }
