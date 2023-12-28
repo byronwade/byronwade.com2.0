@@ -103,7 +103,8 @@
 import { fetchOpenAIContent } from './functions/OpenAI';
 import { fetchPageData } from './functions/webScrape/fetchPageData';
 import { findExisting } from './functions/FindExisting';
-import { getWikipediaData } from './functions/WikiAPI';
+//import { getWikipediaData } from './functions/WikiAPI';
+import { updateOrInsertMushroom } from './functions/updateOrInsertMushroom';
 
 export async function GET(req) {
   const searchParams = new URL(req.url).searchParams;
@@ -129,21 +130,19 @@ export async function GET(req) {
         }
 
         const existingMushroomResponse = await findExisting(term);
+        let mushroomId = null;
         if (existingMushroomResponse) {
-          controller.enqueue(JSON.stringify({ existingMushroomResponse }));
+          const openAIContent = await fetchOpenAIContent(term);
+          mushroomId = await updateOrInsertMushroom(existingMushroomResponse, openAIContent);
+          console.log('mushroomId', mushroomId);
         }
 
-        const wikiData = await getWikipediaData(term);
-        if (wikiData) {
-          controller.enqueue(JSON.stringify({ wikiData }));
-        }
+        // Include the code to handle the case when the mushroom does not exist and needs to be inserted.
+        // ...
 
-        const openAIContent = await fetchOpenAIContent(wikiData, existingMushroomResponse, term);
-        if (!openAIContent) {
-          controller.enqueue(JSON.stringify({ error: 'Failed to get OpenAI content' }));
-        } else {
-          controller.enqueue(JSON.stringify({ openAIContent }));
-        }
+        // Other code remains the same.
+        // ...
+
       } catch (error) {
         console.error('API Error:', error.message);
         controller.enqueue(JSON.stringify({ error: 'Internal Server Error' }));

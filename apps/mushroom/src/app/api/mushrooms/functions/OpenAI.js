@@ -2,14 +2,13 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({ apiKey: process.env['OPENAI_API_KEY'] });
 
-export async function fetchOpenAIContent(wikiData, existingMushroomResponse, term) {
+export async function fetchOpenAIContent(wikiData = null, term) {
   let combinedData;
 
   if (wikiData) {
     combinedData = {
       searchTerm: term,
-      wikiData: wikiData,
-      existingMushroomData: existingMushroomResponse
+      wikiData: wikiData
     };
   } else {
     combinedData = { searchTerm: term };
@@ -298,7 +297,7 @@ export async function fetchOpenAIContent(wikiData, existingMushroomResponse, ter
           content: JSON.stringify(combinedData) // Ensure this is a string
         }
       ],
-      model: 'gpt-3.5-turbo-1106', //gpt-3.5-turbo-1106
+      model: 'gpt-4-1106-preview', //gpt-3.5-turbo-1106
       response_format: { type: 'json_object' }
     });
     //prompt: "" // It should follow this structure for Dall-E "Create a picture of a <strain_name> mushroom with <cap_color> cap and <stem_color> stem. The mushroom should be <cap_shape> and have a <veil_type> veil. The spore print should be <spore_print_color>. The mushroom should be growing on <substrate> substrate. The mushroom should be <description>. The mushroom should be <difficulty> to grow. The mushroom should have a <level> potency. The mushroom should have a <suitability> user experience. The mushroom should be <legal_status>. The mushroom should have a <flavor_profile> flavor profile. The mushroom should have <medical_effects> medical effects. The mushroom should have <cultural_significance> cultural significance. The mushroom should have <availability> availability. The mushroom should be <category> category. The mushroom should be <intended_use> intended use."
@@ -365,3 +364,4 @@ export async function fetchOpenAIContent(wikiData, existingMushroomResponse, ter
     };
   }
 }
+
