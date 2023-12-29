@@ -8,6 +8,28 @@ const { rows: business } = await sql`SELECT * FROM business;`;
 console.log(business);
 
 export default function Home() {
+
+
+  fetch('http://localhost:3001/api/auth/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username: 'john.doe@example.com',
+      password: 'hashed_password_for_john'
+    })
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the response data
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle errors
+      console.error('Error:', error);
+    });
+  
   return (
     <>
       <Sidebar />

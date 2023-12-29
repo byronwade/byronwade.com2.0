@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/core": "^0.19.0",
     "@react-spring/web": "^9.7.3",
     "@supabase/supabase-js": "^2.39.0",
     "@vercel/postgres": "^0.5.1",
     "api": "^6.1.1",
+    "bcrypt": "^5.1.1",
     "cheerio": "^1.0.0-rc.12",
     "dompurify": "^3.0.6",
     "geist": "^1.2.0",
