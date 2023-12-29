@@ -5,17 +5,17 @@ import { ScrollingImage } from './scrollingImage';
 export function BusinessCard(business) {
   return (
     <div role="list-item" className="w-[100%] sm:w-[100%] md:w-[100%] lg:w-[33.3%] rounded-xl p-4">
-      <Link href="/" className="hover:opacity-90 transition">
+      <Link href="/" className="transition hover:opacity-90">
         <div
           className="relative w-full rounded-xl h-[250px] bg-cover bg-center border-[1px] border-light-100 dark:border-dark-500 border-solid transition duration-200 overflow-hidden"
           alt=""
         >
-          <ScrollingImage src={business.screenshot} alt="Blob Image" />
+          <ScrollingImage src={business.image_url} alt="Blob Image" />
         </div>
       </Link>
-      <div className="flex justify-between items-center mt-2">
+      <div className="flex items-center justify-between mt-2">
         <Link href="/" className="">
-          <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
+          <h2 className="transition duration-200 text-dark-300 hover:text-dark-500 dark:text-white dark:hover:text-dark-100">
             {business.name}
           </h2>
         </Link>

@@ -1,11 +1,11 @@
 import Header from '../components/header';
 import Sidebar from '../components/sidebar';
-import { createClient } from '@supabase/supabase-js';
 import { BusinessCard } from '../components/businessCard';
 import HeroHome from '../components/heroHome';
 
-const supabase = createClient(process.env['SUPABASE_URL'], process.env['SUPABASE_API_KEY']);
-const { data: business } = await supabase.from('business').select('*');
+import { sql } from '@vercel/postgres';
+const { rows: business } = await sql`SELECT * FROM business;`;
+console.log(business);
 
 export default function Home() {
   return (
@@ -31,12 +31,12 @@ export default function Home() {
                 className="fixed inset-0 z-20 animate-fadeIn"
                 style={{ display: 'none' }}
               >
-                <div className="modal-bg absolute w-full h-full bg-black opacity-60" />
+                <div className="absolute w-full h-full bg-black modal-bg opacity-60" />
                 <div className="bg-white w-[90%] sm:w-[90%] md:w-[90%] lg:w-[50%] xl:w-[40%] 2xl:w-[40%] h-fit max-h-[90%] sm:h-fit md:h-fit rounded-xl shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-10 py-5">
                   <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8f8f8f] to-black text-center mt-5 mb-2">
                     Get Your Daily Dose of News with a Dash of Humor
                   </h1>
-                  <form className="mt-4 relative">
+                  <form className="relative mt-4">
                     <input
                       type="email"
                       placeholder="Email"
@@ -59,7 +59,7 @@ export default function Home() {
                       </svg>
                     </button>
                   </form>
-                  <p className="py-5 text-sm text-dark-200 text-center">
+                  <p className="py-5 text-sm text-center text-dark-200">
                     Join over 4 million people who kickstart their day with CopyUI&apos;s daily
                     newsletter - delivering the latest headlines worldwide with a touch of humor,
                     all for free.
@@ -69,23 +69,23 @@ export default function Home() {
             </div>
           </div>
           <div className="w-full rounded-xl max-w-auto xl:max-w-[650px]">
-            <a href="/view/Chenzoku" className="hover:opacity-90 transition">
+            <a href="/view/Chenzoku" className="transition hover:opacity-90">
               <div
                 style={{ backgroundImage: 'url("")' }}
                 className="relative w-full rounded-xl h-[250px] lg:h-[400px] bg-cover bg-no-repeat bg-center border-[1px] border-light-100 border-solid transition duration-20"
                 alt=""
               >
                 <video
-                  className="ease block w-full h-full object-cover rounded-xl transition duration-200"
+                  className="block object-cover w-full h-full transition duration-200 ease rounded-xl"
                   autoPlay=""
                   loop=""
                   src="https://video.godly.website/video/upload/w_2560/q_100/godly/recordings/pyaqvjjimo6vixa0mdab.webm"
                 />
               </div>
             </a>
-            <div className="flex justify-between items-center mt-2">
+            <div className="flex items-center justify-between mt-2">
               <a href="">
-                <h2 className="text-dark-300 hover:text-dark-500  dark:text-white dark:hover:text-dark-100 transition duration-200">
+                <h2 className="transition duration-200 text-dark-300 hover:text-dark-500 dark:text-white dark:hover:text-dark-100">
                   ChainZoku
                 </h2>
               </a>
