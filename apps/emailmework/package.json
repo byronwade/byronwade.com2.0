@@ -1,5 +1,6 @@
 {
   "name": "emailmework",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3007",
