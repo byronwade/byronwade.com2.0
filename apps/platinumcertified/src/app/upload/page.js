@@ -9,6 +9,8 @@ import { ensureHttps } from '../api/seo/utils/utils';
 import { CornerDownLeft } from 'react-feather';
 import { analyzeBusiness } from './analyzeBusiness';
 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 // Define your default business data
 const defaultBusinessData = {
   name: 'Default Business Name',
@@ -29,6 +31,15 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [isValidUrl, setIsValidUrl] = useState(false);
   const [hasError, setHasError] = useState(false);
+
+  const supabase = createClientComponentClient();
+  const {
+    data: { session }
+  } = supabase.auth.getSession();
+
+  if (!session) {
+    console.log('no session');
+  }
 
   console.log(business);
 
@@ -70,10 +81,10 @@ export default function Page() {
   return (
     <div className="main w-full max-h-[100vh] scrollbar-hide overflow-y-auto">
       <Header />
-      <div className="w-full max-w-md space-y-4 duration-1200 ease-in-out animate-in fade-in slide-in-from-bottom-4 mx-auto pt-10">
+      <div className="w-full max-w-md pt-10 mx-auto space-y-4 ease-in-out duration-1200 animate-in fade-in slide-in-from-bottom-4">
         <form
           onSubmit={handleSubmit}
-          className="flex h-fit w-full flex-row items-center rounded-xl bg-black dark:bg-white px-1 shadow-lg"
+          className="flex flex-row items-center w-full px-1 bg-black shadow-lg h-fit rounded-xl dark:bg-white"
         >
           <input
             autoComplete="off"
@@ -82,13 +93,13 @@ export default function Page() {
             value={url}
             onChange={handleInputChange}
             disabled={isLoading}
-            className="h-10 w-full resize-none bg-transparent dark:text-black dark:placeholder:text-neutral-800 px-2 font-mono text-base text-white placeholder:text-gray-400 sm:text-sm border-0 outline-none ring-0 focus:ring-0 transition-all duration-300"
+            className="w-full h-10 px-2 font-mono text-base text-white transition-all duration-300 bg-transparent border-0 outline-none resize-none dark:text-black dark:placeholder:text-neutral-800 placeholder:text-gray-400 sm:text-sm ring-0 focus:ring-0"
             name="prompt"
           />
 
           {isLoading ? (
             <svg
-              className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
+              className="w-5 h-5 mr-3 -ml-1 text-black animate-spin"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -122,7 +133,7 @@ export default function Page() {
               }`}
             >
               <CornerDownLeft
-                className="lucide lucide-corner-down-left shrink-0 -ml-px"
+                className="-ml-px lucide lucide-corner-down-left shrink-0"
                 width={18}
                 height={18}
                 strokeWidth="1.5"
@@ -131,7 +142,7 @@ export default function Page() {
           )}
         </form>
         {hasError && !isValidUrl && (
-          <div className="text-sm text-red-500 mt-2 text-center">
+          <div className="mt-2 text-sm text-center text-red-500">
             Please enter a valid URL starting with http:// or https://
           </div>
         )}
@@ -142,39 +153,39 @@ export default function Page() {
           <div className="animate-pulse">
             <div className="p-10 text-center">
               <div className="max-w-[600px] mx-auto">
-                <div className="h-16 bg-gray-300 rounded-md mb-4"></div>
-                <div className="h-4 bg-gray-300 rounded-md mb-4"></div>
-                <div className="h-4 bg-gray-300 rounded-md mb-4"></div>
-                <div className="h-4 bg-gray-300 rounded-md mb-4"></div>
+                <div className="h-16 mb-4 bg-gray-300 rounded-md"></div>
+                <div className="h-4 mb-4 bg-gray-300 rounded-md"></div>
+                <div className="h-4 mb-4 bg-gray-300 rounded-md"></div>
+                <div className="h-4 mb-4 bg-gray-300 rounded-md"></div>
                 <div className="flex justify-center gap-2.5 mb-4">
-                  <div className="h-4 bg-gray-300 rounded w-24"></div>
-                  <div className="h-4 bg-gray-300 rounded w-24"></div>
+                  <div className="w-24 h-4 bg-gray-300 rounded"></div>
+                  <div className="w-24 h-4 bg-gray-300 rounded"></div>
                 </div>
               </div>
-              <div className="flex flex-row space-x-4 justify-center mb-4">
+              <div className="flex flex-row justify-center mb-4 space-x-4">
                 <div className="h-[42px] w-[160px] bg-gray-300 rounded-lg"></div>
                 <div className="h-[42px] w-[160px] bg-gray-300 rounded-lg"></div>
                 <div className="h-[42px] w-[160px] bg-gray-300 rounded-lg"></div>
               </div>
               <div className="flex flex-wrap justify-center mt-4 mb-4">
-                <div className="h-8 bg-gray-300 rounded-full w-24 mr-2 mb-2"></div>
-                <div className="h-8 bg-gray-300 rounded-full w-24 mr-2 mb-2"></div>
-                <div className="h-8 bg-gray-300 rounded-full w-24 mr-2 mb-2"></div>
+                <div className="w-24 h-8 mb-2 mr-2 bg-gray-300 rounded-full"></div>
+                <div className="w-24 h-8 mb-2 mr-2 bg-gray-300 rounded-full"></div>
+                <div className="w-24 h-8 mb-2 mr-2 bg-gray-300 rounded-full"></div>
               </div>
               <div className="mb-4">
-                <div className="h-6 bg-gray-300 rounded-md w-48 mx-auto"></div>
+                <div className="w-48 h-6 mx-auto bg-gray-300 rounded-md"></div>
               </div>
             </div>
             <div className="flex flex-wrap justify-center mb-4">
               <div className="w-full md:w-[80%] p-5">
-                <div className="h-96 bg-gray-300 rounded-md"></div>
+                <div className="bg-gray-300 rounded-md h-96"></div>
               </div>
             </div>
-            <div className="max-w-lg mx-auto w-full px-4">
-              <div className="columns-2 gap-4 pt-9 md:columns-3">
+            <div className="w-full max-w-lg px-4 mx-auto">
+              <div className="gap-4 columns-2 pt-9 md:columns-3">
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} className="break-inside-avoid flex-col gap-1 pb-4">
-                    <div className="h-6 bg-gray-300 rounded-md mb-2"></div>
+                  <div key={index} className="flex-col gap-1 pb-4 break-inside-avoid">
+                    <div className="h-6 mb-2 bg-gray-300 rounded-md"></div>
                     <div className="grid grid-cols-1 gap-2">
                       <div className="h-4 bg-gray-300 rounded-md"></div>
                       <div className="h-4 bg-gray-300 rounded-md"></div>
@@ -192,21 +203,21 @@ export default function Page() {
         <>
           <div className="p-10 text-center">
             <div className="max-w-[600px] mx-auto">
-              <h1 className="text-4xl font-bold text-gray-800 dark:text-white  animate-in fade-in slide-in-from-bottom-3 duration-1000 ease-in-out">
+              <h1 className="text-4xl font-bold text-gray-800 duration-1000 ease-in-out dark:text-white animate-in fade-in slide-in-from-bottom-3">
                 {business.name}
               </h1>
-              <p className="text-dark-200 dark:text-gray-400 mt-4 duration-1200 ease-in-out animate-in fade-in slide-in-from-bottom-4">
+              <p className="mt-4 ease-in-out text-dark-200 dark:text-gray-400 duration-1200 animate-in fade-in slide-in-from-bottom-4">
                 {business.description}
               </p>
               <div className="flex justify-center gap-2.5 mb-4 mt-2">
-                <time className="opacity-60 text-xs" dateTime="2023-08-24T09:04:32.048Z">
+                <time className="text-xs opacity-60" dateTime="2023-08-24T09:04:32.048Z">
                   Last Updated 3m ago
                 </time>
-                <span className="opacity-60 text-xs">·</span>
-                <span className="opacity-60 text-xs">4.1K views</span>
+                <span className="text-xs opacity-60">·</span>
+                <span className="text-xs opacity-60">4.1K views</span>
               </div>
             </div>
-            <div className="flex flex-row space-x-4 justify-center">
+            <div className="flex flex-row justify-center space-x-4">
               {business?.email ? (
                 <a target="_blank" href={`mailto:${business.email}`}>
                   <button className="h-[42px] py-2 text-sm bg-white border border-1 border-[#e3e3e3] text-black px-5 rounded-lg flex items-center gap-2 mx-auto hover:bg-light-100 transition-all duration-300">
@@ -266,7 +277,7 @@ export default function Page() {
                 {business.categories.map((category) => (
                   <div
                     key={category.title}
-                    className="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full mr-2 mb-2"
+                    className="px-3 py-1 mb-2 mr-2 text-xs text-gray-600 bg-gray-100 rounded-full dark:bg-gray-800 dark:text-gray-300"
                   >
                     {category.title}
                   </div>
@@ -274,7 +285,7 @@ export default function Page() {
               </div>
             )}
             <div className="flex justify-center mt-4">
-              <Link href="/" className="text-sm hover:underline text-teal-600">
+              <Link href="/" className="text-sm text-teal-600 hover:underline">
                 Is this info incorrect? Make changes here
               </Link>
             </div>
@@ -284,14 +295,14 @@ export default function Page() {
               <ScrollingImage src={business.screenshot} alt="Blob Image" />
             </div>
           </div>
-          <div className="max-w-lg mx-auto w-full px-4">
-            <div className="columns-2 gap-4 pt-9 md:columns-3">
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+          <div className="w-full max-w-lg px-4 mx-auto">
+            <div className="gap-4 columns-2 pt-9 md:columns-3">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Type</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/portfolio"
                     >
                       Portfolio
@@ -299,7 +310,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/personal"
                     >
                       Personal
@@ -307,7 +318,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/photography"
                     >
                       Photography
@@ -315,7 +326,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/motion"
                     >
                       Motion
@@ -323,12 +334,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Style</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/black-and-white"
                     >
                       Black &amp; White
@@ -336,7 +347,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/minimal"
                     >
                       Minimal
@@ -344,7 +355,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/clean"
                     >
                       Clean
@@ -352,7 +363,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/transitions"
                     >
                       Transitions
@@ -360,7 +371,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/small-type"
                     >
                       Small Type
@@ -368,7 +379,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/horizontal-scrolling"
                     >
                       Horizontal Scrolling
@@ -376,12 +387,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Font</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/circular-std"
                     >
                       Circular Std
@@ -389,12 +400,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Database</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/mysql"
                     >
                       MySQL
@@ -402,12 +413,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Platform</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/wordpress"
                     >
                       WordPress
@@ -415,7 +426,7 @@ export default function Page() {
                   </li>
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/flywheel"
                     >
                       Flywheel
@@ -423,12 +434,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Language</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/php"
                     >
                       PHP
@@ -436,12 +447,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">Analytics</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/google-analytics"
                     >
                       Google Analytics
@@ -449,12 +460,12 @@ export default function Page() {
                   </li>
                 </ul>
               </div>
-              <div className="break-inside-avoid flex-col gap-1 pb-4">
+              <div className="flex-col gap-1 pb-4 break-inside-avoid">
                 <h4 className="font-medium opacity-40">CDN</h4>
                 <ul className="grid list-none">
                   <li>
                     <Link
-                      className="font-light hover:opacity-40 cursor-pointer transition-color duration-150 ease-smooth"
+                      className="font-light duration-150 cursor-pointer hover:opacity-40 transition-color ease-smooth"
                       href="/websites/cloudflare"
                     >
                       Cloudflare

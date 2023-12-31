@@ -1,10 +1,27 @@
+'use client';
+import { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import { FloatingAI } from '../../components/floatingAI';
 
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+
 export default function Search() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const supabase = createClientComponentClient();
+    const getUser = async () => {
+      const { data: session } = await supabase.auth.getSession();
+      setUser(session?.user || null);
+    };
+
+    getUser();
+  }, []);
   return (
     <>
-      <div className="mt-10 mx-auto">
+      <div>{user ? <p>User is logged in</p> : <p>User is not logged in</p>}</div>
+      <div className="mx-auto mt-10">
         <div className="mx-auto">
           <FloatingAI />
         </div>

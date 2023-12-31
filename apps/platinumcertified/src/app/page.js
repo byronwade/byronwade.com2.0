@@ -2,10 +2,31 @@ import Header from '../components/header';
 import Sidebar from '../components/sidebar';
 import { BusinessCard } from '../components/businessCard';
 import HeroHome from '../components/heroHome';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
 
-import { sql } from '@vercel/postgres';
-const { rows: business } = await sql`SELECT * FROM business;`;
-console.log(business);
+const supabase = createServerComponentClient({ cookies });
+const { data: user } = await supabase.auth.getUser();
+console.log(user);
+let { data: business, error } = await supabase.from('business').select('*');
+
+const subscription = supabase.auth.onAuthStateChange((event, session) => {
+  console.log(event, session);
+
+  if (event === 'INITIAL_SESSION') {
+    console.log('initial session', session);
+  } else if (event === 'SIGNED_IN') {
+    console.log('signed in', session);
+  } else if (event === 'SIGNED_OUT') {
+    console.log('signed out', session);
+  } else if (event === 'PASSWORD_RECOVERY') {
+    console.log('password recovery', session);
+  } else if (event === 'TOKEN_REFRESHED') {
+    console.log('token refreshed', session);
+  } else if (event === 'USER_UPDATED') {
+    console.log('user updated', session);
+  }
+});
 
 export default function Home() {
   return (
