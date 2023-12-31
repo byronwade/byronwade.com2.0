@@ -2,29 +2,30 @@
 import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
-import { FloatingAI } from '../../components/floatingAI';
-
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '../../utils/supabase/client';
 
 export default function Search() {
-  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
+  const supabase = createClient();
 
   useEffect(() => {
-    const supabase = createClientComponentClient();
-    const getUser = async () => {
-      const { data: session } = await supabase.auth.getSession();
-      setUser(session?.user || null);
-    };
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
-    getUser();
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    console.log(authListener);
   }, []);
+
+  console.log(session);
+
   return (
     <>
-      <div>{user ? <p>User is logged in</p> : <p>User is not logged in</p>}</div>
       <div className="mx-auto mt-10">
-        <div className="mx-auto">
-          <FloatingAI />
-        </div>
+        <div>{session ? <span>User is logged in</span> : <span>User is logged out</span>}</div>
         <div className="prose dark:prose-invert prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-img:rounded-lg prose-headings:underline">
           <p>
             This is a generative text display to see what it looks like qqwec wqec w ec we c eqw c

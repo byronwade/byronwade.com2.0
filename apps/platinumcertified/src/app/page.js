@@ -1,42 +1,39 @@
 import Header from '../components/header';
 import Sidebar from '../components/sidebar';
 import { BusinessCard } from '../components/businessCard';
-import HeroHome from '../components/heroHome';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+//import HeroHome from '../components/heroHome';
+import AuthButton from '../components/AuthButton';
 
-const supabase = createServerComponentClient({ cookies });
-const { data: user } = await supabase.auth.getUser();
-console.log(user);
-let { data: business, error } = await supabase.from('business').select('*');
+import { createClient } from '../utils/supabase/server';
 
-const subscription = supabase.auth.onAuthStateChange((event, session) => {
-  console.log(event, session);
+export default async function Home() {
+  const supabase = createClient();
 
-  if (event === 'INITIAL_SESSION') {
-    console.log('initial session', session);
-  } else if (event === 'SIGNED_IN') {
-    console.log('signed in', session);
-  } else if (event === 'SIGNED_OUT') {
-    console.log('signed out', session);
-  } else if (event === 'PASSWORD_RECOVERY') {
-    console.log('password recovery', session);
-  } else if (event === 'TOKEN_REFRESHED') {
-    console.log('token refreshed', session);
-  } else if (event === 'USER_UPDATED') {
-    console.log('user updated', session);
-  }
-});
+  const { data: session } = await supabase.auth.getSession();
+  console.log('home page session', session);
 
-export default function Home() {
+  const { data, error } = await supabase.auth.refreshSession();
+  console.log('home page data', data);
+
+  // const {
+  //   data: { user }
+  // } = await supabase.auth.getUser();
+  // console.log('home page user', user);
+
+  let { data: business } = await supabase.from('business').select('*');
+
   return (
     <>
       <Sidebar />
       <div className="main w-full max-h-[100vh] scrollbar-hide overflow-y-auto">
         <Header />
-        <HeroHome />
+        {/* <HeroHome /> */}
         <div className="flex flex-col sm:flex-col md:flex-col lg:flex-row gap-10 justify-between items-center mt-[100px] sm:mt-[100px] xl:mt-[50px] mb-10 px-5 xl:px-8">
           <div className="px-0 sm:px-2 md:px-10 max-w-auto xl:max-w-[500px] w-full">
+            <div>
+              {/* {user ? <span>user is logged in</span> : <span>user is not logged in</span>} */}
+              <AuthButton />
+            </div>
             <h1 className="text-[45px] font-bold leading-[1] mb-3 capitalize text-transparent bg-clip-text bg-gradient-to-r from-[#707070] to-black dark:to-dark-300 dark:from-white">
               All the best SaaS resources in one place
             </h1>

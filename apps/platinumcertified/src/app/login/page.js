@@ -1,27 +1,41 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '../../utils/supabase/client';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [logs, setLogs] = useState([]);
   const [user, setUser] = useState(null);
 
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   useEffect(() => {
-    const { data: session } = supabase.auth.getSession();
-    setUser(session?.user || null);
+    const updateSession = async () => {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+      console.log('user', user);
+      setUser(user || null);
+    };
+
+    updateSession();
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('event', event);
+      console.log('session', session);
       setUser(session?.user || null);
       setLogs((prevLogs) => [...prevLogs, { event, session }]);
     });
 
+    if (window.location.pathname === '/auth/callback') {
+      updateSession();
+    }
+
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, []);
+  }, [supabase.auth]);
 
   const handleSignUp = async () => {
     const { user, error } = await supabase.auth.signUp({
@@ -39,6 +53,28 @@ export default function Login() {
     setLogs((prevLogs) => [...prevLogs, { action: 'Sign In', user, error }]);
   };
 
+  const handleSignInGithub = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: `${location.origin}/auth/callback`
+      }
+    });
+    setLogs((prevLogs) => [...prevLogs, { action: 'Sign In', data, error }]);
+    console.log(data.url);
+  };
+
+  const handleSignInTwitter = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'twitter',
+      options: {
+        redirectTo: `${location.origin}/auth/callback`
+      }
+    });
+    setLogs((prevLogs) => [...prevLogs, { action: 'Sign In', data, error }]);
+    console.log(data.url);
+  };
+
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
     setLogs((prevLogs) => [...prevLogs, { action: 'Sign Out', error }]);
@@ -51,6 +87,8 @@ export default function Login() {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button onClick={handleSignUp}>Sign Up</button>
         <button onClick={handleSignIn}>Sign In</button>
+        <button onClick={handleSignInGithub}>Github</button>
+        <button onClick={handleSignInTwitter}>Twitter</button>
         <button onClick={handleSignOut}>Sign Out</button>
       </div>
       {user ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}
