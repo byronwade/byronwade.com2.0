@@ -1,6 +1,9 @@
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
-import { CombinedThemeProvider } from '../utils/wrapper';
+import { CombinedThemeProvider } from '../lib/wrapper';
+import { Toaster } from '@/components/ui/toaster';
+
+import ThemeSwitch from '@/components/ThemeSwitch';
 
 import { GeistSans } from 'geist/font/sans';
 import './globals.css';
@@ -22,7 +25,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="w-full min-h-screen dark" suppressHydrationWarning={true}>
       <body
-        className={`bg-white2 text-black2 dark:text-white2 dark:bg-black2 ${GeistSans.className}`}
+        className={`relative bg-white2 text-black2 dark:text-white2 dark:bg-black2 ${GeistSans.className}`}
       >
         <CombinedThemeProvider
           attribute="class"
@@ -32,6 +35,10 @@ export default function RootLayout({ children }) {
         >
           {children}
         </CombinedThemeProvider>
+        {/* <div className="absolute z-20 bottom-10 right-10">
+          <ThemeSwitch />
+        </div> */}
+        <Toaster />
       </body>
       {/* <SpeedInsights /> */}
       <Analytics />
