@@ -1,6 +1,10 @@
 import Image from 'next/image';
+import { getProducts } from '../lib/shopify';
 
 export default async function Home() {
+  const product = await getProducts({});
+
+  console.log(product);
   return (
     <>
       <div
