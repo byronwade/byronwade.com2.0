@@ -60,6 +60,14 @@ export default function Navbar() {
                 Agar Plates
               </Link>
             </li>
+            <li>
+              <Link
+                className="text-black underline-offset-4 hover:text-black hover:underline dark:text-white dark:hover:text-neutral-300"
+                href="/agar-plates"
+              >
+                Grow Boxes
+              </Link>
+            </li>
             {/* <li>
               <Link
                 className="text-black underline-offset-4 hover:text-black hover:underline dark:text-white dark:hover:text-neutral-300"
