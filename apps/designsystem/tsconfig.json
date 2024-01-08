@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*", "@/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/error.js",
+    "src/app/manifest.js",
+    "src/app/robots.js",
+    "src/app/not-found.js",
+    "src/app/opngraph-image.js",
+    "src/app/sitemap.js",
+    "src/app/icon.js"
+  ],
+  "exclude": ["node_modules"]
+}
