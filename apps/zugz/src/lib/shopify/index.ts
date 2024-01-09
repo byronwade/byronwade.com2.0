@@ -1,3 +1,4 @@
+'use server';
 /* 
 Here's a brief documentation of each function in your code:
 

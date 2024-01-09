@@ -133,8 +133,17 @@ module.exports = {
         shimmer: 'shimmer 1.3s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out'
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)'
       }
     }
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss-animate')
+  ]
 };

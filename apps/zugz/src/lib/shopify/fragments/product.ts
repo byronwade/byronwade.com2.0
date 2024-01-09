@@ -9,6 +9,8 @@ const productFragment = /* GraphQL */ `
     title
     description
     descriptionHtml
+    onlineStoreUrl
+    totalInventory
     options {
       id
       name
@@ -30,6 +32,13 @@ const productFragment = /* GraphQL */ `
           id
           title
           availableForSale
+          currentlyNotInStock
+          image {
+            src
+            width
+            height
+            altText
+          }
           selectedOptions {
             name
             value

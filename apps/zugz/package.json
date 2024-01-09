@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@radix-ui/react-slot": "^1.0.2",
+    "@shopify/hydrogen-react": "^2023.10.1",
     "@shopify/shopify-api": "^8.1.1",
     "@vercel/analytics": "^1.1.1",
     "@vercel/speed-insights": "^1.0.2",
@@ -19,14 +20,15 @@
     "embla-carousel-autoplay": "^8.0.0-rc17",
     "embla-carousel-react": "^8.0.0-rc17",
     "lucide-react": "^0.298.0",
-    "next": "^14.0.5-canary.28",
+    "next": "^14.0.5-canary.45",
     "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
     "react-feather": "^2.0.10",
     "react-icons": "^4.12.0",
     "react-masonry": "^1.0.7",
-    "tailwind-merge": "^2.1.0"
+    "tailwind-merge": "^2.1.0",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",

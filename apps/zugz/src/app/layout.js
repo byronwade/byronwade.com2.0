@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Providers } from './providers';
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
     <html className="h-full bg-zugz-950 dark max-h-min" lang="en" suppressHydrationWarning={true}>
       <body
