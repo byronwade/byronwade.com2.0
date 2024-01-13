@@ -2,6 +2,8 @@ import Header from '../components/header';
 import Twitter from '../components/boxes/twitter';
 import ThemeSwitch from '../components/ThemeSwitch';
 
+import TextScrolling from '../components/boxes/TextScrolling';
+
 export default async function Home() {
   return (
     <div className="shadow-inner bg-white2">
@@ -144,10 +146,7 @@ export default async function Home() {
             <p>Frontend Developer</p>
           </div>
           <div className="relative flex flex-col w-full h-98 bg-[#1da1f2]">
-            <Twitter width="w-5/12" />
-            <Twitter width="w-5/12" />
-            <Twitter width="w-5/12" />
-            <Twitter width="w-5/12" />
+            <TextScrolling />
           </div>
         </div>
       </div>
