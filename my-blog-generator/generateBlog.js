@@ -2,8 +2,13 @@ import axios from 'axios';
 import cheerio from 'cheerio';
 import OpenAI from 'openai';
 
-const websiteURL = 'https://tripsitter.com/cannabis/weed-butter/'; // Replace with the website you want to crawl
-const openAIKey = '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'; // Replace with your OpenAI API key
+const openAIKey = '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'; // Replace with your OpenAI API key
+
+const websiteURLs = [
+  'https://tripsitter.com/cannabis/weed-butter/',
+  'https://example.com/another-article'
+  // Add more URLs as needed
+];
 
 const openai = new OpenAI({ apiKey: openAIKey });
 
@@ -12,7 +17,7 @@ async function fetchWebsiteContent(url) {
     const { data } = await axios.get(url);
     return data;
   } catch (error) {
-    console.error(`Error fetching website content: ${error}`);
+    console.error(`Error fetching website content from ${url}: ${error}`);
     return null;
   }
 }
@@ -24,55 +29,52 @@ async function extractText(html) {
   return extractedText;
 }
 
-async function generateBlogArticle(inputText) {
-  let article = '';
-  let currentText = inputText;
-  let attempts = 0;
+async function generateBlogArticle(textContent) {
+  const response = await openai.chat.completions.create({
+    model: 'gpt-3.5-turbo-0125',
+    messages: [
+      {
+        role: 'user',
+        content: `Write a compleate redo of all of this content: ${textContent}
+        
+        1) The content should be HTML the top most html wrapper should be div and all the article inside of that div
+        2) The blog post should utalize as much worddage as the output will allow, we need our blogs to reach 2400 words
+        3) Our company should be mentioned in the blog, mabye at the bottom as a plug for the company or an ad
+        4) Use images from online to add into the article, use images from google, do not use images from tripsetter`
+      }
+    ]
+  });
 
-  while (getWordCount(article) < 2400 && attempts < 10) {
-    // Limit attempts to prevent infinite loops
-    const prompt = `Write a detailed continuation of the following blog article: ${currentText}`;
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo-0125',
-      messages: [
-        {
-          role: 'user',
-          content: prompt
-        }
-      ]
-    });
-
-    const newText = response.choices[0].message.content;
-    article += ` ${newText}`; // Append new text to the article
-    currentText = newText; // Use the new text as the basis for the next prompt, if needed
-    attempts++;
-  }
-
-  return article.trim();
+  return response.choices[0].message.content;
 }
 
-function getWordCount(text) {
-  return text.split(/\s+/).length;
+async function processBatch(batch) {
+  for (const url of batch) {
+    console.log(`Processing URL: ${url}`);
+    const websiteContent = await fetchWebsiteContent(url);
+    if (!websiteContent) continue;
+
+    const textContent = await extractText(websiteContent);
+    if (!textContent) continue;
+
+    const blogArticle = await generateBlogArticle(textContent);
+    if (!blogArticle) {
+      console.log(`Failed to generate blog article for ${url}.`);
+      continue;
+    }
+
+    console.log(`Generated Blog Article for ${url}:`, blogArticle);
+    // Potential saving to a file or database here
+  }
+}
+
+async function processURLsInBatches(urls, batchSize = 10) {
+  for (let i = 0; i < urls.length; i += batchSize) {
+    const batch = urls.slice(i, i + batchSize);
+    await processBatch(batch);
+  }
 }
 
 (async () => {
-  const websiteContent = await fetchWebsiteContent(websiteURL);
-  if (!websiteContent) {
-    console.log('Failed to fetch website content.');
-    return;
-  }
-
-  const textContent = await extractText(websiteContent);
-  if (!textContent) {
-    console.log('Failed to extract text from website content.');
-    return;
-  }
-
-  const blogArticle = await generateBlogArticle(textContent);
-  if (!blogArticle) {
-    console.log('Failed to generate blog article.');
-    return;
-  }
-
-  console.log('Generated Blog Article:', blogArticle);
+  await processURLsInBatches(websiteURLs);
 })();
